@@ -1,0 +1,316 @@
+<!-- Big summary/important statement for the science -->
+In this study we were able to extract and identify multiple alkaloids from the
+dental calculus of individuals from Middenbeemster, a 19th century Dutch
+archaeological site. We applied ultra-high-performance liquid chromatography-tandem
+mass spectrometry (UHPLC-MS/MS), using a method that was validated the presence
+of drugs and metabolites in dental calculus with the equivalent compounds in blood
+[@sorensenDrugsCalculus2021].
+Here we have shown that the method can also be successfully applied to archaeological
+dental calculus.
+We initially detected cannabinoids, cocaine, nicotine, cotinine, caffeine,
+theopyhlline, and salicylic acid in multiple individuals; however, the detection
+of cannabinoids and cocaine could not be replicated in a second run on different
+samples from the same individuals.
+
+<!-- discuss any correlations, spurious or otherwise
+e.g. more caffeine, salicyl -> less calculus (acidic environ?)
+tobacco -> sinusitis -->
+
+<!-- compounds present and absent with potential sources-->
+
+<!-- nicotine and cotinine: tobacco, obviously...-->
+Nicotine and cotinine were strongly positively correlated, both in concentration
+and presence/absence in individuals (@tbl-pearson and @fig-polycorr).
+The detection of nicotine and cotinine is not surprising, as pipe-smoking in
+the Beemsterpolder is well-documented in the literature
+[@aten400JaarBeemster2012; @boumanBegravenis2017], and visible on the skeletal
+remains [@lemmersMiddenbeemster2013].
+There is also documented medicinal use of nicotine in the Beemsterpolder,
+where a tobacco
+smoke enema was used for headaches, respiratory problems, colds, and drowziness,
+among others, from around 1780 to 1830 [@aten400JaarBeemster2012].
+<!-- Scientific findings as extension of previous work -->
+The detection of nicotine in dental calculus has previously been presented by
+Eerkens and colleagues [-@eerkensDentalCalculus2018] in two individuals from
+pre-contact California. They also targeted caffeine, cotinine, and theophylline
+in their samples, but were unable to detect any of them. It remains to be seen
+whether this is due to differences in methods used, or due to our samples being
+more recent.
+Other alkaloids have been detected in archaeological samples, though these are more
+often associated with other materials, including pipes
+[@raffertyCurrentResearch2012] and ceramics [@smithDetectionOpium2018].
+Direct analysis on human remains
+has also included hair [@ogaldeIdentificationPsychoactive2009; @echeverriaNicotineHair2013].
+
+<!-- theophylline and caffeine: coffee and tea? -->
+Theophylline and caffeine concentrations were positively correlated,
+suggesting that they may have originated from the same source.
+Caffeine is present in coffee, tea, and cocoa beans, with concentrations slightly higher
+in coffee [@stavricVariabilityCaffeine1988; @chinCaffeineContent2008; @bispoSimultaneousDetermination2002].
+Theophylline is present in both coffee beans and tea leaves, but in negligible
+quantities [@stavricVariabilityCaffeine1988]. It is also metabolised from
+caffeine in the liver, and given the low quantity relative to caffeine, it likely
+originated from either tea or coffee, which contain higher concentrations of
+the compounds [@bispoSimultaneousDetermination2002; @srdjenovicSimultaneousHPLC2008].
+Caffeine and theophylline are
+structurally very similar, and we expect they would experience similar rates of
+degradation, allowing us to make interpretations on the ratio between the compounds.
+Tea consumption had become widespread in the Netherlands by 1820, reaching all aspects of
+the population (some argue that this happened already by early 18th century)
+[@nierstraszTeaTrade2015, p.91].
+Historically, we also know that both tea and coffee were consumed in the Beemsterpolder
+during the 19th century. 'Theegasten' (teatime) was a special
+occasion occurring from 15.00-20.00 hours, where tea was served along with the evening
+bread [@schuijtemakerTeTheegasten2011]. Many households also owned at least one coffee pot and tea pot [@boumanBegravenis2017].
+Both the presence of theophylline and caffeine could also be explained by chocolate,
+although given the large quantities of caffeine compared to theophylline, it is more
+likely that the source is tea and/or coffee
+[@bispoSimultaneousDetermination2002; @srdjenovicSimultaneousHPLC2008].
+Distinguishing between tea, coffee, and chocolate may be possible by also including
+theobromine and comparing ratios of the compounds, as theobromine is present in
+higher quantities in chocolate compared to caffeine and theophylline
+[@stavricVariabilityCaffeine1988; @bispoSimultaneousDetermination2002; @alanonAssessmentFlavanol2016].
+Although there is some indication that theobromine does not preserve well
+[@velskoDentalCalculus2017], and frequent consumption of all three
+items would be difficult to parse.
+
+<!-- salicylic acid: diet, medicine, or environmental??? -->
+The ubiquitous presence of salicylic acid poses a different problem. It has
+been shown that salicilyc acid is a very mobile organic acid and the ubuquitous
+presence may be due to environmental contamination
+[@badriRegulationFunction2009; @velskoDentalCalculus2017].
+The bark of a willow tree, *Salix alba*, has long been known for its
+pain-relieving properties [@bruinsmaBijdragenTot1872, p. 119],
+and is also present in many plant-based foods
+[@duthieNaturalSalicylates2011; @malakarNaturallyOccurring2017]. This includes
+potatoes, which were a mainstay in the Beemsterpolder diet [@aten400JaarBeemster2012].
+It will be necessary to explore the extent to which salicylic acid can leech
+into the dental calculus from the soil, and what the rate of degradation is for
+salicylic acid when trapped in dental calculus.
+
+<!-- cannabinoids: medicinal? wait, where did they go..? -->
+Cannabinoids---specifically THC, THCA-A, THCVA, CBD, CBN---were found in the
+first batch, but none were replicated in the second batch. Medicinal use of
+cannabinoids has been well-established in Europe since Medieval-times, and it
+was also grown in the Netherlands [@bruinsmaBijdragenTot1872].
+Administration was most common in the form of concoctions containing various portions
+of the cannabis plant for ingestion; not until the late 19th century did it become
+recommended to smoke it for more immediate effects [@clarkeCannabisEvolution2013].
+John Parkinson described a Dutch medicinal use of hemp. An emulsion was prepared
+from the seeds of the plants to treat pain and various stomach ailments. Another
+preparation involving the roots of the plants was used for inflammation, gout, and joint
+pains [@clarkeCannabisEvolution2013].
+The ability to detect cannabinoids in calculus may be limited by a reduced ability
+to diffuse from serum to salivary glands due to an affinity for protein-binding,
+[@sorensenEffectAntioxidants2018; @sorensenDrugsCalculus2021],
+meaning detection would rely on oral consumption of the cannabinoids. Even then,
+the overall instability of some cannabinoids could also affect detection
+[@sorensenEffectAntioxidants2018; @lindholstLongTerm2010].
+
+<!-- opioids: medicinal. Damn... that would've been cool-->
+Despite many of the individuals living during the height of the opium era in the
+Netherlands, none of the targeted opioids
+(morphine, codeine, thebaine, papaverine, norcodeine, noscapine)
+were detected. 
+Sylvius de la Boe (1614–1672), a German-born physician who studied anatomy at
+Leiden University, the Netherlands, relied heavily on opium [@machtHistoryOpium1915].
+The absence of opioids could be a result of the people ascribing more to the
+"traditional" rather than "scientific" medicine, although laudanum and
+another opium containing concoction was part of the "traditional" medicine in
+the Netherlands [@leuwProhibitionLegalizationDutch1994], including Middenbeemster
+[@aten400JaarBeemster2012]. It was also generally
+considered a drug of the upper class [@scheltemaOpiumTrade1907], and may be
+more common in an urban center.
+The absence could also be attributed to postmortem degradation.
+It has been shown that, while abundant in opium, morphine
+degrades rapidly. The more stable opioids such as thebaine and papaverine
+[@chovanecOpiumMasses2012] were also absent, however.
+<!--Similar to cannabinoids, many opioids are preferentially bound to (plasma) proteins
+[@sorensenDrugsCalculus2021].-->
+
+We explored the relationship between detected compounds and various skeletal
+indicators, such as pathological and dental lesions, preservation, and pipe notches.
+We found no evidence to suggest that preservation of the skeleton influences
+the recovery of compounds from the dental calculus. This could be due to
+the good overall preservation of both teeth and dental calculus, which often
+preserves better than the rest of the skeleton.
+We found no correlation between the number of pipe notches
+and the concentration of nicotine and cotinine, suggesting that our ability
+to detect tobacco consumption in dental calculus does not necessarily rely
+targeting frequent smokers; here, we consider individuals with multiple pipe notches
+as likely to have been heavy smokers.
+There does seem to be a positive correlation between the weight of the calculus
+sample and recovered quantities of the compounds, so weight of the sample may affect
+the ability to detect compounds; although, we were able to detect
+compounds in samples as small as 2 mg [@fig-quant-weight-1 and @fig-quant-weight-2].
+
+[[ Correlation between caffeine, nicotine, and sinusitis - Maia ]]
+
+Authentication
+
+<!-- authentication -->
+The list of targeted compounds included both naturally occurring compounds known
+to have been used in the past, as well as synthetic modern drugs did not exist
+at the time (e.g. Fentanyl, MDMA, Amphetamine). These were part of the toxicology
+screening for the original method [@sorensenDrugsCalculus2021], originally
+developed on cadavers. In our study they serve as an authentication step, as their
+presence in archaeological samples could only be the result of contamination.
+<!-- the importance of replication - brief discussion of cocaine -->
+The only modern compound (at least in a European context) detected in the sample
+was cocaine, which was detected in the first batch of sampels. The population
+analysed is from the early-mid 18th century, and cocaine was isolated in 1860 by
+Albert Niemann, and entered popular medical
+practice in 1884. Coca arrived in Europe as early as 1771, but as botanical
+specimens rather than for consumption, and there were also issues importing enough
+viable specimens of coca for cocaine extraction
+[@mortimerHistoryCoca1901 p. 179; @abucaCocaTrade2019, p.108].
+We considered it possible that it would be present in a sample with
+most individuals originating from the early- to mid-19th century. If corroborated,
+this would have been the first case of coca-consumption in Europe. Given that cocaine
+had yet to be isolated, the only way it could have gotten into the calculus was
+through consumption of the coca leaf. In our replication batch, we included all
+of the individuals who had been cocaine-positive in the first batch. We were
+unable to replicate any of the cocaine results, and we were unable to detect the
+principal metabolite, benzoylecgonine, in either batch; although, the original
+study only detected trace amounts of benzoylecgonine, and only in some of the
+individuals that were cocaine-positive. We hope this will serve as
+a reminder of the importance of replication. We suspect that the original detection
+of cocaine was a result lab contamination during the UHPLC-MS/MS analysis.
+
+Accuracy
+
+We used the presence of a pipe notch and concurrent detection of nicotine
+and/or cotinine was as a crude estimate of the accuracy of the method. Nicotine
+has been widely studied in the archaeological record due to its apparent stability
+and ability to survive over long periods of time
+[@eerkensDentalCalculus2018; @raffertyCurrentResearch2012; @tushinghamHuntergathererTobacco2013].
+The accuracy was found to be around
+`r scales::percent(mean(replicated_accuracy$correct, na.rm = T), accuracy = 0.1)`.
+We acknowledge that this is
+a very rough estimate, as the presence of a pipe notch is likely not a perfect
+indicator of whether or not someone consumed tobacco, and it may not be
+representative of other compounds with different rates of degradation.
+
+<!-- Findings' scientific implications -->
+
+<!-- secondary findings-->
+The choice of tooth for sampling may impact the detection of certain compounds,
+as the incorporation in dental calculus may depend on the mode of consumption.
+Tobacco smokers may have more
+nicotine present in calculus on incisors, whereas tobacco chewers may have more
+on molars [@eerkensDentalCalculus2018]. This has yet to be systematically
+tested in archaeological dental calculus. Direct incorporation by ingesting
+items, food or otherwise, containing the compounds
+is not the only potential pathway to incorporation in the dental calculus. 
+The presence of cotinine, the primary
+metabolite of nicotine, suggests that saliva is also a source of deposition, and
+that deposition of alkaloids in dental calculus can occur both on the way into the body,
+i.e. during consumption, and on the way out, i.e. disposal of waste products via
+saliva secretion into the mouth. Especially mucin-rich saliva from the sublingual
+and submandibular glands preferentially binds toxins [@doddsHealthBenefits2005],
+and since these glands are located closest to the lower incisors, they may be the
+most effective target for these studies. Due to homogenisation of samples in our
+study, we were unable to test this effect.
+
+
+<!-- How this engineering will facilitate future research -->
+<!-- both calculus and teeth preserve well-->
+
+<!-- Forward-looking statements about the field as a whole -->
+
+<!-- a summary/importance of the engineering aspect of the work -->
+
+<!-- How it facilitates scientific research -->
+
+<!-- limitations of the platform show which questions would be unanswered -->
+Limitations
+
+Since we targeted individuals with moderate-to-large calculus deposits,
+it is likely a biased sample. The presence of calculus may increase risk of premature death
+[@yaussyCalculusSurvivorship2019], and periodontal disease (which may or may not
+be associated with dental calculus build-up) is a risk-factor for
+respiratory diseases, if periodontal and respiratory pathogens
+enter the blood stream
+[@azarpazhoohSystematicReview2006; @scannapiecoRoleOral1999; @scannapiecoPotentialAssociations2001].
+In our sample, the percentage of CMS
+(`r scales::percent(mean(explore_select$CMS, na.rm = T), accuracy = 0.1)`)
+is lower than in another (more representative) male sample (44.1%)
+[@casnaUrbanizationRespiratory2021], and the caries percentage is similarly lower
+in our sample (`r scales::percent(caries_ratio_site$ratio, accuracy = 0.1)`) than
+a more representative sample (22.9%) [@lemmersMiddenbeemster2013].
+The bias may also affect the detection of compounds, as caffeinated drinks are often
+acidic, and may cause a lower calculus formation<!-- citation?-->.
+We only found a weak negative correlation (`r signif(corr_tib[15,2], 3)`)
+between caffeine concentration and dental calculus index, but since we targeted individuals with
+calculus, this may inadvertently have been controlled for during sample collection.
+
+Quantitation of the detected compounds may have limited value in archaeological
+samples, given the effects of taphonomy added on top of individual variability
+and relative stochasticity of dental calculus formation, and the metabolic
+degradation of compounds during life [@sorensenDrugsCalculus2021; @velskoAncientDental2022a]. <!-- the results of comparisons with concentration
+had limited outcomes, and the correlations between concentration and other variables
+were similar to the correlations with presence/absence, suggesting that the actual
+concentration was somewhat random.-->
+
+Perhaps the main limitation, which is also true for many other analyses on
+archaeological materials, is that detecting the absence of a compound is not possible.
+The absence of a compound is
+not evidence of its absence, which complicates the interpretation of our results.
+We have attempted to minimise errors occurring due to this limitation by including
+a relatively large sample of individuals. Although given the relatively low
+detection rate seen in tobacco, this remains a major limitation, and will likely
+been compounded by increasing antiquity of the samples.
+The replication of samples increases the evidence of absence if the compound
+was absent in both batches.
+
+<!-- How it will facilitate the specific topic of research (e.g. archaeology) -->
+
+While a major limitation is the uncertainty surrounding whether or not a compound
+is actually absent, the power of the method is in detecting food and other items
+that are consumed in a manner that does not allow macroscopic detection. Taking
+tobacco consumption as an example; while pipe
+notches are a useful way to identify tobacco consumption, pipe smoking was not the
+only mode of tobacco consumption, which includes chewing, drinking, cigars, snuff,
+[@goodmanTobaccoHistory1994, p.67]. Pipe-smoking
+was mostly common in males [@lemmersMiddenbeemster2013; @eerkensDentalCalculus2018].
+Our method does not, at least to our knowledge, discriminate between modes of
+consumption,
+and may be more suitable for exploring tobacco consumption in the entire population,
+not just males. In our sample, we detected nicotine and cotinine (replicated)
+in an old adult, probable female individual. Because the individual was an old
+adult, it is unlikely that the compounds entered the dental calculus through
+pipe-smoking, as there would be pipe notches. More likely that the tobacco entered
+through alternative consumption or secondhand smoke.
+
+Future studies should explore the effect of tooth position on the detection of
+compounds.
+Also on the properties increasing incorporation potential of different compounds,
+and which pathways facilitate maximum incorporation (direct or indirect pathways?),
+which likely differs between alkaloids. How is the preservation once trapped
+inside the calculus, for example using artificial ageing on real or artificial
+dental calculus?
+In this study, we only targeted drugs that were included in the forensic toxicological
+screenings, and therefore only covered a limited number of the potential compounds
+that could be of interest for exploring past diets and medicinal treatments.
+
+<!--final remarks-->
+
+This preliminary study outlines the benefits of using calculus to target a
+variety of compounds that could have been consumed as medicine or diet. 
+This method allows us to directly address specific individuals, which can be
+especially useful in individuals that are not always well-documented in historic
+documentation, such as lower status, children and women.
+We also
+show that there are many limitations that will need to be addressed going forward
+with this type of analysis, and stress the need for more systematic research on
+the consumption of alkaloid-containing items and their subsequent concentration
+and preservation in dental calculus,
+in addition to how mode of consumption may affect concentrations on different parts
+of the dentition. <!-- also individual variation -->
+Another limitation of dental calculus as a medium is the variability its formation
+and the many factors that can influence incorporation and retention of molecules
+and particles; however, in the absence
+of hair and serum (quite uncommon in archaeology), dental calculus represents
+an impressive reservoir of information regarding the consumption of various
+alkaloids, whether dietary, medicinal, recreational, or otherwise.
+

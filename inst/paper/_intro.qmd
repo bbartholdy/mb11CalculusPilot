@@ -1,0 +1,51 @@
+<!-- intro to calculus and residues -->
+Dental calculus has proven to be excellent source of a wide variety of information
+about our past.
+
+the increased availability of methods such as aDNA, paleoproteomics, and
+chromatography, has expanded our ability to identify specific pathogens, dietary,
+and possible medicinal compounds<!--cite-->.
+
+<!--how are compounds incorporated in dental calculus-->
+Increased interest in using oral fluid<!--more accurate terminology than saliva?--> as a means of detecting alkaloids in living
+individuals, due to the non-invasive nature of the testing compared to blood
+and urine sampling<!--citations-->.
+
+Alkaloids enter the dental calculus via two routes: (1) direct
+incorporation through oral consumption of alkaloid-containing plants, whether
+deliberate or accidental;
+and (2) passive diffusion through the
+saliva as toxins are transferred from serum to saliva [@coneInterpretationOral2007],
+and then into the oral cavity through the salivary glands. The relation to serum
+is why there is often a close relation between oral fluid and blood concentrations
+of drugs [@coneInterpretationOral2007; @sorensenDrugsCalculus2021]
+The second route allows the
+detection of compounds that not only are consumed orally, but also any other pathway.
+We also expect to detect metabolites through the second pathway.
+
+Many of the components involved in the formation and growth of dental calculus
+originate from saliva. Therefore the transfer of salts and other
+compounds between saliva and oral biofilms on the tooth surface is likely to also
+allow various alkaloids of dietary and medicinal origin to become entrapped in
+dental plaque, eventually mineralising and becoming dental calculus.
+
+Previous studies have been conducted using various chromatographic methods on
+archaeological dental calculus, employing both targeted
+[@eerkensDentalCalculus2018] and untargeted approaches
+[@buckleyDentalCalculus2014; @gismondiMultidisciplinaryApproach2020].
+
+<!--brief description of method validation-->
+In the method validation study, all compounds detected in the blood were also
+detected in the dental calculus,
+with additional compounds present in dental calculus that were not present
+in blood, suggesting that dental calculus represents a comprehensive history of
+consumption over a long time <!-- rephrase-->[@sorensenDrugsCalculus2021].
+
+<!--summary of results-->
+We were able to detect both parent compounds, such as caffeine and nicotine, as
+well as their metabolites theophylline and cotinine. These indicate the consumption
+of tea and coffee and smoking of tobacco, which is also confirmed by historic
+documentation and identification of pipe notches in the dentition.
+
+
+

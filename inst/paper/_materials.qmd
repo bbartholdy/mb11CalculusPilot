@@ -1,0 +1,37 @@
+<!-- Demographics and description of MB11 sample, selection criteria. -->
+The sample consists of `r nrow(demography)` individuals from Middenbeemster,
+a 19th century rural Dutch site. 
+The village of Middenbeemster and the surrounding Beemsterpolder was established
+in the beginning of the 17th century, when the Beemster lake was drained to
+create more farm land, mainly for the cultivation of cole seeds (de Vries 1978).
+In 1615, a decision was made to dedicate a church to Hendrick de Keyser, and
+construction started in 1618 (Hakvoort 2013). The excavated cemetery is associated
+with the Keyserkerk church, where the inhabitants of the Middenbeemster village
+and the surrounding Beemsterpolder were buried between AD 1615 and 1866
+[@lemmersMiddenbeemster2013]. Archival documents are available for those buried
+between AD 1829 and 1866, when the majority of individuals were interred
+[@palmerActivityReconstruction2016]. The main occupation of the inhabitants
+was dairy farming, consisting largely of manual labour prior to the industrial
+revolution [@aten400JaarBeemster2012; @palmerActivityReconstruction2016].
+
+
+To reduce the number of factors to account for
+in the analysis, we preferentially selected males from the middle adult age category
+(35-49). The sample consists of `r nrow(filter(demography, sex == "m"))` males,
+`r nrow(filter(demography, sex == "pm"))` probable males,
+`r nrow(filter(demography, sex == "pf"))` probable female, and
+`r nrow(filter(demography, sex == "f"))` female.
+We selected males due to a higher
+occurrence of dental calculus deposits than females. Dental calculus was
+preferentially selected from incisors.
+
+```{r}
+# create tables for demographics if there are tables to spare in the article
+demography %>%
+  count(sex) %>%
+  knitr::kable()
+
+demography %>%
+  count(age) %>% 
+  knitr::kable()
+```

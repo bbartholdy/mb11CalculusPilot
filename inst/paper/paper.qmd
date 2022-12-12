@@ -1,0 +1,115 @@
+---
+title: "Title Goes Here"
+author:
+  - Bjørn Peare Bartholdy:
+      correspondence: "yes"
+      email: seriousname@email.org
+      orcid: 0000-0003-1689-0557
+      institute:
+        - fosg
+  - Jørgen B. Hasselstrøm
+  - Lambert K. Sørensen
+  - Maia Casna
+  - Historisch Genootschap Beemster
+  - Amanda G. Henry
+institute:
+  - fosg:
+      name: ZZ9 Plural Z Alpha
+      address: 23 Science Street, Eureka, Mississippi, USA
+  - fop: Federation of Planets
+title-block-published: "Last updated"  
+#date: now
+#date-format: long
+format: 
+  html: 
+    theme: cosmo
+execute: 
+  freeze: true
+knitr: 
+  opts_chunk:
+    echo: false
+    warning: false
+    message: false
+    comment: "#>"
+    fig-path: "../figures/"
+    fig-dpi: 600
+filters:
+  - ../templates/scholarly-metadata.lua
+  - ../templates/author-info-blocks.lua
+  #- ../templates/pagebreak.lua
+bibliography: references.bib
+csl: "apa.csl" # Insert path for the bib-style
+abstract: |
+  This is an abstract.
+keywords: |
+  stuff; and; things
+highlights: |
+  These are the highlights. 
+---
+
+```{r}
+#| label: setup
+#| include: false
+#| cache: false
+
+library(here)
+library(readr)
+
+# upload data
+metadata <- read_tsv(here("inst/data/raw_data/metadata.tsv"))
+demography <- read_csv(here("inst/data/raw_data/demography.csv"))
+lloq <- read_tsv(here("inst/data/raw_data/lloq.tsv"))
+uhplc_data_comb <- read_csv(here("inst/data/derived_data/uhplc-data_combined.csv"))
+#uhplc_calculus <- read_csv(here("inst/data/derived_data/uhplc-calculus_cleaned.csv"))
+dental_inv <- read_csv(here("inst/data/raw_data/dental-inv.csv"))
+caries <- read_csv(here("inst/data/raw_data/caries.csv"))
+periodont <- read_csv(here("inst/data/raw_data/periodontitis.csv"))
+periap <- read_csv(here("inst/data/raw_data/periapical.csv"))
+calculus <- read_csv(here("inst/data/raw_data/calculus.csv"))
+calculus_full <- read_csv(here("inst/data/raw_data/calculus_full.csv"))
+sinusitis_clean <- read_csv(here("inst/data/derived_data/sinusitis_cleaned.csv"))
+path_cond_clean <- read_csv(here("inst/data/derived_data/path-conditions_cleaned.csv"))
+
+source(here("inst/scripts/setup-qmd.R"))
+#source(here("inst/supplementary-materials/supp-mat.qmd"), local = knitr::knit_global())
+# set viridis as default pallette
+
+options(ggplot.discrete.colour = function() scale_fill_viridis_d())
+```
+ 
+Keywords: {{< meta keywords >}}
+
+<!-- Highlights: {{< meta highlights >}} -->
+
+<!-- The actual document text starts here: -->
+
+## Introduction
+
+{{< include _intro.qmd >}}
+
+## Materials
+
+{{< include _materials.qmd >}}
+
+## Methods
+
+{{< include _methods.qmd >}}
+
+## Results
+
+{{< include _results.qmd >}}
+
+## Discussion
+
+{{< include _discussion.qmd >}}
+
+## Conclusion
+
+## Acknowledgements {-}
+
+Cats and dogs
+
+## References {-}
+
+::: {#refs}
+:::

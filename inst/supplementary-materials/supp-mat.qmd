@@ -1,0 +1,863 @@
+---
+title: "Supplementary Materials"
+knitr: 
+  opts_chunk: 
+    warning: false
+    message: false
+format: 
+  html:
+    toc: true
+---
+
+```{r}
+#| label: setup
+#| include: false
+library(here)
+library(readr)
+devtools::load_all()
+
+# upload data
+metadata <- read_tsv(here("inst/data/raw_data/metadata.tsv"))
+demography <- read_csv(here("inst/data/raw_data/demography.csv"))
+lloq <- read_tsv(here("inst/data/raw_data/lloq.tsv"))
+uhplc_data_comb <- read_csv(here("inst/data/derived_data/uhplc-data_combined.csv"))
+#uhplc_calculus <- read_csv(here("inst/data/derived_data/uhplc-calculus_cleaned.csv"))
+dental_inv <- read_csv(here("inst/data/raw_data/dental-inv.csv"))
+caries <- read_csv(here("inst/data/raw_data/caries.csv"))
+periodont <- read_csv(here("inst/data/raw_data/periodontitis.csv"))
+periap <- read_csv(here("inst/data/raw_data/periapical.csv"))
+calculus <- read_csv(here("inst/data/raw_data/calculus.csv"))
+calculus_full <- read_csv(here("inst/data/raw_data/calculus_full.csv"))
+sinusitis_clean <- read_csv(here("inst/data/derived_data/sinusitis_cleaned.csv"))
+path_cond_clean <- read_csv(here("inst/data/derived_data/path-conditions_cleaned.csv"))
+
+source(here("inst/scripts/setup-qmd.R"), local = knitr::knit_global())
+```
+
+## Session information
+
+This report was generated on `r Sys.time()` using the following computational environment and dependencies:
+
+```{r}
+print(sessionInfo(), locale = F)
+```
+
+    
+## Data dictionary
+
+### metadata
+
+| variable | description |
+|---|---|
+| id | unique identifier for the individual |
+| sample | sample number for the UHPLC-MS/MS analysis |
+
+
+### dental-inv
+
+Dental inventory
+
+| variable | description |
+|---|---|
+| feat | Identifier: Feature number of individual |
+| find | Identifier: Find number of individual |
+| t11..t48 | Tooth number (FDI system) and status |
+
+Dental inventory key:
+
+- p = present
+- m = missing (for unknown reason)
+- aml = ante-mortem loss
+- dna = removed for DNA sampling
+
+### caries
+
+Caries lesions location
+
+| variable | description |
+|---|---|
+| feat | Identifier: Feature number of individual |
+| find | Identifier: Find number of individual |
+| t11..t48 | Tooth number (FDI system) and location of caries |
+
+Caries location key:
+
+- none = no caries present
+- mes = mesial
+- dis = distal
+- lin = lingual (and labial)
+- buc = buccal
+- occ = occlusal
+- crown = crown (caries-related loss of much of/entire tooth crown)
+- root = root
+- blank = tooth not present
+
+### periodontitis
+
+| variable | description |
+|---|---|
+| feat | Identifier: Feature number of individual |
+| find | Identifier: Find number of individual |
+| t11..t48 | Tooth number (FDI system) and periodontitis score (0-3) |
+
+Periodontitis score:
+
+- 0 = none
+- 1 = slight
+- 2 = moderate
+- 3 = severe 
+
+- blank = tooth not present
+
+### periapical
+
+| variable | description |
+|---|---|
+| feat | Identifier: Feature number of individual |
+| find | Identifier: Find number of individual |
+| t11..t48 | Tooth number (FDI system) and periapical lesion |
+
+- none = no lesion
+- bucc = buccal
+- lin = lingual
+- perf = perforated alveolar bone
+- blank = not scoreable
+
+### calculus
+
+| variable | description |
+|---|---|
+| feat | Identifier: Feature number of individual |
+| find | Identifier: Find number of individual |
+| t11..t48 | Tooth number (FDI system) and deposit size (0-3) |
+
+- 0 = no calculus
+- 1 = slight calculus
+- 2 = moderate calculus
+- 3 = heavy calculus
+
+Scored according to Standards.
+
+### path-conditions
+
+Pathological conditions
+
+- OA = osteoarthritis
+- IVDD = intervertebral disc disease
+- TB = tuberculosis
+- DISH = diffuse idiopathic skeletal hyperostosis
+- VOP = vertebral osteophytosis
+- SN = schmorl's nodes
+- DDD = degenerative disc disease
+- PNBF = periosteal new bone formation
+- OD = osteochondritis dissecans
+- CF = cribra femora
+- CO = cribra orbitalia
+
+
+## Sample demographics
+
+```{r}
+#| label: male-sample
+males <- demography %>%
+  filter(sex == "m" | sex == "pm")
+```
+
+
+The sample consists of `r nrow(demography)` individuals, most of which are
+middle adult male individuals (@fig-age-distribution).
+
+```{r}
+#| label: fig-age-distribution
+demography %>%
+  ggplot(aes(x = age, fill = sex)) +
+    geom_bar() +
+    theme_minimal()
+```
+
+## Missing data
+
+Missing data per dataset
+
+```{r}
+#| label: fig-missing-hex
+caries %>%
+  mutate(across(!id, ~ is.na(.x))) %>%
+  select(!id) %>%
+  colSums()
+
+caries %>%
+  mutate(across(!id, ~ is.na(.x))) %>% 
+  pivot_longer(-id) %>% 
+  ggplot(aes(x = name, y = id, fill = value)) +
+    geom_tile()
+
+```
+
+Missing data across all dental datasets
+
+```{r}
+#| label: fig-missing-dental
+dental_long %>%
+  mutate(across(c(caries, periodont, periap, calculus), is.na)) %>%
+  select(c(caries, periodont, periap, calculus, id, tooth)) %>%
+  #group_by(id, tooth) %>% 
+  rowwise() %>% 
+  mutate(missing = sum(caries, periodont, periap, calculus)) %>% 
+  ggplot(aes(x = tooth, y = id, fill = missing)) +
+    geom_tile()
+```
+
+
+
+## UHPLC analysis
+
+```{r}
+#| label: tbl-lloq
+#| tbl-cap: "Target compounds and lower limits of quantitation."
+lloq %>%
+  arrange(compound)
+```
+
+```{r}
+#| label: tbl-uhplc-batch-1
+#| tbl-cap: "Results from the UHPLC analysis first batch. Quantity of compound in the dissolved calculus, represented in ng."
+uhplc_calculus_long %>%
+  filter(batch == "batch1") %>%
+  #select(sample, contains("batch1")) %>%
+  #rename_with(~ str_remove(.x, "_calc_batch1"), .cols = contains("_calc_batch1"))
+  pivot_wider(names_from = "compound", values_from = "quant") %>%
+  select(!c(extraction, batch))
+```
+
+```{r}
+#| label: tbl-uhplc-batch-2
+#| tbl-cap: "Results from the UHPLC analysis second batch. Quantity of compound in calculus after third wash, represented in ng."
+uhplc_calculus_long %>%
+  filter(batch == "batch2") %>%
+  #select(sample, contains("batch1")) %>%
+  #rename_with(~ str_remove(.x, "_calc_batch1"), .cols = contains("_calc_batch1"))
+  pivot_wider(names_from = "compound", values_from = "quant") %>%
+  select(!c(extraction, batch))
+```
+
+### Authentication
+
+No modern synthetic drugs were detected in any of the samples.
+
+Samples were replicated to verify results from the initial analysis. Of the
+`r nrow(demography)` samples initially analysed,
+`r nrow(filter(metadata, replicated == TRUE))` samples were replicated.
+
+Only caffeine, theophylline, nicotine, cotinine, and salicylic acid were found
+in the replicated samples.
+
+```{r}
+#| label: tbl-uhplc-replicated
+uhplc_calculus_replicated %>%
+  filter(sum(presence) != 0) %>% # remove compounds absent in all individuals in sample
+  pivot_wider(names_from = "compound", values_from = "presence")
+```
+
+<!-- line plot with concentration across washes and to the final calculus sample -->
+
+Most plots show a large increase in extracted mass of a compound between the
+calculus wash extracts (wash 1-3) and the dissolved calculus (calc). Most samples
+containing theophylline and caffeine had the largest quantity of the compound
+extracted from the first wash, then decreasing in washes 2 and 3. There is
+an increase between wash 3 and the dissolved calculus in all samples.
+The patterns are consistent across batches 1 and 2. The pattern we expect to see
+in a sample is a reduction in the quantity from wash 1 to wash 3, and then another
+spike in the final extraction from the dissolved calculus, which means the compound
+is actually 'ancient' or authentic. The compounds that are completely absent in
+all three washes and present in high quantities in the final extraction may also
+be suggestive of lab contamination.
+This has not been thoroughly tested and is
+only based on what we expect to see. Therefore, the interpretation of these graphs
+is itself up for interpretation.
+
+```{r auth-plot-batch1}
+#| label: fig-auth-plot-batch1
+
+uhplc_data_long %>%
+  filter(
+    batch == "batch1",
+    ) %>% 
+  semi_join(quant_filter, by = c("sample", "compound")) %>% 
+  mutate(
+    extraction = factor(extraction, levels = c("wash1", "wash2", "wash3", "calc")),
+    sample = as.factor(sample)
+    ) %>% 
+  ggplot(aes(x = extraction, y = quant, group = sample, colour = sample)) +
+    geom_line() +
+    geom_point(size = 0.2) +
+    facet_wrap(~ compound, scales = "free_y") +
+    theme_bw()
+```
+
+```{r}
+#| label: fig-auth-plot-batch2
+uhplc_data_long %>%
+  filter(
+    batch == "batch2",
+    !compound %in% c("cbd", "cbn", "cocaine", "thc", "thca-a", "thcva") # remove compounds not detected in batch 2
+    ) %>% 
+  semi_join(quant_filter, by = c("sample", "compound")) %>% # remove compounds not detected in each sample 
+  mutate(
+    extraction = factor(extraction, levels = c("wash1", "wash2", "wash3", "calc")),
+    sample = as.factor(sample)
+    ) %>% 
+  ggplot(aes(x = extraction, y = quant, group = sample, colour = sample)) +
+    geom_line() +
+    geom_point(size = 0.2) +
+    facet_wrap(~ compound, scales = "free_y") +
+    theme_bw()
+```
+
+### Quantity vs. sample weight
+
+There is no clear relationship between the sample weight and the amount of compound
+detected, except for salicylic acid, where the amount of extracted compound increases
+with increasing sample weight. In batch 2 there is also a slight positive trend
+for caffeine, nicotine, and cotinine.
+Nicotine and cotinine display the same relative relationship between samples. Where
+the nicotine quantity is high compared to other samples, the cotinine quantity
+will be similarly high (@fig-quant-weight-1 and @fig-quant-weight-1).
+
+```{r}
+#| label: fig-quant-weight-1
+#| #| fig-cap: "Quantity of a compound (ng) found in a sample plotted against the weight of the calculus sample. Results from batch 1."
+uhplc_data_comb %>%
+  
+  select(sample, contains("batch1")) %>% 
+  select(sample, batch1_weight, contains("calc")) %>% 
+  pivot_longer(
+    -c(sample, batch1_weight),
+    names_to = c("compound", "batch"),
+    names_pattern = "(.*)_(.*)",
+    values_to = c("conc")
+  ) %>% 
+  filter(conc > 0) %>% 
+  mutate(compound = str_remove(compound, "_calc")) %>%
+  ggplot(aes(x = batch1_weight, y = conc, col = as.factor(sample))) +
+    geom_point() +
+    facet_wrap(~ compound, scales = "free_y") +
+    theme_bw() +
+    theme(legend.position = "none") +
+    labs(x = "", y = "Quantity (ng)")
+```
+
+```{r}
+#| label: fig-quant-weight-2
+#| fig-cap: "Quantity of a compound (ng) found in a sample plotted against the weight of the calculus sample. Results from batch 2."
+uhplc_data_comb %>%
+  select(sample, contains("batch2")) %>% 
+  select(sample, batch2_weight, contains("calc")) %>% 
+  pivot_longer(
+    -c(sample, batch2_weight),
+    names_to = c("compound", "batch"),
+    names_pattern = "(.*)_(.*)",
+    values_to = c("conc")
+  ) %>% 
+  mutate(compound = str_remove(compound, "_calc")) %>%
+  #remove_missing() %>% 
+  filter(conc > 0) %>% 
+  ggplot(aes(x = batch2_weight, y = conc, col = as.factor(sample))) +
+    geom_point() +
+    facet_wrap(~ compound, scales = "free_y") +
+    theme_bw() +
+    labs(y = "Quantity (ng)", y = "", col = "Sample number")
+```
+
+
+### Distribution of compounds detected in the samples
+
+<!-- absolute counts in each batch -->
+
+```{r}
+#| label: fig-compounds-detect
+#| fig-cap: "Number of individuals in which each compound was detected between batch 1 and 2."
+
+# awkward wrangling required because the information on which individuals were included in replication was lost when combining batches 1 and 2
+#n_batch1 <- length(metadata$replicated)
+#n_batch2 <- sum(metadata$replicated) # sum boolean vector to get length of TRUE values
+uhplc_calculus_long %>%
+  #remove_missing() %>%
+  filter(quant > 0) %>% 
+  #mutate(detect = replace_na(conc, 0)) %>% 
+  #mutate(detect = if_else(detect > 0, 1, 0)) %>%
+  #group_by(compound, batch) %>% 
+  # summarise(
+  #   n_detect = sum(detect)
+  #           ) %>% 
+  # mutate(n = case_when(batch == 1 ~ n_batch1,
+  #                      batch == 2 ~ n_batch2)) %>% 
+  # mutate(prop = n_detect / n) %>% 
+  
+ggplot(aes(x = compound, fill = compound)) +
+    #geom_jitter(width = 0.2) +
+    #geom_boxplot() +
+    geom_bar() +
+    facet_wrap(~ batch) +
+    theme_bw() +
+    theme(
+      axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1),
+      legend.position = "none"
+      )
+```
+
+The replication showed that caffeine, theophylline, cotinine, nicotine, and
+salicylic acid could be consistently detected in the samples, although theophylline
+detection decreased between batches 1 and 2. CBD, CBN, cocaine, and THCA-A was not
+detected at all in the second batch.
+
+<!-- absolute counts in the replicated individuals -->
+
+```{r}
+#| label: fig-compounds-detect2
+#| fig-cap: "Number of individuals in which each compound was detected between batch 1 and 2. Only showing replicated individuals."
+
+uhplc_calculus_long %>%
+  filter(id %in% filter(metadata, replicated == T)$id,
+         quant > 0) %>%
+  #remove_missing() %>%
+  ggplot(aes(x = compound, fill = compound)) +
+    geom_bar() +
+    facet_wrap(~ batch) +
+    theme_bw() +
+    theme(
+      axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1),
+      legend.position = "none"
+      )
+```
+
+### Detection and preservation
+
+To see if preservation of the skeletal remains had any effect on the detection of
+compounds, absolute quantities of compounds were compared to the various levels of
+preservation.
+
+```{r}
+#| label: fig-detection-preservation
+uhplc_calculus_long %>%
+  filter(
+    !is.na(preservation),
+    !compound %in% c("cbd", "cbn", "cocaine", "thc", "thca-a", "thcva") # remove compounds not detected
+    ) %>% 
+  ggplot(aes(x = preservation, y = quant, fill = preservation)) +
+    geom_violin() +
+    geom_jitter(width = 0.2) +
+    #geom_boxplot(alpha = 0.6, width = 0.2) +
+    facet_wrap(~ compound, scales = "free_y") +
+    theme_bw()
+# 
+# uhplc_calculus_demography %>%
+#   filter(
+#     !is.na(preservation),
+#     !compound %in% c("cbd", "cbn", "cocaine", "thc", "thca-a", "thcva") # remove compounds not detected
+#     ) %>% 
+#   ggplot(aes(x = preservation, y = quant, fill = preservation)) +
+#     geom_violin() +
+#     geom_jitter(width = 0.2) +
+#     #geom_boxplot(alpha = 0.6, width = 0.2) +
+#     facet_wrap(~ compound, scales = "free_y") +
+#     theme_bw()
+```
+
+```{r}
+#| label: fig-detection-preservation2
+#uhplc_calculus_demography %>%
+uhplc_calculus_long %>% 
+  filter(!is.na(preservation)) %>% 
+  ggplot(aes(x = preservation, y = quant, fill = preservation)) +
+    geom_boxplot() +
+    facet_wrap(~ compound, scales = "free_y") +
+    theme_bw()
+```
+
+
+### Detection of tobacco
+
+Given that pipe notches are present in the majority of individuals, the presence
+of pipe notch(es) in an individual and concurrent detection of nicotine and/or
+cotinine is used as a rough indicator of the accuracy of the method.
+
+```{r}
+#| label: fig-corr-notches
+# correlation between nicotine and cotinine conc, and pipe notches
+uhplc_calculus_long %>%
+  ggplot(aes(x = pipe_notch, y = conc)) +
+    geom_point() +
+    facet_wrap(~ compound + batch, scales = "free_y")
+```
+
+
+```{r}
+tobacco <- uhplc_calculus_long %>%
+  filter(compound %in% c("nicotine", "cotinine")) %>% 
+  mutate(detection = if_else(is.na(conc), FALSE, TRUE))
+
+tobacco_comb <- tobacco %>% 
+  group_by(batch, sample, id, .add = TRUE) %>%
+  summarise(
+    detection = sum(detection), 
+    #sex, age, completeness, preservation, pipe_notch, 
+    .groups = "keep" # combine compounds: 0 = none detected; 1 = 1 detected; 2 = both detected
+  ) %>%
+  ungroup() %>%
+  left_join(select(demography, id, pipe_notch), by = "id") %>%
+  mutate(
+    pipe_notch = if_else(pipe_notch > 0, "Y", "N"),
+    correct = case_when(
+      detection > 0 & pipe_notch == "Y" ~ TRUE,
+      detection == 0 & pipe_notch == "N" ~ TRUE,
+      detection > 0 & pipe_notch == "N" ~ NA, # can't be sure if this is true or not
+      TRUE ~ FALSE
+      )
+    )
+
+nicotine <- tobacco %>%
+  filter(compound == "nicotine") %>% 
+  mutate(
+    pipe_notch = if_else(pipe_notch > 0, "Y", "N"),
+    correct = case_when(
+      detection > 0 & pipe_notch == "Y" ~ TRUE,
+      detection == 0 & pipe_notch == "N" ~ TRUE,
+      detection > 0 & pipe_notch == "N" ~ NA, # can't be sure if this is true or not
+      TRUE ~ FALSE
+    )
+  )
+
+cotinine <- tobacco %>%
+  filter(compound == "cotinine") %>% 
+  mutate(
+  correct = case_when(
+    detection > 0 & pipe_notch == "Y" ~ TRUE,
+    detection == 0 & pipe_notch == "N" ~ TRUE,
+    detection > 0 & pipe_notch == "N" ~ NA, # can't be sure if this is true or not
+    TRUE ~ FALSE
+    )
+  )
+
+# accuracy in replicated samples
+uhplc_accuracy <- uhplc_calculus_replicated %>%
+  left_join(select(demography, id, pipe_notch), by = "id") %>% 
+  filter(compound == "nicotine" | compound == "cotinine") %>%
+  group_by(id) %>% 
+  arrange(desc(presence)) %>%
+  slice(which(compound == "nicotine" || compound == "cotinine")) %>%
+  mutate(
+    pipe_notch = if_else(pipe_notch > 0, "Y", "N"),
+    correct = case_when(presence == 1 & pipe_notch == "Y" ~ TRUE,
+                             presence == 0 & pipe_notch == "N" ~ TRUE, # can we be sure if this is correct?
+                             presence == 1 & pipe_notch == "N" ~ NA, # can't be sure if this is true or not
+                             TRUE ~ FALSE))
+
+# ratio of nicotine to cotinine
+tobacco_ratio <- tobacco %>%
+  select(id, batch, compound, conc) %>% 
+  pivot_wider(names_from = compound, values_from = conc) %>% 
+  group_by(id, batch) %>% 
+  summarise(ratio = cotinine / nicotine) %>%
+  remove_missing() %>% 
+  left_join(select(demography, id, age, sex, preservation, pipe_notch)) %>% 
+  filter(batch == "batch2",
+         ratio != Inf) %>% 
+  mutate(
+    age = case_when(
+      age == "eya" ~ 0,
+      age == "lya" ~ 1,
+      age == "ma" ~ 2,
+      age == "old" ~ 3
+    ),
+    preservation = case_when(
+      preservation == "fair" ~ 0,
+      preservation == "good" ~ 1,
+      preservation == "excellent" ~ 2
+    )
+  )
+
+tobacco_ratio %>%
+  ggplot(aes(y = ratio, x = pipe_notch)) +
+    #geom_boxplot()
+    geom_point()
+  
+  #lm(ratio ~ age + sex + preservation + pipe_notch, tobacco_ratio)
+```
+
+No apparent correlation between the number of pipe notches
+and the concentration of nicotine or cotinine [@fig-corr-notches].
+
+Nicotine and cotinine detection successfully identified
+`r nrow(filter(tobacco_comb, batch == 1, pipe_notch == "Y", detection > 0))`
+smokers out of
+`r nrow(filter(tobacco_comb, batch == 1, pipe_notch == "Y"))`
+(`r scales::percent(nrow(filter(tobacco_comb, pipe_notch == "Y", batch == 1, detection > 0)) / nrow(filter(tobacco_comb, batch == 1, pipe_notch == "Y")), accuracy = 0.1)`)
+individuals with pipe notches in the first analysis.
+
+Nicotine detection successfully identified
+`r nrow(filter(nicotine, batch == 1, pipe_notch == "Y", detection > 0))`
+smokers out of
+`r nrow(filter(nicotine, batch == 1, pipe_notch == "Y"))`
+individuals with pipe notches
+(`r scales::percent(nrow(filter(nicotine, batch == 1, pipe_notch == "Y", detection > 0)) / nrow(filter(nicotine, batch == 1, pipe_notch == "Y")), accuracy = 0.1)`).
+
+Cotinine detection successfully identified
+`r nrow(filter(cotinine, batch == 1, pipe_notch == "Y", detection > 0))`
+smokers out of
+`r nrow(filter(cotinine, batch == 1, pipe_notch == "Y"))`
+individuals with pipe notches
+(`r scales::percent(nrow(filter(cotinine, batch == 1, pipe_notch == "Y", detection > 0)) / nrow(filter(cotinine, batch == 1, pipe_notch == "Y")), accuracy = 0.1)`).
+
+In the replicated samples only, tobacco detection was successful in
+`r nrow(filter(uhplc_accuracy, pipe_notch == "Y", presence > 0))`
+out of
+`r nrow(filter(uhplc_accuracy, pipe_notch == "Y"))`
+smokers
+(`r scales::percent(mean(filter(uhplc_accuracy, pipe_notch == "Y")$correct, na.rm = T))`).
+Including individuals with absence of a pipe notch and concurrent absence of
+compounds as a correct identification, gives an overall accuracy of
+`r scales::percent(mean(uhplc_accuracy$correct, na.rm = T), accuracy = 0.1)`.
+
+One individual---an old adult, probable female---was positive
+for both nicotine and cotinine, and had no signs of a pipe notch.
+
+## Dental analysis
+
+```{r}
+#| label: fig-dental-plots
+#| layout-ncol: 2
+#| fig-cap: 
+#|   - "Antemortem tooth loss in sample."
+#|   - "Periodontal scores in the sample."
+dental_long %>%
+  dental_plot(fill = status)
+
+dental_long %>%
+  filter(!is.na(periodont)) %>% 
+  dental_plot(fill = periodont)
+```
+
+### AMTL
+
+### Caries
+
+Caries were scored based on location in each individual. Multiple locations on
+a single tooth is possible. The size of caries was also
+recorded, but not used in further analysis. Large caries that cover multiple
+surfaces were recorded as 'crown'. Caries counts were extracted based on the
+number of locations recorded.
+
+| code | surface |
+|---|---|
+| mes | mesial surface |
+| dis | distal surface |
+| lin | lingual surface |
+| buc | buccal surface (including labial surface) |
+| occ | occlusal surface (including incisal surface) |
+| crown | caries covers 2+ surfaces |
+| none | No caries visible on surface |
+| NA | Not observable/tooth missing |
+
+```{r}
+surface <- c("mes", "dis", "occ", "buc", "lin", "root", "crown") # here occ = incisal
+
+# caries_count <- dental_long %>% 
+#   select(!c(periodont, periap, calculus)) %>% 
+#   #filter(status == "p") %>%
+#   separate_rows(caries, sep = ";") %>% # one lesion per row
+#   mutate(caries_count = if_else(
+#     caries == "none", 0L, 1L
+#     )
+#   ) %>%
+#   group_by(id, tooth) %>%
+#   summarise(
+#     caries_count = sum(caries_count, na.rm = F)
+#     ) %>%
+#   tooth_position()
+# 
+# site_wide_caries <- caries_count %>%
+#   caries_ratio(.caries = caries_count)
+```
+
+In the `r caries_ratio_site$n_teeth` that were examined, `r caries_ratio_site$count`
+teeth had caries
+(`r scales::percent(caries_ratio_site$ratio, accuracy = 0.1)`).
+This frequency has very little meaning, and was further broken down into tooth
+class and individuals.
+
+```{r}
+caries_count %>%
+  group_by(class) %>% 
+  caries_ratio(.caries = count)
+```
+
+As expected, the molars have a higher frequency of caries than the other teeth.
+
+```{r}
+caries_count %>% 
+  group_by(id, class) %>% 
+  caries_ratio(.caries = count)
+```
+
+```{r}
+caries_count %>%
+  caries_ratio(.caries = count, id, class)
+```
+
+```{r}
+caries_count %>%
+  caries_ratio(.caries = count, class, id) %>%
+  ggplot(aes(x = class, y = ratio)) +
+    geom_violin(aes(fill = class)) +
+    geom_boxplot(width = 0.1)
+```
+
+
+```{r}
+upper_order <- c(paste0("t", 18:11), paste0("t", 21:28))
+lower_order <- c(paste0("t", 48:41), paste0("t", 31:38))
+
+maxilla <- caries_count %>%
+  filter(region == "maxilla") %>% 
+  mutate(tooth = factor(tooth, levels = c(upper_order, lower_order))) %>% 
+  group_by(tooth) %>% 
+  summarise(
+    n_teeth = n(),
+    count = sum(count, na.rm = T),
+    rate = count / n_teeth
+    ) %>% 
+  ggplot(aes(x = tooth, y = rate)) +
+    geom_col(fill = "white") +
+    theme_dark() +
+    scale_y_reverse(limits = c(0.33,0), sec.axis = sec_axis(~.)) +
+    scale_x_discrete(position = "top") +
+    theme(
+      axis.title.x = element_blank(),
+      axis.ticks.x = element_blank(),
+      axis.line = element_line(colour = "red", size = 1),
+      axis.line.x.top = element_line(colour = "red", size = 4)
+      ) +
+  labs(y = "")
+
+mandible <- caries_count %>%
+  filter(region == "mandible") %>% 
+  mutate(tooth = factor(tooth, levels = c(upper_order, lower_order))) %>% 
+  group_by(tooth) %>% 
+  summarise(
+    n_teeth = n(),
+    count = sum(count, na.rm = T),
+    rate = count / n_teeth
+    ) %>% 
+  ggplot(aes(x = tooth, y = rate)) +
+    geom_col(fill = "white") +
+    scale_y_continuous(sec.axis = sec_axis(~.)) +
+    theme_dark() +
+    theme(axis.line = element_line(colour = "red", size = 1),
+          axis.line.y.right = element_line(colour = "red", size = 1),
+          axis.line.x.bottom = element_line(colour = "red", size = 6),
+          axis.ticks.x = element_blank()) +
+    labs(y = "Caries rate")
+    
+
+maxilla / mandible + plot_layout(guides = "collect")
+```
+
+
+### Periodontitis
+
+```{r}
+#| label: fig-periodont
+dental_long %>%
+  filter(!is.na(periodont)) %>% 
+  dental_plot(fill = periodont)
+```
+
+### Calculus
+
+```{r}
+calc_index <- calculus_full %>%
+  dental_longer(-id) %>% 
+    #   group_by(id, quadrant) %>%
+    # summarise(
+    #   n_surf = sum(!is.na(score)),
+    #   score_sum = sum(score, na.rm = T),
+    #   calc_index = score_sum / n_surf
+    # )
+
+  calculus_index()
+```
+
+Distribution of calculus indices within the sample.
+<!-- it is not calculating per surface (I think) -->
+
+```{r}
+#| label: fig-calculus-index
+calc_index %>%
+  ggplot(aes(x = quadrant, y = calc_index)) +
+    geom_violin(aes(fill = quadrant), alpha = 0.6) +
+    geom_boxplot(width = 0.1) +
+    theme_minimal() +
+    theme(panel.grid.major.x = element_blank())
+```
+
+```{r}
+calc_index %>%
+  left_join(uhplc_calculus_long, by = "id") %>%
+  filter(
+    batch == "batch1",
+    compound != "thc",
+    compound != "cbd",
+    compound != "thcva",
+    quadrant == "LA"
+    ) %>% 
+  ggplot(aes(x = as.factor(presence), y = calc_index)) +
+    geom_violin(aes(fill = as.factor(presence)), alpha = 0.6) +
+    geom_boxplot(width = 0.1) +
+    facet_wrap(~ compound)
+```
+
+No apparent influence of lower anterior calculus index on the presence/absence
+of a compound (or vice versa).
+
+
+## Pathological conditions
+
+
+
+## Statistical analysis
+
+### Point-biserial correlation
+
+Point-biserial (Pearson) correlation was conducted on compound concentrations,
+calculus index, caries ratio, and binary variables.
+This is done to see if any correlations exist prior to discretisation of continuous
+variables.
+
+```{r}
+#| label: fig-pearson-corr
+conc_cor %>%
+  as_tibble(rownames = "var") %>% 
+  mutate(across(!var, ~ if_else(.x == 1, NaN, .x))) %>%
+  column_to_rownames("var") %>% 
+ggcorrplot::ggcorrplot()
+```
+
+### Polychoric correlation
+
+The calculus index and caries ratio for each individual was converted to an
+ordinal variable by using quartiles, providing a score from 0--4.
+
+```{r caries-calculus-quartiles}
+caries_discrete
+calculus_discrete
+```
+
+```{r polycorr}
+polycorr$rho
+```
+
+```{r fig-polycorr}
+ggcorrplot::ggcorrplot(polycorr$rho, type = "lower", show.diag = F)
+```
+

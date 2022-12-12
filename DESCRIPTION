@@ -1,0 +1,22 @@
+Package: mb11CalculusPilot
+Title: What the Package Does (One Line, Title Case)
+Version: 0.0.0.9000
+Authors@R:
+    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"))
+Description: What the package does (one paragraph).
+License: MIT + file LICENSE
+ByteCompile: true
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.1
+Imports: 
+    dplyr,
+    ggplot2,
+    here,
+    patchwork,
+    readr,
+    stringr,
+    tidyr
+Suggests: devtools,
+    git2r

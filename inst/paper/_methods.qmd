@@ -1,0 +1,192 @@
+New dental calculus samples were taken under sterile conditions in a positive
+pressure laminar flow hood in a dedicated dental calculus lab at Leiden University.
+The surface of the tooth was lightly brushed with a sterile, disposable toothbrush
+to get rid of surface contaminants. A sterile dental curette was then used to
+scrape calculus from the tooth onto weighing paper, which was transferred to 1.5 ml
+Eppendorf tubes.
+Where possible, previously sampled material was used to prevent repeated sampling
+of individuals. The sampling methods can be found in the published material
+[@ziesemer16SChallenges2015; @ziesemerGenomeCalculus2018]. 
+The samples were sent to the Department of Forensic Medicine at Aarhus University
+for ultra-high-performance liquid chromatography tandem mass spectrometry (UHPLC-MS/MS).
+
+The UHPLC-MS/MS method was validated in a separate study on cadavers received
+for forensic autopsy and toxicological analysis. Results from dental calculus were
+validated against compounds detected in whole blood samples from the same
+individuals.
+
+Briefly, dental calculus was treated with citric acid and the dissolution extracts
+were cleaned using weak and strong polymeric cation-exchange sorbents.
+
+[[ UHPLC method description needs to be elaborated ]]
+<!--rephrase and expand-->
+
+<!-- the samples were washed in 0.5 mL MeOH for 10 seconds, and centrifuged
+at 10,000 $\times$ g for 1 minute. This process was repeated. Supernatants were
+mixed with 10 mL dimethyl sulphoxide (DMSO) and 50 mL SIL-IS solution in a conical
+glass centrifuge tube. The solvent was evaporated under a stream of nitrogen at
+40&deg;C until ca. 10 mL residue remained, which was vortexed with 50 ml 30% (v/v)
+MeOH. The calculus residue was air-dried in the dark for 24 h and weighed. The
+washing/drying procedure was repeated twice using 1 mL MeOH, resulting in three
+wash extracts for analysis. -->
+In the original method, samples were washed three times to remove residual
+substances from the surface of the calculus that originated from oral fluids,
+and only extract substances from the calculus. In our samples the washes served
+to remove potential contaminants from the burial environment and post-excavation
+handling.
+<!-- 
+The remaining calculus was dissolved using lysing tube beads in 800 $\mu$L of 0.5
+$\small{M}$ citric acid (CA) and 50 $\mu$L SIL-IS solution. During dissolution the
+suspension was kept at ambient temperature for 1 h under continuous gentle shaking,
+and subsequently mixed with 800 $\mu$L MeOH and centrifuged at 10,000 $\times$ g for
+5 mins.
+-->
+<!--
+2.4.3. Clean-up by WCX
+The dissolution extract was mixed with 6300 m L of water,
+100 m L of a 25% ammonia solution to obtain a pH of 6–7 and 50 m L
+of the SIL-IS working solution. The solution was passed through a
+WCX SPE cartridge with a maximum flow rate of 0.5 mL/min
+(mainly using gravitational force (GF)). The cartridge was pre-
+conditioned with 1 mL of MeOH followed by 1 mL of water. The
+passed extract was collected in a glass tube for clean-up by SCX.
+The cartridge was washed with 1 mL of water, then full vacuum
+( 70 kPa) was applied for 5 s to remove the bulk volume of water
+with a minimum of air flow passing through the sorbent. The wash
+water was collected in the same tube. The substances were eluted
+from the column using a 2-mL volume of freshly prepared 2% FA in
+MeOH. A 10- m L volume of DMSO was added to the eluate, and then
+the solvent was evaporated to a residual volume of approximately
+10 m L under a stream of nitrogen at 40  C. The residue was vortexed
+with a 50- m L volume of 30% MeOH, and the solution was
+transferred to an autosampler vial. This solution was used for
+the analysis of most substances.
+
+2.4.4. Clean-up by SCX
+The sample fraction saved from WCX clean-up was mixed with
+100 m L of 12 M HCl and passed through an SCX SPE cartridge that
+was pre-conditioned with 1 mL of MeOH followed by 1 mL of
+water. The cartridge was washed with 1 mL of water, then full
+vacuum was applied for 5 s before it was eluted with 2 mL of 5%
+ammonia in MeOH. The eluate was mixed with 10 m L of DMSO
+and evaporated to a residual volume of approximately 10 m L
+under a stream of nitrogen at 40  C. The residue was vortexed
+with a 50- m L volume of 30% MeOH, and the solution was
+transferred to an autosampler vial. This solution was used for the
+analysis of morphine-3-glu, morphine-6-glu, pregabalin, gaba-
+pentin and salicylic acid.
+
+2.4.5. UHPLC
+A 5- m L volume was injected onto the column running 99%
+mobile phase A. The column flow rate was 400 m L/min, and the
+column temperature was maintained at 40  2  C. The mobile
+phase was changed through a linear gradient to 0% A and 100% B
+over 5 min. Nine minutes after the initial injection, the gradient
+was returned to 99% A over 0.1 min, and the column was
+equilibrated for 2.9 min before the next injection, resulting in a
+total run time of 12 min. The same column and gradient
+programme were used for the wash, WCX and SCX extracts. The
+eluent was diverted to waste during the time intervals of 0–1.5 and
+8–12 min after injection using a post-column switch.
+
+2.4.6. MS-MS
+The probe temperature (TEM) was set to 400  C. The curtain
+gas (CUR), ion source gas 1 (GS1), ion source gas 2 (GS2) and
+collision gas (CAD) were set at 20, 80, 80 and 8 psi, respectively.
+The mass spectrometer was operated in both positive ion mode
+and negative ion mode at unit mass resolution using polarity
+switching to obtain the maximum sensitivity for both analytes
+that favour positive ionisation and analytes that favour negative
+ionisation. The ion spray voltages were set at 4.5 kV. Scheduled
+multiple reaction monitoring (MRM) with windows of 30 s was
+applied, and at least 12 data points were obtained across each
+peak. The applied MRM conditions are listed in Supplementary
+Table S2. Nitrogen was used as the CAD gas. Data acquisition and
+processing were performed using Analyst 1.7 and MultiQuant
+3.0.3 (Sciex), respectively. -->
+
+For more details about the method and validation, see the original study by
+Sørensen and colleagues [-@sorensenDrugsCalculus2021].
+
+Of the `r nrow(demography)` individuals that were analysed,
+`r nrow(filter(metadata, replicated == TRUE))` individuals were subsequently
+replicated using leftover calculus from the original DNA study.
+in <!-- the same lab? different lab? -->.
+
+### Skeletal analysis
+
+<!-- methods for age, sex, and stature estimation -->
+Demographic and pathological analyses were conducted in the Laboratory for Human
+Osteoarchaeology at Leiden University. Sex was estimated using cranial
+and pelvic morphological traits [@Standards1994]. Age was estimated using dental wear,
+auricular and pubic surface appearance, cranial suture closure, and epiphyseal fusion 
+[@Standards1994; @SucheyBrooks1990; @buckberryAuricular2002; @lovejoyAuricular1985; @meindlSutureClosure1985].
+<!-- differential diagnoses -->
+
+#### Paleopathology
+
+Various pathological conditions were included in the analysis and were
+dichotomised to presence/absence to allow statistical analysis.
+Osteoarthritis (OA) was considered present in cases with eburnation.
+No distinction was made between active or <!-- ? --> lesions in cribra femora
+and cribra orbitalia.
+Data on chronic maxillary sinusitis were obtained from another study
+[@casnaUrbanizationRespiratory2021].
+
+[[ Description of method for sinusitis - Maia ]]
+<!-- Description of lesions included in path conditions - Supp Material?
+
+
+- OA = osteoarthritis
+- IVDD = intervertebral disc disease
+- TB = tuberculosis
+- DISH = diffuse idiopathic skeletal hyperostosis
+- VOP = vertebral osteophytosis
+- SN = schmorl's nodes
+- DDD = degenerative disc disease
+- PNBF = periosteal new bone formation
+- OD = osteochondritis dissecans
+- CF = cribra femora
+- CO = cribra orbitalia
+
+Sinusitis as well
+-->
+
+#### Dental pathology
+
+Caries ratios were calculated by dividing the number of lesions by the number
+of teeth scored, resulting in a single caries ratio per individual. If the surface
+where the lesion originated is not visible, i.e. if the lesion covered multiple
+surfaces, this was scored as "crown".
+
+Calculus indices were calculated according to Greene and colleagues [-@greeneQuantifyingCalculus2005].
+Calculus was scored with a four-stage scoring system (0-3) to score absent, slight,
+moderate, and heavy calculus deposits [@brothwellDiggingBones1981]
+on the lingual, buccal (labial), and interproximal surfaces of each tooth. Only
+one score was used for the combined interproximal surfaces, resulting in three
+scores per tooth (when surfaces are intact), and four calculus indices per individual;
+upper anterior (UA), upper posterior (UP), lower anterior (LA), lower posterior (LP).
+Each index was calculated by dividing
+the sum of calculus scores for each surface by the total number of surfaces scored
+in each quadrant. If a tooth could not be scored on all three surfaces, the tooth
+was not included [@greeneQuantifyingCalculus2005].
+
+
+### Statistical analysis
+
+All compounds and pathological conditions/lesions were converted to a presence/absence
+score. Pearson product-moment correlation was applied to the
+dichotomised pathological lesions (point-biserial correlation),
+compound concentrations, calculus indices, and caries ratios to explore relationships
+paired continuous-continuous variables and paired continuous-binary variables.
+Compound concentrations were then dichotomised to presence/absence, and
+the caries ratio and calculus index for each individual were converted to an
+ordinal score from 0 to 4 by using quartiles. Polychoric correlation was applied
+to the paired dichotomous variables and dichotomous-ordinal variables.
+<!--Median periodontal scores were calculated for each individual. -->
+
+All statistical analysis was conducted in `r version$version.string`,
+`r version$nickname`, [@Rbase]. Data wrangling was conducted with the **tidyverse**
+[@tidyverse2019] and visualisations were created using **ggplot2** [@ggplot2].
+Polychoric correlations were calculated with the **psych** package [@Rpsych].
+

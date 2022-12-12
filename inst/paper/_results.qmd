@@ -1,0 +1,229 @@
+<!-- detected compounds -->
+Multiple compounds were detected in the dental calculus samples. Compounds detected
+at a lower concentration than the LLOQ were considered not present. Not all the
+compounds detected in the first batch could be replicated in the second batch
+(@tbl-compound-detect). For a full list of targeted compounds, see Supplementary
+Material.
+<!-- maybe move full list to supp. mat and only include compounds here that were detected in one of the batches. -->
+
+```{r}
+#| label: detection-tbl-setup
+
+uhplc_calculus_detect <- uhplc_calculus_long %>%
+#uhplc_calculus_detect <- uhplc_calculus_demography %>%
+  #remove_missing() %>%
+  ungroup() %>% 
+  filter(quant > 0) %>%
+  distinct(compound, batch) %>%
+  pivot_wider(names_from = batch, values_from = batch) %>% 
+  mutate(across(!compound, ~ if_else(!is.na(.x), TRUE, FALSE)))
+```
+
+<!-- May need to limit the list to compounds that were detected in either batch and keep the full list in supplementary materials -->
+```{r}
+#| label: tbl-compound-detect
+#| tbl-cap: "Target compound including whether it was detected (TRUE) or not (FALSE) in each batch, as well as the lower limit of quantitation (LLOQ) in ng."
+uhplc_calculus_detect %>%
+  left_join(compound_name_abbrev, by = c("compound" = "abbrev")) %>% 
+  full_join(lloq, by = c("name" = "compound")) %>%
+  mutate(across(batch1:batch2, ~ replace_na(.x, FALSE))) %>%
+  filter(!(batch1 == FALSE & batch2 == FALSE)) %>% 
+  select(name, batch1, batch2, lloq) %>% 
+  arrange(name) %>% 
+  knitr::kable(col.names = c("Compound", "Batch 1", "Batch 2", "LLOQ"))
+```
+
+Most plots show a large increase in extracted mass of a compound between the
+calculus wash extracts (wash 1-3) and the dissolved calculus (calc). Most samples
+containing theophylline and caffeine had the largest quantity of the compound
+extracted from the first wash, then decreasing in washes 2 and 3. There is
+an increase between wash 3 and the dissolved calculus in all samples.
+The patterns are consistent across batches 1 and 2.
+Nicotine and cotinine have the same relative quantities in the samples, i.e., the
+sample with the highest extracted quantity of nicotine also had the highest extracted
+quantity of cotinine [@fig-auth-plot-batch2].
+
+```{r}
+#| label: fig-auth-plot-batch2
+#| fig-cap: "Quantity (ng) of each compound extracted from each sample across washes 1-3 and final calculus extraction (calc). Colours represent different calculus samples. Only results from batch 2 are shown."
+
+uhplc_data_long %>%
+  filter(
+    batch == "batch2",
+    !compound %in% c("cbd", "cbn", "cocaine", "thc", "thca-a", "thcva") # remove compounds not detected in batch 2
+    ) %>% 
+  semi_join(quant_filter, by = c("sample", "compound")) %>% # remove compounds not detected in each sample 
+  mutate(
+    extraction = factor(extraction, levels = c("wash1", "wash2", "wash3", "calc")),
+    #sample = as.factor(sample)
+    ) %>% 
+  ggplot(aes(x = extraction, y = quant, group = sample, colour = sample)) +
+    geom_line() +
+    geom_point(size = 0.2) +
+    #facet_wrap(~ compound, scales = "free_y", labeller = compound_name_repair) +
+    facet_wrap(~ compound, scales = "free_y", labeller = labeller(compound = compound_names)) +
+    theme_bw() +
+    theme(
+      legend.position = "none"
+    ) +
+    labs(y = "Quantity (ng)", x = "") +
+    scale_colour_viridis_d()
+```
+
+<!-- detection vs. preservation -->
+To see if preservation of the skeletal remains had any effect on the detection of
+compounds, concentrations of compounds were compared to the various levels of
+preservation. No apparent patterns were present between preservation and detection
+of compounds in the samples (@fig-detection-preservation).
+
+```{r}
+#| label: fig-detection-preservation
+uhplc_calculus_long %>%
+  filter(
+    !is.na(preservation),
+    !compound %in% c("cbd", "cbn", "cocaine", "thc", "thca-a", "thcva"), # remove compounds not detected
+    id != "MB329" # unusually high nicotine and cotinine quantity in batch 1
+    ) %>% 
+  ggplot(aes(x = preservation, y = quant)) +
+    geom_violin(aes(fill = preservation), alpha = 0.6) +
+    #geom_jitter(width = 0.2) +
+    geom_boxplot(width = 0.2) +
+    facet_wrap(~ compound, scales = "free_y", labeller = labeller(compound = compound_names)) +
+    theme_bw() +
+    theme(legend.position = "none") +
+    labs(x = "Preservation", y = "Quantity (ng)") +
+    scale_fill_viridis_d()
+```
+
+<!-- detection of tobacco as accuracy -->
+
+```{r}
+#| label: tobacco-accuracy-setup
+#tobacco <- uhplc_calculus_demography %>%
+tobacco <- uhplc_calculus_long %>%
+  filter(compound %in% c("nicotine", "cotinine")) %>% 
+  mutate(
+    detection = if_else(quant == 0, 0, 1) # 0 = not detected; NA = not included in batch 2.
+    
+    ) # 0 = not detected; NA = not included in batch 2.
+
+tobacco_accuracy <- tobacco %>%
+  remove_missing(vars = "quant") %>%
+  group_by(sample, id, .drop = F) %>% 
+  summarise(
+    detection = sum(detection),
+    #compound = compound
+    ) %>% 
+  left_join(select(demography, id, pipe_notch, preservation, age), by = "id") %>% 
+  mutate(
+    pipe_notch = if_else(pipe_notch > 0, "Y", "N"),
+    correct = case_when(
+      detection == 0 & pipe_notch == "N" ~ 1,
+      detection > 0 & pipe_notch == "Y" ~ 1,
+      detection > 0 & pipe_notch == "N" ~ NaN, # no way of knowing macroscopically if the person smoked without pipe
+      TRUE ~ 0
+    )
+  )
+
+accuracy_age <- tobacco_accuracy %>% # move to supplementary material
+  group_by(age) %>% 
+  summarise(mean = mean(correct, na.rm = T))
+
+# accuracy in replicated samples
+replicated_accuracy <- tobacco %>%
+  group_by(sample,id) %>%
+  summarise(detection = sum(detection)) %>%
+  remove_missing() %>% 
+  left_join(select(demography, id, pipe_notch, preservation, age), by = "id") %>% 
+  mutate(
+    pipe_notch = if_else(pipe_notch > 0, "Y", "N"),
+    correct = case_when(
+      detection == 0 & pipe_notch == "N" ~ 1,
+      detection > 0 & pipe_notch == "Y" ~ 1,
+      detection > 0 & pipe_notch == "N" ~ NaN, # no way of knowing macroscopically if the person smoked without pipe
+      TRUE ~ 0
+    )
+  )
+```
+
+The presence of pipe notch(es) in an individual and concurrent detection of nicotine
+and/or cotinine is used as a crude indicator of the accuracy of the method. When
+combining the results of both batches, the method was able to detect some form
+of tobacco in
+`r nrow(filter(tobacco_accuracy, pipe_notch == "Y", detection > 0))`
+of `r nrow(filter(tobacco_accuracy, pipe_notch == "Y"))`
+individuals with a pipe notch
+(`r scales::percent(nrow(filter(tobacco_accuracy, pipe_notch == "Y", detection > 0)) / nrow(filter(tobacco_accuracy, pipe_notch == "Y")), accuracy = 0.1)`).
+When also considering correct the absence of a tobacco alkaloid together with the absence
+of a pipe notch, the accuracy of the method is
+`r scales::percent(mean(tobacco_accuracy$correct, na.rm = T), accuracy = 0.1)`.
+Accuracy in the old adult age category is
+`r scales::percent(filter(accuracy_age, age == "old")$mean, accuracy = 0.1)`.
+
+In the replicated samples only, tobacco detection was successful in
+`r nrow(filter(replicated_accuracy, pipe_notch == "Y", detection > 0))`
+out of
+`r nrow(filter(replicated_accuracy, pipe_notch == "Y"))`
+pipe smokers
+(`r scales::percent(nrow(filter(replicated_accuracy, pipe_notch == "Y", detection > 0)) / nrow(filter(replicated_accuracy, pipe_notch == "Y")), accuracy = 0.1)`)
+Including individuals with absence of a pipe notch and concurrent absence of
+compounds as a correct identification, gives an overall accuracy of
+`r scales::percent(mean(replicated_accuracy$correct, na.rm = T), accuracy = 0.1)`.
+
+One individual---an old adult, probable female---was positive
+for both nicotine and cotinine, and had no signs of a pipe notch.
+
+<!-- missing data -->
+
+Additional results from dental and skeletal lesions can be found in the supplementary
+materials.
+
+### Correlations between detected alkaloids and diseases
+
+For further statistical analyses, only the UHPLC-MS/MS results from batch 2 were
+used, as batch 1 had results that could not be replicated and may have contained
+contamination.
+
+```{r}
+#| label: tbl-pearson
+corr_tib <- conc_cor %>% 
+  as_tibble(rownames = "var") %>% 
+  filter(var != "age",
+         var != "periodont_status") %>% 
+  column_to_rownames("var") %>%
+  mutate(across(everything(), signif, 3))
+corr_tib %>% 
+  knitr::kable(caption = "Pearson correlation on dichotomous skeletal lesions and compound concentrations from batch 2. Correlations between pairs of dichotomous variables are removed due to incompatibility with a Pearson correlation.")
+```
+
+Point-biserial (Pearson) correlation on caries and calculus versus
+presence/absence variables. We found only weak correlations between the calculus
+index and caries ratio and other variables.
+
+Polychoric correlation was conducted on the dichotomised compounds and pathological
+conditions, as well as the discretised dental diseases.
+Salicylic acid was removed due to its ubiquitous presence in the sample, and is
+likely to cause spurious correlations.
+Strong correlations were found between `r cor_statement(polycorr_tib, strength = "strong")`.
+Moderate correlations were found between `r cor_statement(polycorr_tib, strength = "moderate")`. Remaining
+correlations were weak or absent (@fig-polycorr).
+Correlations with age will be depressed because age was largely controlled for
+in the sample selection.
+
+```{r}
+#| label: fig-polycorr
+#| fig-cap: "Plot of the polychoric correlations. Larger circles and stronger calculus indicate stronger correlation coefficient."
+polycorr$rho %>%
+  ggcorrplot::ggcorrplot(
+    method = "circle", type = "lower", 
+    colors = c(viridisLite::plasma(1, begin = 0), "white", viridisLite::plasma(1, begin = 1))
+    ) +
+  scale_x_discrete(labels = compound_names) +
+  scale_y_discrete(position = "right") +
+  theme(
+    legend.position = "left",
+  )
+```
+
+
+
