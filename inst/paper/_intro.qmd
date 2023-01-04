@@ -1,51 +1,68 @@
 <!-- intro to calculus and residues -->
-Dental calculus has proven to be excellent source of a wide variety of information
-about our past.
+Dental calculus has proven to be an excellent source of a wide variety of information
+about our past. The increased accessibility and advancement of methods such as
+aDNA, paleoproteomics, and chromatography, has expanded our ability to identify
+biomarkers of diet and disease on an increasingly large scale
+[@warinnerEvidenceMilk2014; @velskoDentalCalculus2017; @gismondiMultidisciplinaryApproach2020].
 
-the increased availability of methods such as aDNA, paleoproteomics, and
-chromatography, has expanded our ability to identify specific pathogens, dietary,
-and possible medicinal compounds<!--cite-->.
+<!-- define alkaloids -->
+One such biomarker is alkaloids, a plant-derived group of compounds. Many alkaloids
+have important medicinal and psychoactive effects in humans, and their direct
+detection, or detection of their metabolites, is of great interest to archaeologists.
+Previous studies have successfully recovered alkaloids archaeological
+contexts including ceramics [@smithDetectionOpium2018], pipes
+[@raffertyCurrentResearch2012], human hair
+[@ogaldeIdentificationPsychoactive2009; @echeverriaNicotineHair2013], and even
+dental calculus employing both targeted [@eerkensDentalCalculus2018] and
+untargeted approaches
+[@buckleyDentalCalculus2014; @gismondiMultidisciplinaryApproach2020].
+Especially nicotine, the principal alkaloid in tobacco leaves,
+has been widely studied in the archaeological record due to its apparent stability
+and ability to survive over long periods of time
+[@eerkensDentalCalculus2018; @raffertyCurrentResearch2012; @tushinghamHuntergathererTobacco2013].
 
 <!--how are compounds incorporated in dental calculus-->
-Increased interest in using oral fluid<!--more accurate terminology than saliva?--> as a means of detecting alkaloids in living
-individuals, due to the non-invasive nature of the testing compared to blood
-and urine sampling<!--citations-->.
-
-Alkaloids enter the dental calculus via two routes: (1) direct
+Alkaloids may enter the oral cavity via two pathways: (1) direct
 incorporation through oral consumption of alkaloid-containing plants, whether
 deliberate or accidental;
-and (2) passive diffusion through the
-saliva as toxins are transferred from serum to saliva [@coneInterpretationOral2007],
+and (2) passive diffusion as toxins are transferred from serum to saliva
+[@coneInterpretationOral2007],
 and then into the oral cavity through the salivary glands. The relation to serum
-is why there is often a close relation between oral fluid and blood concentrations
-of drugs [@coneInterpretationOral2007; @sorensenDrugsCalculus2021]
-The second route allows the
-detection of compounds that not only are consumed orally, but also any other pathway.
-We also expect to detect metabolites through the second pathway.
+is why there is often a close correlation between presence (not concentration)
+of drugs in oral fluid and blood/serum
+[@coneInterpretationOral2007; @willeRelationshipOral2009; @milmanOralFluid2011].
+The second pathway allows the
+detection of compounds that not only are consumed orally, but also any other mode
+of consumption or administration<!--cite e.g. injection or topical-->.
+<!-- Additionally, alkaloids will spend shorter time in mouth during direct consumption than
+during excretion through saliva, so we expect the second pathway to be more
+feasible for detection. -->
 
 Many of the components involved in the formation and growth of dental calculus
-originate from saliva. Therefore the transfer of salts and other
-compounds between saliva and oral biofilms on the tooth surface is likely to also
-allow various alkaloids of dietary and medicinal origin to become entrapped in
-dental plaque, eventually mineralising and becoming dental calculus.
-
-Previous studies have been conducted using various chromatographic methods on
-archaeological dental calculus, employing both targeted
-[@eerkensDentalCalculus2018] and untargeted approaches
-[@buckleyDentalCalculus2014; @gismondiMultidisciplinaryApproach2020].
+originate from oral fluid. Proteins, bacteria, salts and other compounds are
+transferred from saliva to biofilms on the tooth surface
+[@whiteDentalCalculus1997; @jinSupragingivalCalculus2002].
+This may also allow various alkaloids of dietary and medicinal origin to become
+incorporated in dental plaque. Dental plaque undergoes frequent mineralisation
+events, ultimately causing the entrapped alkaloids and their metabolites to become
+preserved within the dental calculus. Barring intentional or accidental removal of
+the calculus during life,
+burial, excavation, and post-excavation cleaning, the alkaloids can then be detected
+by various methods to show a record of consumption during life.
 
 <!--brief description of method validation-->
-In the method validation study, all compounds detected in the blood were also
-detected in the dental calculus,
+The method we use in this study was developed in a previous study on dental
+calculus from cadavers and validated by comparing the results to compounds detected
+in the blood of the same individuals.
+All compounds that were detected in the blood were also detected in dental calculus,
 with additional compounds present in dental calculus that were not present
 in blood, suggesting that dental calculus represents a comprehensive history of
 consumption over a long time <!-- rephrase-->[@sorensenDrugsCalculus2021].
-
 <!--summary of results-->
-We were able to detect both parent compounds, such as caffeine and nicotine, as
-well as their metabolites theophylline and cotinine. These indicate the consumption
-of tea and coffee and smoking of tobacco, which is also confirmed by historic
-documentation and identification of pipe notches in the dentition.
-
-
-
+We were able to detect both parent compounds and metabolites, including caffeine,
+nicotine, theophylline, and cotinine, in the dental calculus of individuals from
+a 19th century Dutch population from Middenbeemster. By detecting these compounds
+we are able to show the consumption
+of tea and coffee and smoking of tobacco on an individual scale, which is also
+confirmed by historic documentation and identification of pipe notches in the
+dentition.
