@@ -216,10 +216,27 @@ dentition_checker <- function(.data){
 #' @param strength character. Strength of correlation ("weak", "moderate", or "strong").
 #' @export
 cor_statement <- function(.data, strength){
-  if(nrow(filter(.data, strength == strength)) == 0){
+
+  corr_tib <- .data %>%
+    #as_tibble(rownames = "var") %>%
+    #pivot_longer(-var, values_to = "corr") %>%
+    mutate(
+      strength = case_when(
+        abs(corr) >= 0.8 ~ "strong",
+        abs(corr) < 0.8 & abs(corr) >= 0.4 ~ "moderate",
+        abs(corr) < 0.4 ~ "weak"
+      ),
+      direction = case_when(
+        corr > 0 ~ "positive",
+        corr < 0 ~ "negative"
+      )
+    ) %>%
+    filter(corr != 1)
+
+  if(nrow(filter(corr_tib, strength == strength)) == 0){
     correlations <- glue("No {strength} correlations were found")
   } else {
-    correlations <- .data %>%
+    correlations <- corr_tib %>%
       filter(strength == {{ strength }}) %>%
       #distinct(rho, .keep_all = T) %>%
       slice(seq(from = 2, to = nrow(.), by = 2)) %>%  # awkward solution to distinct not working
@@ -243,6 +260,25 @@ compound_names <- c(
   "thcva" = "THCVA",
   "thc" = "THC",
   "cbd" = "CBD"
+)
+
+prettified_names <- c(
+  "thca-a" = "THCA-A",
+  "cocaine" = "Cocaine",
+  "caffeine" = "Caffeine",
+  "theophyl" = "Theophylline",
+  "cotinine" = "Cotinine",
+  "nicotine" = "Nicotine",
+  "salicyl" = "Salicylic acid",
+  "cbn" = "CBN",
+  "thcva" = "THCVA",
+  "thc" = "THC",
+  "cbd" = "CBD",
+  "caries_ratio" = "Caries",
+  "periodont_status" = "Periodontitis",
+  "calc_index" = "Calculus",
+  "pipe_notches" = "PN",
+  "age" = "Age-at-death"
 )
 
 compound_name_abbrev <- data.frame(
