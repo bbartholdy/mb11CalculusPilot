@@ -5,7 +5,12 @@
 \title{Function to convert compound abbreviations to full name
 correlation statements}
 \usage{
-cor_statement(.data, cor_coef, strength = c("weak", "moderate", "strong"))
+cor_statement(.data, strength)
+}
+\arguments{
+\item{.data}{correlation tibble. Long format.}
+
+\item{strength}{character. Strength of correlation ("weak", "moderate", or "strong").}
 }
 \description{
 Function to convert compound abbreviations to full name

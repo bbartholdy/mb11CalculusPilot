@@ -1,8 +1,10 @@
 <!-- Big summary/important statement for the science -->
-In this study we were able to extract and identify multiple alkaloids from the
+In this study we were able to extract and identify multiple alkaloids and salicylic
+acid from the
 dental calculus of individuals from Middenbeemster, a 19th century Dutch
 archaeological site. We applied ultra-high-performance liquid chromatography-tandem
-mass spectrometry (UHPLC-MS/MS), using a method that was validated by co-occurrence
+mass spectrometry method using pneumatically assisted electrospray ionisation
+(UHPLC-ESI-MS/MS), a method that was validated by co-occurrence
 of drugs and metabolites in dental calculus and blood [@sorensenDrugsCalculus2021].
 Here we have shown that the method can also be successfully applied to archaeological
 dental calculus.
@@ -28,9 +30,9 @@ where a tobacco-smoke enema was used for headaches, respiratory problems, colds,
 and drowsiness from around 1780 to 1830 [@aten400JaarBeemster2012].
 In our sample, we also detected nicotine and cotinine (replicated)
 in an old adult, probable female individual.
-It is unlikely that the compounds entered the dental calculus through
-pipe-smoking, as the individual had no visible pipe notches.
-More likely that the tobacco entered through an alternate mode of consumption,
+In this particular case it is unlikely that the compounds entered the dental
+calculus through pipe-smoking, as the individual had no visible pipe notches;
+more likely the tobacco entered through an alternate mode of consumption,
 secondhand smoke, or the aforementioned tobacco-smoke enema.
 
 <!-- Scientific findings as extension of previous work -->
@@ -326,5 +328,5 @@ only mode of tobacco consumption, with others including chewing, drinking, cigar
 and snuff [@goodmanTobaccoHistory1994, p.67]. Pipe-smoking
 was mainly practised by males [@lemmersMiddenbeemster2013; @eerkensDentalCalculus2018],
 so chromatographic methods, such as the one presented here,
-are suitable for exploring tobacco consumption in an entire population, rather
+are suitable for exploring tobacco consumption in an entire society, rather
 than a trivial subset of past populations.<!--admittedly, this study did just that...-->

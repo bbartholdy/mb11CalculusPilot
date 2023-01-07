@@ -18,11 +18,10 @@ To reduce the number of factors to account for
 in the analysis, we preferentially selected males from the middle adult age category
 (35-49). The sample consists of `r nrow(filter(demography, sex == "m"))` males,
 `r nrow(filter(demography, sex == "pm"))` probable males,
-`r nrow(filter(demography, sex == "pf"))` probable female, and
-`r nrow(filter(demography, sex == "f"))` female.
+`r nrow(filter(demography, sex == "pf"))` probable females, and
+`r nrow(filter(demography, sex == "f"))` female [@fig-sample-demography].
 We selected males due to a higher
 occurrence of dental calculus deposits than females (unpublished observation).
-Dental calculus was preferentially selected from incisors.
 
 <!-- use plot to show original and replicated sample demographics? -->
 ```{r}
@@ -40,7 +39,8 @@ first_batch <- demography %>%
     labs(y = "Count", fill = "Sex") +
     theme(
       panel.grid.major.x = element_blank(),
-      axis.title.x = element_blank()
+      axis.title.x = element_blank(),
+      plot.margin = unit(c(0,0,0.5,0), "cm")
     )
 
 second_batch <- demography %>%
@@ -62,13 +62,5 @@ second_batch <- demography %>%
 
 first_batch + second_batch + plot_layout(guides = "collect")
 
-grid::grid.draw(grid::textGrob("Age-at-death", x =.45, y=0.01))
-
-# demography %>% 
-#   count(sex) %>%
-#   knitr::kable()
-# 
-# demography %>%
-#   count(age) %>% 
-#   knitr::kable()
+grid::grid.draw(grid::textGrob("Age-at-death", x =.45, y=0.045))
 ```

@@ -1,52 +1,3 @@
----
-title: "Title Goes Here"
-author:
-  - Bjørn Peare Bartholdy:
-      correspondence: "yes"
-      email: seriousname@email.org
-      orcid: 0000-0003-1689-0557
-      institute:
-        - fosg
-  - Jørgen B. Hasselstrøm
-  - Lambert K. Sørensen
-  - Maia Casna
-  - Historisch Genootschap Beemster
-  - Amanda G. Henry
-institute:
-  - fosg:
-      name: ZZ9 Plural Z Alpha
-      address: 23 Science Street, Eureka, Mississippi, USA
-  - fop: Federation of Planets
-title-block-published: "Last updated"  
-#date: now
-#date-format: long
-format: 
-  html: 
-    theme: cosmo
-execute: 
-  freeze: true
-knitr: 
-  opts_chunk:
-    echo: false
-    warning: false
-    message: false
-    comment: "#>"
-    fig-path: "../figures/"
-    fig-dpi: 600
-filters:
-  - ../templates/scholarly-metadata.lua
-  - ../templates/author-info-blocks.lua
-  #- ../templates/pagebreak.lua
-bibliography: references.bib
-csl: "apa.csl" # Insert path for the bib-style
-abstract: |
-  This is an abstract.
-keywords: |
-  stuff; and; things
-highlights: |
-  These are the highlights. 
----
-
 ```{r}
 #| label: setup
 #| include: false
@@ -81,8 +32,6 @@ Keywords: {{< meta keywords >}}
 
 <!-- Highlights: {{< meta highlights >}} -->
 
-<!-- The actual document text starts here: -->
-
 ## Introduction
 
 {{< include _intro.qmd >}}
@@ -103,11 +52,22 @@ Keywords: {{< meta keywords >}}
 
 {{< include _discussion.qmd >}}
 
-## Conclusion
+## Conclusions
+
+{{< include _conclusions.qmd >}}
 
 ## Acknowledgements {-}
 
-Cats and dogs
+We wish to thank Kirsten Ziesemer for helping track down the calculus samples
+from her studies. Additionally, we owe special thanks to Vincent Falger and Kees
+de Groot from the Middenbeemster Historical Society for their input on early
+draft manuscripts and a lovely guided tour of Middenbeemster.
+
+## Data Availability Statement
+
+All raw data, analysis scripts, and the source code for the manuscript and
+supplementary materials are available as a research compendium<!--Zenodo link-->
+using the structure defined in the **rrtools** R package [@Rrrtools].
 
 ## References {-}
 

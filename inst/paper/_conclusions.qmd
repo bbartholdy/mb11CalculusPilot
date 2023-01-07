@@ -2,7 +2,7 @@ This preliminary study outlines the benefits of using calculus to target a
 variety of compounds that could have been consumed as medicine or diet. 
 This method allows us to directly address specific individuals, which can be
 especially useful in individuals that are not always well-documented in historic
-documentation, such as lower status, children and women.
+documentation, such as rural communities, children and women.
 We also
 show that there are many limitations that will need to be addressed going forward
 with this type of analysis, and stress the need for more systematic research on

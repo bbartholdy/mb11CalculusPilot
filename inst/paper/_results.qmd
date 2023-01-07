@@ -4,7 +4,6 @@ at a lower concentration than the LLOQ were considered not present. Not all the
 compounds detected in the first batch could be replicated in the second batch
 (@tbl-compound-detect). For a full list of targeted compounds, see Supplementary
 Material.
-<!-- maybe move full list to supp. mat and only include compounds here that were detected in one of the batches. -->
 
 ```{r}
 #| label: detection-tbl-setup
@@ -22,7 +21,7 @@ uhplc_calculus_detect <- uhplc_calculus_long %>%
 <!-- May need to limit the list to compounds that were detected in either batch and keep the full list in supplementary materials -->
 ```{r}
 #| label: tbl-compound-detect
-#| tbl-cap: "Target compound including whether it was detected (TRUE) or not (FALSE) in each batch, as well as the lower limit of quantitation (LLOQ) in ng."
+#| tbl-cap: "Target compound including whether it was detected (TRUE) or not (FALSE) in each batch, as well as the lower limit of quantitation (LLOQ) in ng. CBD = cannabidiol; CBN = cannabinol; THC = tetrahydrocannabinol; THCA-A = tetrahydrocannabinolic acid; THCVA = tetrahydrocannabivarin acid."
 uhplc_calculus_detect %>%
   left_join(compound_name_abbrev, by = c("compound" = "abbrev")) %>% 
   full_join(lloq, by = c("name" = "compound")) %>%
@@ -45,9 +44,11 @@ quantity of cotinine [@fig-auth-plot-batch2].
 
 ```{r}
 #| label: fig-auth-plot-batch2
-#| fig-cap: "Quantity (ng) of each compound extracted from each sample across washes 1-3 and final calculus extraction (calc). Colours represent different calculus samples. Only results from batch 2 are shown."
+#| fig-cap: "(A) Number of samples in which the each compound was detected in the first and second batch. (B) Quantity (ng) of each compound extracted from each sample across the three washes and final calculus extraction (calc). Colours represent different calculus samples. Only results from batch 2 are shown."
+#| fig-width: 8
+#| fig-height: 7
 
-uhplc_data_long %>%
+auth_plot <- uhplc_data_long %>%
   filter(
     batch == "batch2",
     !compound %in% c("cbd", "cbn", "cocaine", "thc", "thca-a", "thcva") # remove compounds not detected in batch 2
@@ -61,13 +62,39 @@ uhplc_data_long %>%
     geom_line() +
     geom_point(size = 0.2) +
     #facet_wrap(~ compound, scales = "free_y", labeller = compound_name_repair) +
-    facet_wrap(~ compound, scales = "free_y", labeller = labeller(compound = compound_names)) +
+    facet_wrap(~ compound, scales = "free_y", labeller = labeller(compound = compound_names), dir = "v") +
     theme_bw() +
+    scale_colour_viridis_d() +
+    scale_y_continuous(position = "right") +
+    labs(y = "Quantity (ng)") +
     theme(
-      legend.position = "none"
-    ) +
-    labs(y = "Quantity (ng)", x = "") +
-    scale_colour_viridis_d()
+      legend.position = "none",
+      axis.title.x = element_blank(),
+      axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1)
+    )
+
+
+compound_detect_plot <- uhplc_calculus_long %>%
+  #remove_missing() %>%
+  filter(quant > 0) %>% 
+  ggplot(aes(x = compound, fill = batch)) +
+    #geom_jitter(width = 0.2) +
+    #geom_boxplot() +
+    geom_bar(position = "dodge") +
+    #facet_wrap(~ batch) +
+    theme_bw() +
+    scale_fill_viridis_d() +
+    scale_x_discrete(labels = compound_names) +
+    theme(
+      axis.title.x = element_blank(),
+      axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1),
+      legend.position = "none",
+      panel.grid.major.x = element_blank()
+      ) +
+    labs(y = "Count")
+
+compound_detect_plot + auth_plot + plot_layout(widths = c(1,1.8)) + plot_annotation(tag_levels = "A")
+
 ```
 
 <!-- detection vs. preservation -->
@@ -78,7 +105,11 @@ of compounds in the samples (@fig-detection-preservation).
 
 ```{r}
 #| label: fig-detection-preservation
-uhplc_calculus_long %>%
+#| fig-cap: "(A) Distribution of extracted quantities of each compound, separated by state of preservation of the skeleton. (B) Extracted quantity (ng) of compound plotted against weights of the calculus samples from batch 2."
+#| fig-height: 6
+#| fig-width: 7
+
+preservation_plot <- uhplc_calculus_long %>%
   filter(
     !is.na(preservation),
     !compound %in% c("cbd", "cbn", "cocaine", "thc", "thca-a", "thcva"), # remove compounds not detected
@@ -88,11 +119,36 @@ uhplc_calculus_long %>%
     geom_violin(aes(fill = preservation), alpha = 0.6) +
     #geom_jitter(width = 0.2) +
     geom_boxplot(width = 0.2) +
-    facet_wrap(~ compound, scales = "free_y", labeller = labeller(compound = compound_names)) +
+    facet_wrap(~ compound, scales = "free_y", labeller = labeller(compound = compound_names), dir = "v") +
     theme_bw() +
-    theme(legend.position = "none") +
+    theme(
+      legend.position = "none",
+      panel.grid.major.x = element_blank(),
+      axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1)
+      ) +
     labs(x = "Preservation", y = "Quantity (ng)") +
     scale_fill_viridis_d()
+
+weight_quant_plot <- uhplc_data_comb %>%
+  select(sample, contains("batch2")) %>% 
+  select(sample, batch2_weight, contains("calc")) %>% 
+  pivot_longer(
+    -c(sample, batch2_weight),
+    names_to = c("compound", "batch"),
+    names_pattern = "(.*)_(.*)",
+    values_to = c("conc")
+  ) %>% 
+  mutate(compound = str_remove(compound, "_calc")) %>%
+  #remove_missing() %>% 
+  filter(conc > 0) %>% 
+  ggplot(aes(x = batch2_weight, y = conc)) +
+    geom_point(col = viridisLite::viridis(1)) +
+    facet_wrap(~ compound, scales = "free_y", labeller = labeller(compound = compound_names), dir = "v") +
+    theme_bw() +
+    theme(axis.title.y = element_blank()) +
+    labs(y = "Quantity (ng)", x = "Weight (mg)")
+
+preservation_plot + weight_quant_plot + plot_annotation(tag_levels = "A")
 ```
 
 <!-- detection of tobacco as accuracy -->
@@ -100,12 +156,13 @@ uhplc_calculus_long %>%
 ```{r}
 #| label: tobacco-accuracy-setup
 #tobacco <- uhplc_calculus_demography %>%
+# should only be in males
 tobacco <- uhplc_calculus_long %>%
-  filter(compound %in% c("nicotine", "cotinine")) %>% 
-  mutate(
-    detection = if_else(quant == 0, 0, 1) # 0 = not detected; NA = not included in batch 2.
-    
-    ) # 0 = not detected; NA = not included in batch 2.
+  filter(
+    compound %in% c("nicotine", "cotinine"),
+    sex == "m" | sex == "pm"
+    ) %>% 
+  mutate(detection = if_else(quant == 0, 0, 1)) # 0 = not detected; NA = not included in batch 2.
 
 tobacco_accuracy <- tobacco %>%
   remove_missing(vars = "quant") %>%
@@ -175,53 +232,75 @@ for both nicotine and cotinine, and had no signs of a pipe notch.
 
 <!-- missing data -->
 
-Additional results from dental and skeletal lesions can be found in the supplementary
-materials.
-
 ### Correlations between detected alkaloids and diseases
 
-For further statistical analyses, only the UHPLC-MS/MS results from batch 2 were
-used, as batch 1 had results that could not be replicated and may have contained
-contamination.
+For further statistical analyses, only the UHPLC-ESI-MS/MS results from batch 2
+were used, as batch 1 had multiple compounds that were not detected in batch 2
+and may have been contamination.
 
 ```{r}
 #| label: tbl-pearson
+#| tbl-cap: "Pearson correlation (*r*) on dichotomous skeletal lesions and compound concentrations from the second batch. Correlations between pairs of dichotomous variables are removed due to incompatibility with a Pearson correlation. OA = osteoarthritis; VOP = vertebral osteophytosis; SN = Schmorl's nodes; DDD = degenerative disc disease; CO = cribra orbitalia; CMS = chronic maxillary sinusitis; SA = salicylic acid; PN = pipe notches."
+
 corr_tib <- conc_cor %>% 
   as_tibble(rownames = "var") %>% 
   filter(var != "age",
-         var != "periodont_status") %>% 
+         var != "periodont_status") #%>% 
+  #mutate(across(everything(), signif, 3))
+
+corr_tib_long <- corr_tib %>% 
+  pivot_longer(
+    -var,
+    names_to = "name",
+    values_to = "corr"
+  )
+# still need to remove everything under the diagonal (colour white?)
+#corr_tib[corr_tib == 1] <- kableExtra::cell_spec(corr_tib[corr_tib == 1], color = "transparent")
+corr_tib_out <- corr_tib %>%
   column_to_rownames("var") %>%
-  mutate(across(everything(), signif, 3))
-corr_tib %>% 
-  knitr::kable(caption = "Pearson correlation on dichotomous skeletal lesions and compound concentrations from batch 2. Correlations between pairs of dichotomous variables are removed due to incompatibility with a Pearson correlation.")
+  as.matrix() %>% 
+  signif(digits = 2)
+cols <- 0
+for(i in 7:nrow(corr_tib)){ # terrible solution for formatting table
+  cols <- cols + 1 
+  corr_tib_out[i,1:cols] <- ""
+} 
+corr_names <- c("Caries", "Nicotine", "SA", "Calculus", "PN", "Theophylline", "Caffeine", "Cotinine")
+row.names(corr_tib_out) <- c(row.names(corr_tib_out)[1:6], corr_names)
+corr_tib_out <- corr_tib_out[-nrow(corr_tib),] # remove last row because it has no values (all duplicate coefficients)
+corr_tib_out %>% 
+  knitr::kable(col.names = corr_names)
 ```
 
-Point-biserial (Pearson) correlation on caries and calculus versus
-presence/absence variables. We found only weak correlations between the calculus
-index and caries ratio and other variables.
+The strongest point-biserial (Pearson) correlation correlations were a near-perfect
+positive correlation between `r cor_statement(corr_tib_long, strength = "strong")`,
+and moderate correlations between
+`r cor_statement(corr_tib_long, strength = "moderate")` (@tbl-pearson).
 
 Polychoric correlation was conducted on the dichotomised compounds and pathological
 conditions, as well as the discretised dental diseases.
 Salicylic acid was removed due to its ubiquitous presence in the sample, and is
 likely to cause spurious correlations.
 Strong correlations were found between `r cor_statement(polycorr_tib, strength = "strong")`.
-Moderate correlations were found between `r cor_statement(polycorr_tib, strength = "moderate")`. Remaining
-correlations were weak or absent (@fig-polycorr).
+Moderate correlations were found between `r cor_statement(polycorr_tib, strength = "moderate")`.
+Remaining correlations were weak or absent (@fig-polycorr).
 Correlations with age will be depressed because age was largely controlled for
 in the sample selection.
 
 ```{r}
 #| label: fig-polycorr
-#| fig-cap: "Plot of the polychoric correlations. Larger circles and stronger calculus indicate stronger correlation coefficient."
+#| fig-cap: "Plot of the polychoric correlations (*rho*). Larger circles and increased opacity indicates a stronger correlation coefficient."
 polycorr$rho %>%
   ggcorrplot::ggcorrplot(
     method = "circle", type = "lower", 
-    colors = c(viridisLite::plasma(1, begin = 0), "white", viridisLite::plasma(1, begin = 1))
+    colors = c(viridisLite::plasma(1, begin = 0), "white", viridisLite::plasma(1, begin = 1)),
+    legend.title = expression(rho)
     ) +
-  scale_x_discrete(labels = compound_names) +
-  scale_y_discrete(position = "right") +
+  scale_x_discrete(labels = prettified_names) +
+  scale_y_discrete(position = "right", labels = prettified_names) +
   theme(
     legend.position = "left",
+    legend.title = element_text(face = "italic")
   )
 ```
 
