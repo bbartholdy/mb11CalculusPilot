@@ -9,7 +9,10 @@ library(stringr)
 library(glue)
 library(purrr)
 library(psych)
+library(patchwork)
 devtools::load_all()
+
+try(generate_bib())
 
 # UHPLC analysis ----------------------------------------------------------
 
@@ -273,7 +276,7 @@ explore_filter <- explore_data %>%
 
 explore_select <- explore_data %>%
   select(names(explore_filter)) %>%
-  select(!c(periap_num, Mastoiditis, OD))
+  select(!c(IPR, periap_num, Mastoiditis, OD, PNBF))
 
 # discretisation of caries and calculus using quartiles
 caries_discrete <- quantile(caries_ratio_id$caries_ratio)
@@ -336,19 +339,19 @@ polycorr <- polychoric(explore_discrete)
 # Correlation tibble with strength and direction
 polycorr_tib <- polycorr$rho %>%
   as_tibble(rownames = "var") %>%
-  pivot_longer(-var, values_to = "corr") %>%
-  mutate(
-    strength = case_when(
-      abs(corr) >= 0.8 ~ "strong",
-      abs(corr) < 0.8 & abs(corr) >= 0.4 ~ "moderate",
-      abs(corr) < 0.4 ~ "weak"
-    ),
-    direction = case_when(
-      corr > 0 ~ "positive",
-      corr < 0 ~ "negative"
-    )
-  ) %>%
-  filter(corr != 1)
+  pivot_longer(-var, values_to = "corr") #%>%
+  # mutate(
+  #   strength = case_when(
+  #     abs(corr) >= 0.8 ~ "strong",
+  #     abs(corr) < 0.8 & abs(corr) >= 0.4 ~ "moderate",
+  #     abs(corr) < 0.4 ~ "weak"
+  #   ),
+  #   direction = case_when(
+  #     corr > 0 ~ "positive",
+  #     corr < 0 ~ "negative"
+  #   )
+  # ) %>%
+  # filter(corr != 1)
 
 # objects with correlation statements about variables
 
