@@ -8,18 +8,9 @@ Where possible, previously sampled material was used to prevent repeated samplin
 of individuals. The sampling methods can be found in the published material
 [@ziesemer16SChallenges2015; @ziesemerGenomeCalculus2018]. 
 The samples were sent to the Department of Forensic Medicine at Aarhus University
-for ultra-high-performance liquid chromatography-tandem mass spectrometry method
-using pneumatically assisted electrospray ionisation (UHPLC-ESI-MS/MS).
+for ultra-high-performance liquid chromatography-tandem mass spectrometry (UHPLC-MS/MS)
+analysis.
 
-The UHPLC-ESI-MS/MS method was validated in a separate study on cadavers received
-for forensic autopsy and toxicological analysis. Results from dental calculus were
-validated against compounds detected in whole blood samples from the same
-individuals.  
-In the original method, samples were washed three times to remove residual
-substances from the surface of the calculus that originated from oral fluids,
-and only extract substances from the calculus. In our samples the washes served
-to remove potential contaminants from the burial environment and post-excavation
-handling.  
 The list of targeted compounds included both naturally occurring compounds known
 to have been used in the past, as well as synthetic modern drugs that did not exist
 at the time (e.g. Fentanyl, MDMA, Amphetamine). These were part of the toxicology
@@ -27,32 +18,20 @@ screening for the original method [@sorensenDrugsCalculus2021],
 developed on cadavers. In our study they serve as an authentication step, as their
 presence in archaeological samples could only be the result of contamination.
 
-Briefly, dental calculus was treated with citric acid and the dissolution extracts
-were cleaned using weak and strong polymeric cation-exchange sorbents. Samples
-were washed with 0.5 mL MeOH for 10 seconds. Samples were weighed before and after
-each wash. Samples were air-dried for 24 hours at room temperature after each wash.
-Extracts from each wash were analysed by injecting 5 mL volume into the column
-of an Exion UHPLC system that consisted of two Exion AD pumps, an Exion AD
-multiplate autosampler set at 10 $\pm$ 2 &deg;C and an Exion AC column oven set
-at 40 $\pm$ 2 &deg;C (Sciex, Ontario, Canada).
-Separation was performed using a Raptor Biphenyl UHPLC column (2.7 mm, 2.1 mm I.D.
-$\times$100 mm) (Restek, Bellefonte, PA). The mass spectrometer was a Sciex QTRAP
-6500+ with a TurboIonSpray probe for electrospray ionisation.  
-The remaining calculus was dissolved using lysing tube beads in 800 $\mu$L of 0.5
-$\small{M}$ citric acid (CA) and 50 $\mu$L stable isotope-labelled analogue used
-as internal standards (SIL-IS) solution for 1 h at ambient
-temperature with gentle shaking. The suspension was then mixed with 800 $\mu$L
-MeOH and centrifuged at 10,000 $\times$ g for 5 mins, and analysed by the same
-method as the wash extracts.
-Data analysis was performed using Analyst 1.7 and MultiQuant 3.0.3 (Sciex).
-Raw quantities of compounds are presented in ng and concentrations as ng / mg.  
+Briefly, samples of dental calculus were washed three times each with one mL of
+methanol (MeOH), to remove surface contaminants. The wash solutions were collected
+separately. The solvent was
+evaporated and the residues were dissolved in 50 µL 30% MeOH.
+The washed calculus was homogenized in presence of 0.5 M citric acid using a lysing
+tube with stainless steel beads. Following one hour of incubation the dissolution
+extract was cleaned by weak and strong cation-exchange. After evaporation of the
+elution solvent the residue was dissolved in 50 µL 30% MeOH.
+The final extracts obtained from washing and dissolution of the dental calculus were
+analysed by UHPLC-MS/MS using a reversed-phase biphenyl column for chromatography.
+To obtain quantitative results, isotope dilution was applied.
 For more details about the method and validation, see the original study by
 Sørensen and colleagues [-@sorensenDrugsCalculus2021].
 
-Of the `r nrow(demography)` individuals that were analysed,
-`r nrow(filter(metadata, replicated == TRUE))` individuals were subsequently
-replicated using leftover calculus from the original DNA study.
-<!--in the same lab? different lab? -->
 
 ### Skeletal analysis
 
@@ -63,8 +42,8 @@ and pelvic morphological traits [@Standards1994]. Age-at-death was estimated usi
 dental wear,
 auricular and pubic surface appearance, cranial suture closure, and epiphyseal fusion 
 [@Standards1994; @SucheyBrooks1990; @buckberryAuricular2002; @lovejoyAuricular1985; @meindlSutureClosure1985], and divided into the following categories:
-early young adult (EYA, 18-24), late young adult (LYA, 25-34), middle adult (MA, 
-35-49), old adult (Old, 50+).
+early young adult (EYA, 18-24 years), late young adult (LYA, 25-34 years), middle adult (MA, 
+35-49 years), old adult (Old, 50+ years).
 
 #### Paleopathology
 
@@ -72,21 +51,21 @@ Pathological conditions and lesions that occur frequently in the population were
 included in the analysis. Data were
 dichotomised to presence/absence to allow statistical analysis.
 Osteoarthritis (OA) was considered present in cases where eburnation was visible
-on one or more joint surface.
+on one or more joint surfaces.
 Vertebral osteophytosis is identified by marginal lipping and/or osteophyte
 formation on the margin of the superior and inferior surfaces of the vertebral
 body.
 Cribra orbitalia (CO) was diagnosed based on presence of pitting on the superior
-surface of the orbit. No distinction was made between active or <!-- ? --> lesions.
+surface of the orbit. No distinction was made between active or healing lesions.
 Degenerative disc disease (DDD), or spondylosis, is identified as a large diffuse
 depression of the
 superior and/or inferior surfaces of the vertebral body [@rogersPalaeopathologyJoint2000].
 Schmorl's nodes (SN) are identified as any cortical depressions on the surface of
 the vertebral body.
-Data on chronic maxillary sinusitis from @casnaUrbanizationRespiratory2021 were
+Data on chronic maxillary sinusitis (CMS) from @casnaUrbanizationRespiratory2021 were
 included in this study to assess the relationship between upper respiratory
 diseases with environmental factors (i.e. tobacco smoke, caffeine consumption).
-Lesions associated with chronic maxillary sinusitis (CMS) as defined by
+Lesions associated with CMS as defined by
 @boocockMaxillarySinusitis1995 were
 recorded for each individual and classified as "pitting", "spicule-type bone
 formation", "remodeled spicules", or "white pitted bone". CMS was scored as absent

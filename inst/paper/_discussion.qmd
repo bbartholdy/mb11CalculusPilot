@@ -3,8 +3,7 @@ In this study we were able to extract and identify multiple alkaloids and salicy
 acid from the
 dental calculus of individuals from Middenbeemster, a 19th century Dutch
 archaeological site. We applied ultra-high-performance liquid chromatography-tandem
-mass spectrometry method using pneumatically assisted electrospray ionisation
-(UHPLC-ESI-MS/MS), a method that was validated by co-occurrence
+mass spectrometry (UHPLC-MS/MS), a method that was validated by co-occurrence
 of drugs and metabolites in dental calculus and blood [@sorensenDrugsCalculus2021].
 Here we have shown that the method can also be successfully applied to archaeological
 dental calculus.
@@ -17,12 +16,11 @@ We discuss the implications of these findings in light of historical and
 archaeological evidence for the consumption of these drugs.
 
 <!-- compounds detected with potential sources, and those that were surprisingly missing -->
-
 <!-- nicotine and cotinine: tobacco, obviously...-->
-Nicotine and its principal metabolite, cotinine, were strongly positively correlated,
+Nicotine and its principal/main metabolite, cotinine, were strongly positively correlated,
 both in concentration and presence/absence in individuals (@tbl-pearson and @fig-polycorr).
-The detection of nicotine and cotinine is not surprising, as tobacco-use and
-pipe-smoking in the Beemsterpolder is well-documented in the literature
+The detection of nicotine and cotinine is not surprising, as pipe-smoking in the
+Beemsterpolder is well-documented in the literature
 [@aten400JaarBeemster2012; @boumanBegravenis2017], and visible on the skeletal
 remains as pipe notches [@lemmersMiddenbeemster2013].
 There is also documented medicinal use of nicotine in the Beemsterpolder,
@@ -47,9 +45,8 @@ Theophylline and caffeine were positively correlated in our samples, though to a
 lesser extent than nicotine and cotinine, so we are unable to determine if they
 originated from the same source (@tbl-pearson and @fig-polycorr).
 Caffeine and theophylline have very similar chemical structures, so we expect
-they would experience similar rates of incorporation and degradation
-degradation, allowing us to make interpretations the ratio and correlations
-between the compounds.
+they would experience similar rates of incorporation and degradation, allowing
+us to interpret the ratio and correlations between the compounds.
 Caffeine is present in coffee, tea, and cocoa beans, with concentrations slightly
 higher in coffee
 [@stavricVariabilityCaffeine1988; @chinCaffeineContent2008; @bispoSimultaneousDetermination2002; @srdjenovicSimultaneousHPLC2008].
@@ -108,29 +105,27 @@ A Dutch medicinal use of hemp involved an emulsion prepared from the seeds of
 the plants to treat pain and various stomach ailments. Another
 preparation involving the roots of the plants was used for inflammation, gout,
 and joint pains [@clarkeCannabisEvolution2013].
-The ability to detect cannabinoids in calculus may be limited by a reduced ability
+The ability to detect cannabinoids in calculus may be limited by their reduced ability
 to diffuse from serum to salivary glands due to an affinity for protein-binding,
-[@sorensenEffectAntioxidants2018; @sorensenDrugsCalculus2021],
-meaning detection would rely on oral consumption of the cannabinoids. Even then,
+[@coneInterpretationOral2007],
+meaning detection would rely on oral consumption. Even then,
 the overall instability of some cannabinoids could also affect detection
 [@sorensenEffectAntioxidants2018; @lindholstLongTerm2010].
 However, given the lack of replication, we cannot with security confirm that
 cannabis was used by the Beemster population.
  
 <!-- opioids: Damn... that would've been awesome -->
-Despite many of our sampled individuals living during the height of the opium era
-in the Netherlands, none of the targeted opioids
+Despite many of our sampled individuals having lived during the height of the opium era
+in the Netherlands [@machtHistoryOpium1915], none of the targeted opioids
 (morphine, codeine, thebaine, papaverine, norcodeine, noscapine)
 were detected. 
-Sylvius de la Boe (1614–1672), a German-born physician who studied anatomy at
-Leiden University, the Netherlands, relied heavily on opium [@machtHistoryOpium1915].
 The absence of opioids could be a result of the people ascribing more to the
 "traditional" rather than "scientific" medicine, although laudanum and
 another opium containing concoction was part of the "traditional" medicine in
 the Netherlands [@leuwProhibitionLegalizationDutch1994], including Middenbeemster
 [@aten400JaarBeemster2012]. It was also generally
-considered a drug of the upper class [@scheltemaOpiumTrade1907], and may be
-more common in an urban center.
+considered a drug of the upper class [@scheltemaOpiumTrade1907], and may have been
+more common in urban centers.
 The absence could also be attributed to postmortem degradation.
 It has been shown that, while abundant in opium, morphine
 degrades rapidly, while thebaine and papaverine are more resistant to various
@@ -160,17 +155,14 @@ during analysis.<!--and hope this will serve as a reminder of the importance of 
 <!-- correlations with skeletal indicators -->
 We explored the relationship between detected compounds and various skeletal
 indicators, such as pathological and dental lesions, preservation, and pipe notches.
-We found no evidence to suggest that preservation of the skeleton influences
-the recovery of compounds from the dental calculus. This could be due to
-the good overall preservation of both teeth and dental calculus, which often
-preserves better than the rest of the skeleton.  
+We found some evidence to suggest that preservation of the skeleton influences
+the recovery of compounds from the dental calculus, with well-preserved skeletons
+potentially serving as a better target for sampling.  
 We found no correlation between the number of pipe notches
 and the concentration of nicotine and cotinine, suggesting that our ability
 to detect tobacco consumption in dental calculus does not necessarily rely on
 targeting frequent smokers; here, we consider individuals with multiple pipe notches
 as likely to have been heavy smokers.  
-<!-- inter-individual variability in calculus formation and degradation depending
-on microbiome, diet, etc. -->
 We found a positive correlation between CMS and nicotine, which may be
 indicative of the impact tobacco smoking had on the respiratory health of the
 Beemster inhabitants.
@@ -188,7 +180,7 @@ effect on the respiratory system, suggesting a preventive association between
 caffeine intake and pneumonia
 [e.g. @alfaroChronicCoffee2018; @kondoAssociationCoffee2021].
 However, while the
-upper respiratory tract seems to benefit from chronic coffee consumption, it is
+lower respiratory tract seems to benefit from chronic coffee consumption, it is
 possible that elevated caffeine intake impacts mucosal moisture due to its
 dehydrating effect [@maughanCaffeineIngestion2003], thereby exposing individuals
 to greater risk of sinus infection. 
@@ -221,7 +213,7 @@ and since these glands are located closest to the lower incisors, they may be th
 most effective target for these studies.
 This has yet to be systematically
 tested in archaeological dental calculus.
-Because we homogenised samples from multiple teeth of an indiviual, we were unable
+Because we homogenised samples from multiple teeth of an individual, we were unable
 to test the effect of oral biogeography.
 It is also possible that resident microflora within
 biofilms contribute to alkaloid breakdown and that the presence of caffeine and
@@ -262,35 +254,35 @@ This is a very rough estimate, as the presence of a pipe notch is likely not a
 perfect indicator of whether or not someone consumed tobacco.
 Dental calculus is also
 more transient than for example bone, as it can be mechanically removed,
-intentionally or unintentionally, during life<!--cite-->. This would remove all
-trace of the alkaloids consumed prior to its removal, and provide a blank slate
-for newly formed calculus.  
+intentionally or unintentionally, during life, eliminating
+all trace of the alkaloids consumed prior to its removal.  
 Quantitation of the detected compounds may have limited value in archaeological
-samples, and will greatly affect correlations related to concentration.
-The detected quantity of a compound will depend on the quantity in dental
-calculus during life, which is largely dependent on quantity of consumption,
-how often the
-calculus was disrupted/removed, and inter-individual factors such as calculus
-formation, and metabolic breakdown of the compound
-[@mackiePreservationMetaproteome2017; @velskoAncientDental2022a].
+samples due to degradation, and will greatly affect our correlations related to
+concentration.
 Following burial, compound stability over
 time will play a large role, as will microbial degradation of compounds by bacteria
 and funghi in soil [@liuNicotinedegradingMicroorganisms2015], as well as
 the soil environment, such as temperature, pH, and oxygen availability
-[@lindholstLongTerm2010].  
-Perhaps the main limitation, which is also true for many other analyses on
-archaeological materials, is that detecting the absence of a compound is not possible.
-The absence of a compound is
-not evidence of its absence, which complicates the interpretation of our results.
+[@mackiePreservationMetaproteome2017; @lindholstLongTerm2010].  
+The detected quantity of a compound will also depend on the quantity in dental
+calculus during life, which is largely controlled by quantity of consumption,
+how often the
+calculus was disrupted/removed, metabolic breakdown of the compound, and inter-
+and intra-individual factors related to stages of biofilm formation, maturation,
+and mineralisation
+[@lustmannScanningElectron1976; @velskoMicrobialDifferences2019; @zijngeBiofilmArchitecture2010].
+In short, this means it is not really possible to detect the absence of a compound.
+The absence of a compound is not evidence of absence of consumption. This complicates
+the interpretation of our results.
 We have attempted to minimise errors occurring due to this limitation by including
 a relatively large sample of individuals. Although given the relatively low
 detection rate seen in tobacco, this remains a major limitation, and will likely
-been compounded by increasing antiquity of the samples.
+be compounded by increasing antiquity of the samples.
 The replication of samples increases the evidence of absence if the compound
 was absent in both batches.
 
 Future studies should explore how sampling from various types of teeth
-and their position in the mouth effects the probability of a compound becoming
+and their position in the mouth affects the probability of a compound becoming
 entrapped in dental calculus.
 This may also be related to properties within the oral cavity, as well as chemical
 properties of the compounds, which facilitate or reduce the incorporation-potential,
@@ -315,8 +307,8 @@ source of method validation and can help determine the feasibility of detecting
 certain alkaloids in oral fluid and, subsequently, dental calculus. Archaeologists,
 though, will likely be responsible for exploring dental calculus specific
 incorporation and retention of alkaloids, as well as their long-term preservation
-in the burial environment. Here, *in vitro* studies
-may provide valuable insights<!--shameless self-citation?-->.
+in the burial environment.<!-- move to discussion in disseration: Here, *in vitro* studies
+may provide valuable insights-->
 
 <!-- How it will facilitate the specific topic of research (e.g. archaeology) -->
 While a major limitation is the uncertainty surrounding whether or not a compound
@@ -327,6 +319,6 @@ notches are a useful way to identify tobacco consumption, pipe smoking was not t
 only mode of tobacco consumption, with others including chewing, drinking, cigars,
 and snuff [@goodmanTobaccoHistory1994, p.67]. Pipe-smoking
 was mainly practised by males [@lemmersMiddenbeemster2013; @eerkensDentalCalculus2018],
-so chromatographic methods, such as the one presented here,
+so methods like the one presented here
 are suitable for exploring tobacco consumption in an entire society, rather
 than a trivial subset of past populations.<!--admittedly, this study did just that...-->
