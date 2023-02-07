@@ -1,12 +1,15 @@
 ---
 title: "Supplementary Materials"
+execute: 
+  echo: false
+  warning: false
 knitr: 
   opts_chunk: 
-    warning: false
     message: false
 format: 
   html:
     toc: true
+    code-fold: true
 ---
 
 ```{r}
@@ -31,7 +34,7 @@ calculus_full <- read_csv(here("inst/data/raw_data/calculus_full.csv"))
 sinusitis_clean <- read_csv(here("inst/data/derived_data/sinusitis_cleaned.csv"))
 path_cond_clean <- read_csv(here("inst/data/derived_data/path-conditions_cleaned.csv"))
 
-source(here("inst/scripts/setup-qmd.R"), local = knitr::knit_global())
+source(here("inst/scripts/setup-qmd.R"))
 ```
 
 ## Session information
@@ -47,10 +50,16 @@ print(sessionInfo(), locale = F)
 
 ### metadata
 
+<!-- id	sample	element	KZ_sample	KZ_element	replicated	batch1_weight	batch2_weight -->
+
 | variable | description |
 |---|---|
 | id | unique identifier for the individual |
 | sample | sample number for the UHPLC-MS/MS analysis |
+| element | which tooth (FDI notation) was sampled for UHPLC-MS/MS analysis |
+| replicated | Whether the sample was included in the replication batch (TRUE/FALSE) |
+| batch1_weight | weight (mg) of sample in batch 1 |
+| batch2_weight | weight (mg) of sample in batch 2 |
 
 
 ### dental-inv
@@ -59,8 +68,7 @@ Dental inventory
 
 | variable | description |
 |---|---|
-| feat | Identifier: Feature number of individual |
-| find | Identifier: Find number of individual |
+| id | unique identifier for the individual |
 | t11..t48 | Tooth number (FDI system) and status |
 
 Dental inventory key:
@@ -76,8 +84,7 @@ Caries lesions location
 
 | variable | description |
 |---|---|
-| feat | Identifier: Feature number of individual |
-| find | Identifier: Find number of individual |
+| id | unique identifier for the individual |
 | t11..t48 | Tooth number (FDI system) and location of caries |
 
 Caries location key:
@@ -96,8 +103,7 @@ Caries location key:
 
 | variable | description |
 |---|---|
-| feat | Identifier: Feature number of individual |
-| find | Identifier: Find number of individual |
+| id | unique identifier for the individual |
 | t11..t48 | Tooth number (FDI system) and periodontitis score (0-3) |
 
 Periodontitis score:
@@ -113,8 +119,7 @@ Periodontitis score:
 
 | variable | description |
 |---|---|
-| feat | Identifier: Feature number of individual |
-| find | Identifier: Find number of individual |
+| id | unique identifier for the individual |
 | t11..t48 | Tooth number (FDI system) and periapical lesion |
 
 - none = no lesion
@@ -127,8 +132,7 @@ Periodontitis score:
 
 | variable | description |
 |---|---|
-| feat | Identifier: Feature number of individual |
-| find | Identifier: Find number of individual |
+| id | unique identifier for the individual |
 | t11..t48 | Tooth number (FDI system) and deposit size (0-3) |
 
 - 0 = no calculus
@@ -154,8 +158,25 @@ Pathological conditions
 - CF = cribra femora
 - CO = cribra orbitalia
 
+## Sample
 
-## Sample demographics
+### Selection
+
+```{r}
+#| label: tbl-sampling
+#| tbl-cap: "Table showing which individuals were sampled in this study (element) and which individuals were sampled in the previous study (KZ_element)."
+metadata %>% 
+  select(id, element, KZ_element) %>% 
+  mutate(
+    element = case_when(is.na(element) ~ FALSE,
+                   TRUE ~ TRUE),
+    KZ_element = case_when(is.na(KZ_element) ~ FALSE,
+                   TRUE ~ TRUE),
+    )
+```
+
+
+### Demographics
 
 ```{r}
 #| label: male-sample
@@ -175,12 +196,12 @@ demography %>%
     theme_minimal()
 ```
 
-## Missing data
+### Missing data
 
 Missing data per dataset
 
 ```{r}
-#| label: fig-missing-hex
+#| label: fig-missing-caries
 caries %>%
   mutate(across(!id, ~ is.na(.x))) %>%
   select(!id) %>%
@@ -191,13 +212,13 @@ caries %>%
   pivot_longer(-id) %>% 
   ggplot(aes(x = name, y = id, fill = value)) +
     geom_tile()
-
 ```
 
 Missing data across all dental datasets
 
 ```{r}
 #| label: fig-missing-dental
+#| fig-cap: "Number of missing values per individual and tooth across all dental scores (caries, periodontitis, periapical lesions, calculus)."
 dental_long %>%
   mutate(across(c(caries, periodont, periap, calculus), is.na)) %>%
   select(c(caries, periodont, periap, calculus, id, tooth)) %>%
@@ -211,6 +232,84 @@ dental_long %>%
 
 
 ## UHPLC analysis
+
+```{r}
+#| label: setup-uhplc
+
+
+
+# presence/absence data frame
+uhplc_calculus_bin <- uhplc_calculus_long %>%
+  mutate(presence = if_else(quant > 0, 1, quant))
+
+# successfully replicated samples only
+uhplc_calculus_replicated <- uhplc_calculus_bin %>%
+  mutate(compound = str_remove(compound, "_calc")) %>%
+  group_by(id, sample, compound) %>% # combine batches
+  summarise(presence = sum(presence)) #%>%
+  # filter(presence == 0 | presence == 2) %>%
+  # group_by(compound) %>%
+  # mutate(presence = if_else(presence == 2, 1, 0)) # convert replications to presence/absence
+
+
+uhplc_calculus_replicated <- uhplc_calculus_bin %>%
+  filter(id %in% filter(metadata, replicated == TRUE)$id) %>%
+  #right_join(select(filter(metadata, replicated == TRUE)), by = c("id", "sample"))
+  #mutate(compound = str_remove(compound, "_calc")) %>%
+  group_by(id, sample, compound) %>% # combine batches
+  summarise(presence = sum(presence)) %>%
+  filter(presence == 0 | presence == 2) %>% # remove compounds only detected in one batch
+  group_by(compound) %>%
+  mutate(presence = if_else(presence == 0, 0, 1)) %>%  # convert replications to presence/absence
+  ungroup()
+
+uhplc_replicated_wide <- uhplc_calculus_replicated %>%
+  mutate(compound = case_when(compound == "nicotine" ~ "tobacco",
+                              compound == "cotinine" ~ "tobacco",
+                              TRUE ~ compound)) %>%
+  group_by(id, sample, compound) %>%
+  summarise(presence = sum(presence)) %>% # combine nicotine and cotinine
+  #remove_missing() %>%
+  mutate(presence = case_when(presence > 0 ~ TRUE,
+                              TRUE ~ FALSE)) %>%
+  pivot_wider(names_from = "compound", values_from = "presence")
+```
+
+
+The UHPLC-MS/MS method was validated in a separate study on cadavers received
+for forensic autopsy and toxicological analysis. Results from dental calculus were
+validated against compounds detected in whole blood samples from the same
+individuals [@sorensenDrugsCalculus2021].  
+In the original method, samples were washed three times to remove residual
+substances from the surface of the calculus that originated from oral fluids,
+and only extract substances from the calculus. In our samples the washes served
+to remove potential contaminants from the burial environment and post-excavation
+handling.
+
+Briefly, dental calculus was treated with citric acid and the dissolution extracts
+were cleaned using weak and strong polymeric cation-exchange sorbents. Samples
+were washed with 0.5 mL MeOH for 10 seconds. Samples were weighed before and after
+each wash. The wash solvent was evaporated to a residual volume of 10 µl and added
+50µl 30% methanol.
+Samples were air-dried for 24 hours at room temperature after each wash.
+Extracts from each wash were analysed by injecting 5 µL into the column
+on an Exion UHPLC system that consisted of two Exion AD pumps, an Exion AD
+multiplate autosampler set at 10 $\pm$ 2 &deg;C and an Exion AC column oven set
+at 40 $\pm$ 2 &deg;C (Sciex, Ontario, Canada).
+Separation was performed using a Raptor Biphenyl UHPLC column (2.7 mm, 2.1 mm I.D.
+$\times$ 100 mm) (Restek, Bellefonte, PA). The mass spectrometer was a Sciex QTRAP
+6500+ with a TurboIonSpray probe for electrospray ionisation.  
+The remaining calculus was dissolved using lysing tube beads in 800 $\mu$L of 0.5
+$\small{M}$ citric acid (CA) and 50 $\mu$L stable isotope-labelled analogue used
+as internal standards (SIL-IS) solution for 1 h at ambient
+temperature with gentle shaking. The suspension was then mixed with 800 $\mu$L
+MeOH and centrifuged at 10,000 $\times$ g for 5 mins, and analysed by the same
+method as the wash extracts.
+Data analysis was performed using Analyst 1.7 and MultiQuant 3.0.3 (Sciex).
+Raw quantities of compounds are presented in ng and concentrations as ng / mg.
+
+The samples in the replication batch were processed in the same way, but
+analysed on equipment used exclusively for oral samples.
 
 ```{r}
 #| label: tbl-lloq
@@ -323,6 +422,12 @@ for caffeine, nicotine, and cotinine.
 Nicotine and cotinine display the same relative relationship between samples. Where
 the nicotine quantity is high compared to other samples, the cotinine quantity
 will be similarly high (@fig-quant-weight-1 and @fig-quant-weight-1).
+
+The positive correlation between the weight of the calculus
+sample and recovered quantities of the compounds suggests sample weight may affect
+the ability to detect compounds; although, we were able to detect
+compounds in samples as small as 2 mg [@fig-quant-weight-1 and @fig-quant-weight-2].  
+
 
 ```{r}
 #| label: fig-quant-weight-1
@@ -442,36 +547,65 @@ preservation.
 uhplc_calculus_long %>%
   filter(
     !is.na(preservation),
-    !compound %in% c("cbd", "cbn", "cocaine", "thc", "thca-a", "thcva") # remove compounds not detected
+    batch == "batch1",
+    quant > 0,
+    #!compound %in% c("cbd", "cbn", "cocaine", "thc", "thca-a", "thcva"), # remove compounds not detected
     ) %>% 
-  ggplot(aes(x = preservation, y = quant, fill = preservation)) +
-    geom_violin() +
-    geom_jitter(width = 0.2) +
-    #geom_boxplot(alpha = 0.6, width = 0.2) +
-    facet_wrap(~ compound, scales = "free_y") +
-    theme_bw()
-# 
-# uhplc_calculus_demography %>%
-#   filter(
-#     !is.na(preservation),
-#     !compound %in% c("cbd", "cbn", "cocaine", "thc", "thca-a", "thcva") # remove compounds not detected
-#     ) %>% 
-#   ggplot(aes(x = preservation, y = quant, fill = preservation)) +
-#     geom_violin() +
-#     geom_jitter(width = 0.2) +
-#     #geom_boxplot(alpha = 0.6, width = 0.2) +
-#     facet_wrap(~ compound, scales = "free_y") +
-#     theme_bw()
+  ggplot(aes(x = preservation, y = quant)) +
+    geom_violin(aes(fill = preservation), alpha = 0.6) +
+    #geom_jitter(width = 0.2) +
+    geom_boxplot(width = 0.2) +
+    facet_wrap(~ compound, scales = "free_y", labeller = labeller(compound = compound_names), dir = "v") +
+    theme_bw() +
+    theme(
+      legend.position = "none",
+      panel.grid.major.x = element_blank(),
+      axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1)
+      ) +
+    labs(x = "Preservation", y = "Quantity (ng)") +
+    scale_fill_viridis_d()
 ```
 
 ```{r}
 #| label: fig-detection-preservation2
-#uhplc_calculus_demography %>%
+uhplc_calculus_long %>%
+  filter(
+    !is.na(preservation),
+    quant > 0,
+    batch == "batch2",
+    #!compound %in% c("cbd", "cbn", "cocaine", "thc", "thca-a", "thcva"), # remove compounds not detected
+    ) %>% 
+  ggplot(aes(x = preservation, y = quant)) +
+    geom_violin(aes(fill = preservation), alpha = 0.6) +
+    #geom_jitter(width = 0.2) +
+    geom_boxplot(width = 0.2) +
+    facet_wrap(~ compound, scales = "free_y", labeller = labeller(compound = compound_names), dir = "v") +
+    theme_bw() +
+    theme(
+      legend.position = "none",
+      panel.grid.major.x = element_blank(),
+      axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1)
+      ) +
+    labs(x = "Preservation", y = "Quantity (ng)") +
+    scale_fill_viridis_d()
+
+
+```
+
+Distribution of state-of-preservation in batches 1 and 2 to make sure the number
+of skeletons are not affecting the relationships shown above. Given our sample
+contains a smaller number of individuals with fair preservation, this may bias
+our interpretations (@fig-preservation-detection).
+
+```{r}
+#| label: fig-preservation-detection
 uhplc_calculus_long %>% 
-  filter(!is.na(preservation)) %>% 
-  ggplot(aes(x = preservation, y = quant, fill = preservation)) +
-    geom_boxplot() +
-    facet_wrap(~ compound, scales = "free_y") +
+  ungroup() %>% 
+  distinct(id, batch, .keep_all = TRUE) %>%
+  remove_missing(vars = c("preservation", "weight")) %>% 
+  ggplot(aes(x = preservation)) +
+    geom_bar() +
+    facet_wrap(~ batch) +
     theme_bw()
 ```
 
@@ -496,6 +630,38 @@ uhplc_calculus_long %>%
 tobacco <- uhplc_calculus_long %>%
   filter(compound %in% c("nicotine", "cotinine")) %>% 
   mutate(detection = if_else(is.na(conc), FALSE, TRUE))
+
+tobacco <- uhplc_calculus_long %>%
+  filter(
+    #batch == "batch2",
+    compound %in% c("nicotine", "cotinine"),
+    sex == "m" | sex == "pm"
+    ) %>% 
+  mutate(detection = if_else(quant == 0, 0, 1)) # 0 = not detected; NA = not included in batch 2.
+
+tobacco_accuracy <- tobacco %>%
+  remove_missing(vars = "quant") %>%
+  group_by(sample, id, .drop = F) %>% 
+  summarise(
+    detection = sum(detection),
+    #compound = compound
+    ) %>% 
+  left_join(select(demography, id, pipe_notch, preservation, age), by = "id") %>% 
+  mutate(
+    pipe_notch = if_else(pipe_notch > 0, "Y", "N"),
+    correct = case_when(
+      detection == 0 & pipe_notch == "N" ~ 1,
+      detection > 0 & pipe_notch == "Y" ~ 1,
+      detection > 0 & pipe_notch == "N" ~ NaN, # no way of knowing macroscopically if the person smoked without pipe
+      TRUE ~ 0
+    )
+  )
+
+
+accuracy_age <- tobacco_accuracy %>% # move to supplementary material
+  group_by(age) %>% 
+  summarise(mean = mean(correct, na.rm = T))
+
 
 tobacco_comb <- tobacco %>% 
   group_by(batch, sample, id, .add = TRUE) %>%
@@ -585,8 +751,39 @@ tobacco_ratio %>%
   #lm(ratio ~ age + sex + preservation + pipe_notch, tobacco_ratio)
 ```
 
+We found no correlation between the number of pipe notches
+and the concentration of nicotine and cotinine, suggesting that our ability
+to detect tobacco consumption in dental calculus does not necessarily rely on
+targeting frequent smokers; here, we consider individuals with multiple pipe notches
+as likely to have been heavy smokers.  
+
 No apparent correlation between the number of pipe notches
 and the concentration of nicotine or cotinine [@fig-corr-notches].
+
+The presence of pipe notch(es) in an individual and concurrent detection of nicotine
+and/or cotinine is used as a crude indicator of the accuracy of the method. When
+combining the results of both batches, the method was able to detect some form
+of tobacco in
+`r nrow(filter(tobacco_accuracy, pipe_notch == "Y", detection > 0))`
+of `r nrow(filter(tobacco_accuracy, pipe_notch == "Y"))`
+individuals with a pipe notch
+(`r scales::percent(nrow(filter(tobacco_accuracy, pipe_notch == "Y", detection > 0)) / nrow(filter(tobacco_accuracy, pipe_notch == "Y")), accuracy = 0.1)`).
+When also considering correct the absence of a tobacco alkaloid together with the absence
+of a pipe notch, the accuracy of the method is
+`r scales::percent(mean(tobacco_accuracy$correct, na.rm = T), accuracy = 0.1)`.
+Accuracy in the old adult age category is
+`r scales::percent(filter(accuracy_age, age == "old")$mean, accuracy = 0.1)`.
+
+In the replicated samples only, tobacco detection was successful in
+`r nrow(filter(replicated_accuracy, pipe_notch == "Y", detection > 0))`
+out of
+`r nrow(filter(replicated_accuracy, pipe_notch == "Y"))`
+pipe smokers
+(`r scales::percent(nrow(filter(replicated_accuracy, pipe_notch == "Y", detection > 0)) / nrow(filter(replicated_accuracy, pipe_notch == "Y")), accuracy = 0.1)`)
+Including individuals with absence of a pipe notch and concurrent absence of
+compounds as a correct identification, gives an overall accuracy of
+`r scales::percent(mean(replicated_accuracy$correct, na.rm = T), accuracy = 0.1)`.
+
 
 Nicotine and cotinine detection successfully identified
 `r nrow(filter(tobacco_comb, batch == 1, pipe_notch == "Y", detection > 0))`
@@ -624,6 +821,12 @@ for both nicotine and cotinine, and had no signs of a pipe notch.
 
 ## Dental analysis
 
+Pipe notches were identified by wear on the mesial and distal
+sides of the crowns between to teeth, resulting from the practice of clenching a
+pipe between adjacent and isomeric teeth, and which differs from the occlusal
+wear that occurs through mastication. Wear occurring between adjacent and isomeric
+teeth were counted as a single pipe notch.
+
 ```{r}
 #| label: fig-dental-plots
 #| layout-ncol: 2
@@ -642,11 +845,11 @@ dental_long %>%
 
 ### Caries
 
-Caries were scored based on location in each individual. Multiple locations on
-a single tooth is possible. The size of caries was also
+Caries were scored as the location on each individual tooth. Multiple locations on
+a single tooth were separated with `;`. The size of caries was also
 recorded, but not used in further analysis. Large caries that cover multiple
-surfaces were recorded as 'crown'. Caries counts were extracted based on the
-number of locations recorded.
+surfaces with an unknown origin were recorded as 'crown'. Caries counts were
+extracted based on the number of locations recorded.
 
 | code | surface |
 |---|---|
@@ -683,8 +886,8 @@ surface <- c("mes", "dis", "occ", "buc", "lin", "root", "crown") # here occ = in
 In the `r caries_ratio_site$n_teeth` that were examined, `r caries_ratio_site$count`
 teeth had caries
 (`r scales::percent(caries_ratio_site$ratio, accuracy = 0.1)`).
-This frequency has very little meaning, and was further broken down into tooth
-class and individuals.
+This frequency has very little meaning, and was further broken down into a ratio
+for each individual and each tooth class.
 
 ```{r}
 caries_count %>%
@@ -823,7 +1026,34 @@ of a compound (or vice versa).
 
 ## Pathological conditions
 
+Data on chronic maxillary sinusitis from @casnaUrbanizationRespiratory2021 were
+included in this study to assess the relationship between upper respiratory
+diseases with environmental factors (i.e. tobacco smoke, caffeine consumption).
+Chronic maxillary sinusitis (CMS) is the inflammation of the lower paranasal
+sinuses, air-filled pockets located in the skull that defend the organism against
+inhaled particulate matter and pathogens. This occurs through the production of
+mucus carried by small hairs toward an opening situated on the superior part of
+the sinus, where pathogens are drained [@slavinDiagnosisManagement2005]. Without
+drainage, mucus begins to accumulate in the sinuses, providing an ideal environment
+for bacterial growth and thereby contributing to inflammation of the mucous
+membranes and subsequently of the bone surfaces [@jangBoneInvolvement2002].
+Lesions associated with CMS as defined by @boocockMaxillarySinusitis1995 were
+recorded for each individual and classified as "pitting", "spicule-type bone
+formation", "remodeled spicules", or "white pitted bone". CMS was scored as absent
+when the sinus presented smooth surfaces with little or no associated pitting.
+To facilitate inspection, fragmented sinuses were cleaned using a dry tooth-brush
+and water where necessary. If the sinuses were not observable with the naked eye,
+they were examined with a flexible medical endoscope (Pentax, model: FNL-10RBS,
+ø=4mm; view angle=30°) inserted through minor breaks naturally occurring on the
+inferior nasal conchae and palatine bone, where the bone tissue is thinner.
 
+<!-- description of other diseases
+Osteoarthritis
+Vertebral osteophytosis
+Cribra orbitalia
+Degenerative disc disease
+Schmorl's nodes
+-->
 
 ## Statistical analysis
 
@@ -861,3 +1091,12 @@ polycorr$rho
 ggcorrplot::ggcorrplot(polycorr$rho, type = "lower", show.diag = F)
 ```
 
+
+The sample bias caused by targeting larger calculus deposits may also affect the detection of
+compounds, as caffeinated drinks are often
+acidic, and may cause a lower calculus formation.
+We only found a weak negative correlation
+between caffeine concentration and dental calculus index, but since we targeted individuals with
+calculus, this may inadvertently have been controlled for during sample collection.
+
+<!-- correlations on caries and calculus separated by quadrant/tooth type -->

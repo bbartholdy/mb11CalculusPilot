@@ -1,0 +1,114 @@
+project:
+  type: default
+  output-dir: _output
+  execute-dir: project
+  #pre-render: ../scripts/setup-qmd.R
+title: "Multiproxy analysis exploring patterns of diet and disease in dental calculus and skeletal remains from a 19th century Dutch population"
+author:
+  - Bjørn Peare Bartholdy:
+      correspondence: "yes"
+      email: b.p.bartholdy@arch.leidenuniv.nl
+      orcid: 0000-0003-1689-0557
+      institute:
+        - leiden
+  - Jørgen B. Hasselstrøm:
+      institute: aarhus
+  - Lambert K. Sørensen:
+      institute: aarhus
+  - Maia Casna:
+      institute: leiden
+  - Menno Hoogland:
+      institute: leiden
+  - Historisch Genootschap Beemster:
+      institute: hgb
+  - Amanda G. Henry:
+      institute: leiden
+institute:
+  - leiden:
+      name: Department of Archaeological Sciences, Leiden University
+      address: Einsteinweg 2, 2333 CC, Leiden, Netherlands
+  - aarhus:
+      name: Department of Forensic Medicine, Aarhus University
+      address: Palle Juul-Jensens Boulevard 99, 8200, Aarhus N, Denmark
+  - hgb:
+      name: Historisch Genootschap Beemster
+      address: Postbus 73, 1462 ZH, Middenbeemster, Netherlands
+title-block-published: "Last updated"
+#date: now
+#date-format: long
+format:
+  html:
+    theme: cosmo
+    output-file: "draft-manuscript-3.html"
+  pdf:
+    keep-tex: true
+    output-file: "draft-manuscript-3.pdf"
+    documentclass: article
+    geometry:
+      - top=30mm
+      - left=30mm
+      - heightrounded
+    include-in-header:
+      text: |
+        \usepackage{lineno}
+        \linenumbers
+  docx:
+    output-file: "draft-manuscript-3.docx"
+#output-file: "_output/draft-manuscript-2"
+execute:
+  freeze: true
+  echo: false
+  warning: false
+knitr:
+  opts_chunk:
+    message: false
+    comment: "#>"
+    fig-path: "../figures/"
+    fig-dpi: 600
+filters:
+  - ../templates/scholarly-metadata.lua
+  - ../templates/author-info-blocks.lua
+  #- ../templates/pagebreak.lua
+bibliography: references.bib
+csl: "apa.csl" # Insert path for the bib-style
+abstract: |
+  Dental calculus is an excellent source of information on the dietary patterns
+  of past populations, including consumption of plant-based items. The detection
+  of plant-derived residues such as alkaloids and their metabolites in dental
+  calculus provides direct evidence of consumption by individuals within a
+  population.
+  We conducted a study on 41 individuals from Middenbeemster, a 19th century rural
+  Dutch archaeological site. Skeletal and dental analysis was performed to explore
+  potential relationships between pathological conditions/lesions and the presence
+  of alkaloids. We also explored other factors potentially affecting the detection
+  of alkaloids, including sample weight and skeletal preservation. Dental calculus
+  was sampled and analysed using ultra-high-performance liquid chromatography-tandem
+  mass spectrometry (UHPLC-ESI-MS/MS).
+  We were able to detect nicotine, cotinine, caffeine, theophylline, and salicylic
+  acid.
+  By detecting these compounds we are able to show the consumption of tea and
+  coffee and smoking of tobacco on an individual scale, which is also confirmed
+  by historic documentation and identification of pipe notches in the dentition.
+  Nicotine and/or cotinine was present in 60% of individuals with at least one
+  visible pipe notch.
+  We find some influence of skeletal preservation on the detection
+  of alkaloids and salicylic acid, with higher quantities of compounds extracted
+  from well-preserved individuals, and also observe a relationship between weight
+  of the calculus sample and raw quantity of the detected compounds, and we were
+  able to detect alkaloids in samples as small as 2 mg. We found correlations
+  between chronic maxillary sinusitis and the presence of multiple alkaloids.
+  We show that there are many limitations that will need to be addressed going
+  forward with this type of analysis, and stress the need for more systematic
+  research on the consumption of alkaloid-containing items and their subsequent
+  concentration and preservation in dental calculus, in addition to how mode of
+  consumption may affect concentrations on different parts of the dentition.
+  Despite the limitations, this preliminary study illustrates the many benefits
+  of using calculus to target a variety of compounds that could have been ingested
+  as medicine or diet, or consumed in a different manner. This method allows us
+  to directly address specific individuals, which can be especially useful in
+  individuals that are not always well-documented in historic documentation,
+  such as rural populations, children and women.
+keywords: |
+  dental calculus; LC-MS/MS; alkaloids; dental pathology; sinusitis; caffeine; tobacco
+#highlights: |
+ # These are the highlights.
