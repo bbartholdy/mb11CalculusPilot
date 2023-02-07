@@ -9,9 +9,12 @@ Here we have shown that the method can also be successfully applied to archaeolo
 dental calculus.
 We extend findings from previous studies on alkaloids in archaeological samples
 by extracting multiple different alkaloids from dental calculus, including
-cannabinoids, cocaine, nicotine, cotinine, caffeine, theophylline, and salicylic
-acid in multiple individuals. Of these compounds, the cannabinoids and cocaine
-could not be replicated in a second run on different samples from the same individuals.
+nicotine, cotinine, caffeine, theophylline, and salicylic
+acid in multiple individuals. The detection of these compounds was
+solidified in a replication analysis on different samples from the same
+individuals.
+Cocaine and multiple cannabinoids were also detected during the first
+analysis, but were not replicated.
 We discuss the implications of these findings in light of historical and
 archaeological evidence for the consumption of these drugs.
 
@@ -158,23 +161,19 @@ indicators, such as pathological and dental lesions, preservation, and pipe notc
 We found some evidence to suggest that preservation of the skeleton influences
 the recovery of compounds from the dental calculus, with well-preserved skeletons
 potentially serving as a better target for sampling.  
-We found no correlation between the number of pipe notches
-and the concentration of nicotine and cotinine, suggesting that our ability
-to detect tobacco consumption in dental calculus does not necessarily rely on
-targeting frequent smokers; here, we consider individuals with multiple pipe notches
-as likely to have been heavy smokers.  
 We found a positive correlation between CMS and nicotine, which may be
 indicative of the impact tobacco smoking had on the respiratory health of the
 Beemster inhabitants.
 Tobacco smoke may play a significant role in diseases
-of the upper respiratory tract, including CMS [@rehImpactTobacco2012]. Although
+of the upper respiratory tract, including chronic maxillary sinusities
+[@rehImpactTobacco2012]. Although
 the mechanisms by which smoking increases the risk of infections is not fully
 understood, solid evidence has been presented linking tobacco smoke to
 increased mucosal permeability and impairment of mucociliary clearance
 [@arcaviCigaretteSmoking2004]. Such changes, together with an altered immunologic
-response, are thought to predispose to the development of CMS
+response, are thought to predispose to the development of chronic maxillary sinusitis
 [@slavinDiagnosisManagement2005].  
-We also observed a moderate positive correlation between CMS and caffeine which
+We also observed a moderate positive correlation between chronic maxillary sinusitis and caffeine which
 contradicts previous research linking chronic coffee consumption with a positive
 effect on the respiratory system, suggesting a preventive association between
 caffeine intake and pneumonia
@@ -234,14 +233,15 @@ communities, e.g. biofilms [@takahashiOralMicrobiome2015].
 <!-- How it facilitates scientific research -->
 
 <!-- limitations of the platform show which questions would be unanswered -->
-Since we targeted individuals with moderate-to-large calculus deposits,
-it is likely a biased sample. The presence of calculus may increase risk of premature death
+Because we targeted individuals with moderate-to-large calculus deposits,
+it is likely a biased sample. The presence of calculus may increase the
+risk of premature death
 [@yaussyCalculusSurvivorship2019], and periodontal disease (which may or may not
 be associated with dental calculus build-up) is a risk-factor for
 respiratory diseases, if periodontal and respiratory pathogens
-enter the blood stream
+enter the bloodstream
 [@azarpazhoohSystematicReview2006; @scannapiecoRoleOral1999; @scannapiecoPotentialAssociations2001].
-In our sample, the percentage of CMS
+In our sample, the percentage of chronic maxillary sinusitis
 (`r scales::percent(mean(explore_select$CMS, na.rm = T), accuracy = 0.1)`)
 is lower than in another (more representative) male sample (44.1%)
 [@casnaUrbanizationRespiratory2021], and the caries percentage is similarly lower
@@ -261,7 +261,7 @@ samples due to degradation, and will greatly affect our correlations related to
 concentration.
 Following burial, compound stability over
 time will play a large role, as will microbial degradation of compounds by bacteria
-and funghi in soil [@liuNicotinedegradingMicroorganisms2015], as well as
+and fungi in soil [@liuNicotinedegradingMicroorganisms2015], as well as
 the soil environment, such as temperature, pH, and oxygen availability
 [@mackiePreservationMetaproteome2017; @lindholstLongTerm2010].  
 The detected quantity of a compound will also depend on the quantity in dental
@@ -275,11 +275,9 @@ In short, this means it is not really possible to detect the absence of a compou
 The absence of a compound is not evidence of absence of consumption. This complicates
 the interpretation of our results.
 We have attempted to minimise errors occurring due to this limitation by including
-a relatively large sample of individuals. Although given the relatively low
-detection rate seen in tobacco, this remains a major limitation, and will likely
-be compounded by increasing antiquity of the samples.
-The replication of samples increases the evidence of absence if the compound
-was absent in both batches.
+a relatively large sample of individuals and replicating our analysis. Although
+given the relatively low detection rate seen in tobacco, this remains a major
+limitation, and will likely be compounded by increasing antiquity of the samples.
 
 Future studies should explore how sampling from various types of teeth
 and their position in the mouth affects the probability of a compound becoming
@@ -293,11 +291,6 @@ that could be of interest for exploring past diets and medicinal treatments. The
 list of targeted compounds can be expanded as we discover more potential targets
 based on which specific compounds/metabolites are more likely to be incorporated
 and preserved in dental calculus.  
-We found a strong correlation between nicotine and cotinine, but
-a lesser correlation between caffeine and theophylline. This is likely because
-caffeine and theophylline have multiple plausible sources in our population, but
-more research is needed on the relationship between parent compounds and their
-metabolites in dental calculus.  
 There is an increasing interest in using oral fluid as a means of detecting alkaloids
 in living
 individuals due to the non-invasive nature of the testing compared to blood
@@ -307,13 +300,17 @@ source of method validation and can help determine the feasibility of detecting
 certain alkaloids in oral fluid and, subsequently, dental calculus. Archaeologists,
 though, will likely be responsible for exploring dental calculus specific
 incorporation and retention of alkaloids, as well as their long-term preservation
-in the burial environment.<!-- move to discussion in disseration: Here, *in vitro* studies
-may provide valuable insights-->
+in the burial environment.<!-- move to discussion in disseration: Here, *in vitro* studies may provide valuable insights-->
 
 <!-- How it will facilitate the specific topic of research (e.g. archaeology) -->
+
+<!-- rephrase -->
 While a major limitation is the uncertainty surrounding whether or not a compound
-is actually absent, the power of the method is in detecting food and other items
-that are consumed in a manner that does not allow macroscopic detection. Taking
+is actually absent, the power of the method lies
+in the ability to detect dietary and other compounds that were incorporated
+via multiple
+consumption pathways that are not detected by other methods.
+Taking
 tobacco consumption as an example; while pipe
 notches are a useful way to identify tobacco consumption, pipe smoking was not the
 only mode of tobacco consumption, with others including chewing, drinking, cigars,
@@ -321,4 +318,7 @@ and snuff [@goodmanTobaccoHistory1994, p.67]. Pipe-smoking
 was mainly practised by males [@lemmersMiddenbeemster2013; @eerkensDentalCalculus2018],
 so methods like the one presented here
 are suitable for exploring tobacco consumption in an entire society, rather
-than a trivial subset of past populations.<!--admittedly, this study did just that...-->
+than a trivial subset of past populations.<!--admittedly, our sample was just that...-->
+Combined with other methods, it can also give us a more complete picture
+of dietary patterns and medicinal/recreational plant-use in the past by capturing
+multiple possible incorporation pathways of dietary (and other) compounds.

@@ -6,7 +6,8 @@ biomarkers of diet and disease on an increasingly large scale
 [@warinnerEvidenceMilk2014; @velskoDentalCalculus2017; @gismondiMultidisciplinaryApproach2020].
 
 <!-- define alkaloids -->
-One such biomarker is alkaloids, a plant-derived group of compounds. Many alkaloids
+One such collection of biomarkers is alkaloids, a plant-derived group of compounds.
+Many alkaloids
 have important medicinal and psychoactive effects in humans, and their direct
 detection, or detection of their metabolites, is of great interest to archaeologists.
 Previous studies have successfully recovered alkaloids in archaeological
@@ -27,15 +28,14 @@ incorporation through oral consumption of alkaloid-containing plants, whether
 deliberate or accidental;
 and (2) passive diffusion as alkaloids and other compounds are transferred from
 plasma to saliva, and then into the oral cavity through the salivary glands
-in the hours-to-days following consumption [@coneInterpretationOral2007]. The
+in the hours to days following consumption [@coneInterpretationOral2007]. The
 relation to plasma
 is why there is often a close correlation between presence (not concentration)
 of drugs in oral fluid and blood
 [@coneInterpretationOral2007; @willeRelationshipOral2009; @milmanOralFluid2011].
-The second pathway allows the
-detection of parent compounds and their metabolites that not only are consumed orally,
-but also any other mode
-of consumption or administration, as long as it is excreted through saliva<!--cite e.g. injection or topical The second pathway may also be more
+The second pathway allows the identification of parent compounds that are not
+consumed orally, as long as they, or their metabolites, are excreted through saliva.
+<!--cite e.g. injection or topical The second pathway may also be more
 detectable, as the excretion of compounds through saliva may take hours to days
 whereas compounds spend less time in the oral cavity during direct consumption-->.
 
@@ -55,7 +55,7 @@ by various methods to show a record of consumption during life.
 In this study we use a ultra-high-performance liquid chromatography-tandem mass
 spectrometry (UHPLC-MS/MS) method that was developed in a previous study on dental
 calculus from cadavers and validated by comparing the results to compounds detected
-in the blood of the same individuals.
+in the blood of the same individuals [@sorensenDrugsCalculus2021].
 All compounds that were detected in the blood were also detected in dental calculus,
 with additional compounds present in dental calculus that were not present
 in blood, suggesting that dental calculus represents a comprehensive history of

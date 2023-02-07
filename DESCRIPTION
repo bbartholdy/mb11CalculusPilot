@@ -1,9 +1,9 @@
 Package: mb11CalculusPilot
-Title: What the Package Does (One Line, Title Case)
-Version: 0.0.0.9000
+Title: Research compendium
+Version: 0.0.3
 Authors@R:
     person("First", "Last", , "first.last@example.com", role = c("aut", "cre"))
-Description: What the package does (one paragraph).
+Description: Research compendium for 'Multiproxy analysis exploring patterns of diet and disease in dental calculus and skeletal remains from a 19th century Dutch population'.
 License: MIT + file LICENSE
 ByteCompile: true
 Encoding: UTF-8
@@ -15,6 +15,7 @@ Imports:
     ggplot2,
     here,
     patchwork,
+    psych,
     readr,
     stringr,
     tidyr

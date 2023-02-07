@@ -1,13 +1,9 @@
 <!-- Demographics and description of MB11 sample, selection criteria. -->
 The sample consists of `r nrow(demography)` individuals from Middenbeemster,
 a 19th century rural Dutch site.
-Of the `r nrow(demography)` individuals that were analysed,
-`r nrow(filter(metadata, replicated == TRUE))` individuals were subsequently
-replicated using leftover calculus from the original DNA study.
-<!--in the same lab? different lab? -->
 The village of Middenbeemster and the surrounding Beemsterpolder was established
 in the beginning of the 17th century, when the Beemster lake was drained to
-create more farm land, mainly for the cultivation of cole seeds (de Vries 1978).
+create more farmland, mainly for the cultivation of cole seeds (de Vries 1978).
 In 1615, a decision was made to build a church, and
 construction started in 1618 (Hakvoort 2013). The excavated cemetery is associated
 with the Keyserkerk church, where the inhabitants of the Middenbeemster village
@@ -18,14 +14,14 @@ between AD 1829 and 1866, when the majority of individuals were interred
 was dairy farming, consisting largely of manual labour prior to the industrial
 revolution [@aten400JaarBeemster2012; @palmerActivityReconstruction2016].
 
-To reduce the number of factors to account for
+To reduce the number of potentially confounding factors to account for
 in the analysis, we preferentially selected males from the middle adult age category
 (35-49 years). The sample consists of `r nrow(filter(demography, sex == "m"))` males,
 `r nrow(filter(demography, sex == "pm"))` probable males,
 `r nrow(filter(demography, sex == "pf"))` probable females, and
-`r nrow(filter(demography, sex == "f"))` female [@fig-sample-demography].
+`r nrow(filter(demography, sex == "f"))` female (@fig-sample-demography).
 We selected males due to a higher
-occurrence of dental calculus deposits than females (unpublished observation).
+occurrence of pipe notches and dental calculus deposits than females (unpublished observation).
 
 <!-- use plot to show original and replicated sample demographics? -->
 ```{r}

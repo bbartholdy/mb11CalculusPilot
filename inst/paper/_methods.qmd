@@ -1,15 +1,87 @@
+### Skeletal analysis
+
+<!-- methods for age, sex, and stature estimation -->
+Demographic and pathological analyses were conducted in the Laboratory for Human
+Osteoarchaeology at Leiden University. Sex was estimated using cranial
+and pelvic morphological traits [@Standards1994]. Age-at-death was estimated using
+dental wear,
+auricular and pubic surface appearance, cranial suture closure, and epiphyseal fusion 
+[@Standards1994; @SucheyBrooks1990; @buckberryAuricular2002; @lovejoyAuricular1985; @meindlSutureClosure1985],
+and divided into the following categories:
+early young adult (18-24 years), late young adult (25-34 years), middle adult (
+35-49 years), old adult (50+ years).
+
+#### Paleopathology
+
+Pathological conditions and lesions that occur frequently in the population were
+included in the analysis. Data were
+dichotomised to presence/absence to allow statistical analysis.
+Osteoarthritis was considered present in cases where eburnation was visible
+on one or more joint surfaces.
+Vertebral osteophytosis is identified by marginal lipping and/or osteophyte
+formation on the margin of the superior and inferior surfaces of the vertebral
+body.
+Cribra orbitalia was diagnosed based on the presence of pitting on the superior
+surface of the orbit. No distinction was made between active or healing lesions.
+Degenerative disc disease, or spondylosis, is identified as a large diffuse
+depression of the
+superior and/or inferior surfaces of the vertebral body [@rogersPalaeopathologyJoint2000].
+Schmorl's nodes are identified as any cortical depressions on the surface of
+the vertebral body.
+Data on chronic maxillary sinusitis from @casnaUrbanizationRespiratory2021 were
+included in this study to assess the relationship between upper respiratory
+diseases with environmental factors (i.e. tobacco smoke, caffeine consumption).
+Lesions associated with chronic maxillary sinusitis as defined by
+@boocockMaxillarySinusitis1995 were
+recorded for each individual and classified as "pitting", "spicule-type bone
+formation", "remodeled spicules", or "white pitted bone".
+chronic maxillary sinusitis was scored as absent
+when the sinus presented smooth surfaces with little or no associated pitting.
+
+#### Dental pathology
+
+Caries ratios were calculated by dividing the number of lesions by the number
+of teeth scored, resulting in a single caries ratio per individual. If the surface
+where the lesion originated is not visible, i.e. if the lesion covered multiple
+surfaces, this was scored as "crown".
+Calculus indices were calculated according to Greene and colleagues [-@greeneQuantifyingCalculus2005].
+Calculus was scored with a four-stage scoring system (0-3) to score absent, slight,
+moderate, and heavy calculus deposits [@brothwellDiggingBones1981]
+on the lingual, buccal (and labial), and interproximal surfaces of each tooth. Only
+one score was used for the combined interproximal surfaces, resulting in three
+scores per tooth (when surfaces are intact), and four calculus indices per individual;
+upper anterior, upper posterior, lower anterior, lower posterior.
+Each index was calculated by dividing
+the sum of calculus scores for each surface by the total number of surfaces scored
+in each quadrant. If a tooth could not be scored on all three surfaces, the tooth
+was not included [@greeneQuantifyingCalculus2005].
+Periodontitis was scored on a visual four-stage (0-3) scoring system according to
+distance from cemento-enamel junction of each tooth to alveolar bone [@maatManualPhysical2005].
+
+### Calculus sampling
+
+Where possible, we used material that had already been sampled for a previous
+study to prevent unnecessary repeated sampling of individuals. 
+Calculus from the previous study was
+sampled in a dedicated ancient DNA laboratory at the Laboratories of Molecular
+Anthropology and Microbiome Research in Norman, Oklahoma, U.S.A,
+using established ancient DNA protocols. More details on the methods can be found
+in the published articles
+[@ziesemer16SChallenges2015; @ziesemerGenomeCalculus2018]. 
+Of the `r nrow(demography)` individuals that were originally included in our sample,
+`r nrow(filter(metadata, replicated == TRUE))`
+were replicated in a separate analysis only using calculus from the previous study.  
 New dental calculus samples were taken under sterile conditions in a positive
 pressure laminar flow hood in a dedicated dental calculus lab at Leiden University.
 The surface of the tooth was lightly brushed with a sterile, disposable toothbrush
 to get rid of surface contaminants. A sterile dental curette was then used to
 scrape calculus from the tooth onto weighing paper, which was transferred to 1.5 ml
 Eppendorf tubes.
-Where possible, previously sampled material was used to prevent repeated sampling
-of individuals. The sampling methods can be found in the published material
-[@ziesemer16SChallenges2015; @ziesemerGenomeCalculus2018]. 
-The samples were sent to the Department of Forensic Medicine at Aarhus University
+All calculus samples were sent to the Department of Forensic Medicine at Aarhus University
 for ultra-high-performance liquid chromatography-tandem mass spectrometry (UHPLC-MS/MS)
 analysis.
+
+### UHPLC-MS/MS
 
 The list of targeted compounds included both naturally occurring compounds known
 to have been used in the past, as well as synthetic modern drugs that did not exist
@@ -31,65 +103,6 @@ analysed by UHPLC-MS/MS using a reversed-phase biphenyl column for chromatograph
 To obtain quantitative results, isotope dilution was applied.
 For more details about the method and validation, see the original study by
 Sørensen and colleagues [-@sorensenDrugsCalculus2021].
-
-
-### Skeletal analysis
-
-<!-- methods for age, sex, and stature estimation -->
-Demographic and pathological analyses were conducted in the Laboratory for Human
-Osteoarchaeology at Leiden University. Sex was estimated using cranial
-and pelvic morphological traits [@Standards1994]. Age-at-death was estimated using
-dental wear,
-auricular and pubic surface appearance, cranial suture closure, and epiphyseal fusion 
-[@Standards1994; @SucheyBrooks1990; @buckberryAuricular2002; @lovejoyAuricular1985; @meindlSutureClosure1985], and divided into the following categories:
-early young adult (EYA, 18-24 years), late young adult (LYA, 25-34 years), middle adult (MA, 
-35-49 years), old adult (Old, 50+ years).
-
-#### Paleopathology
-
-Pathological conditions and lesions that occur frequently in the population were
-included in the analysis. Data were
-dichotomised to presence/absence to allow statistical analysis.
-Osteoarthritis (OA) was considered present in cases where eburnation was visible
-on one or more joint surfaces.
-Vertebral osteophytosis is identified by marginal lipping and/or osteophyte
-formation on the margin of the superior and inferior surfaces of the vertebral
-body.
-Cribra orbitalia (CO) was diagnosed based on presence of pitting on the superior
-surface of the orbit. No distinction was made between active or healing lesions.
-Degenerative disc disease (DDD), or spondylosis, is identified as a large diffuse
-depression of the
-superior and/or inferior surfaces of the vertebral body [@rogersPalaeopathologyJoint2000].
-Schmorl's nodes (SN) are identified as any cortical depressions on the surface of
-the vertebral body.
-Data on chronic maxillary sinusitis (CMS) from @casnaUrbanizationRespiratory2021 were
-included in this study to assess the relationship between upper respiratory
-diseases with environmental factors (i.e. tobacco smoke, caffeine consumption).
-Lesions associated with CMS as defined by
-@boocockMaxillarySinusitis1995 were
-recorded for each individual and classified as "pitting", "spicule-type bone
-formation", "remodeled spicules", or "white pitted bone". CMS was scored as absent
-when the sinus presented smooth surfaces with little or no associated pitting.
-
-#### Dental pathology
-
-Caries ratios were calculated by dividing the number of lesions by the number
-of teeth scored, resulting in a single caries ratio per individual. If the surface
-where the lesion originated is not visible, i.e. if the lesion covered multiple
-surfaces, this was scored as "crown".
-Calculus indices were calculated according to Greene and colleagues [-@greeneQuantifyingCalculus2005].
-Calculus was scored with a four-stage scoring system (0-3) to score absent, slight,
-moderate, and heavy calculus deposits [@brothwellDiggingBones1981]
-on the lingual, buccal (labial), and interproximal surfaces of each tooth. Only
-one score was used for the combined interproximal surfaces, resulting in three
-scores per tooth (when surfaces are intact), and four calculus indices per individual;
-upper anterior (UA), upper posterior (UP), lower anterior (LA), lower posterior (LP).
-Each index was calculated by dividing
-the sum of calculus scores for each surface by the total number of surfaces scored
-in each quadrant. If a tooth could not be scored on all three surfaces, the tooth
-was not included [@greeneQuantifyingCalculus2005].
-Periodontitis was scored on a visual four-stage (0-3) scoring system according to
-distance from CEJ of each tooth to alveolar bone [@maatManualPhysical2005].
 
 ### Statistical analysis
 
