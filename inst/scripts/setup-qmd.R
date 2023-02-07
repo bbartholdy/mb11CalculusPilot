@@ -1,5 +1,3 @@
-library(here)
-library(readr)
 library(dplyr)
 library(tidyr)
 library(tibble)
@@ -10,7 +8,6 @@ library(glue)
 library(purrr)
 library(psych)
 library(patchwork)
-devtools::load_all()
 
 try(generate_bib())
 
@@ -70,45 +67,6 @@ uhplc_calculus_long <- uhplc_data_long %>%
   mutate(conc = quant / weight) %>%
   left_join(demography, by = "id") %>%
   mutate(preservation = factor(preservation, levels = c("fair", "good", "excellent")))
-
-# uhplc_calculus_demography <- uhplc_calculus_long %>%
-#   left_join(demography) %>%
-#   mutate(preservation = factor(preservation, levels = c("fair", "good", "excellent")))
-
-# presence/absence data frame
-uhplc_calculus_bin <- uhplc_calculus_long %>%
-  mutate(presence = if_else(quant > 0, 1, quant))
-
-# successfully replicated samples only
-uhplc_calculus_replicated <- uhplc_calculus_bin %>%
-  mutate(compound = str_remove(compound, "_calc")) %>%
-  group_by(id, sample, compound) %>% # combine batches
-  summarise(presence = sum(presence)) #%>%
-  # filter(presence == 0 | presence == 2) %>%
-  # group_by(compound) %>%
-  # mutate(presence = if_else(presence == 2, 1, 0)) # convert replications to presence/absence
-
-uhplc_calculus_replicated <- uhplc_calculus_bin %>%
-  filter(id %in% filter(metadata, replicated == TRUE)$id) %>%
-  #right_join(select(filter(metadata, replicated == TRUE)), by = c("id", "sample"))
-  #mutate(compound = str_remove(compound, "_calc")) %>%
-  group_by(id, sample, compound) %>% # combine batches
-  summarise(presence = sum(presence)) %>%
-  filter(presence == 0 | presence == 2) %>% # remove compounds only detected in one batch
-  group_by(compound) %>%
-  mutate(presence = if_else(presence == 0, 0, 1)) %>%  # convert replications to presence/absence
-  ungroup()
-
-uhplc_replicated_wide <- uhplc_calculus_replicated %>%
-  mutate(compound = case_when(compound == "nicotine" ~ "tobacco",
-                              compound == "cotinine" ~ "tobacco",
-                              TRUE ~ compound)) %>%
-  group_by(id, sample, compound) %>%
-  summarise(presence = sum(presence)) %>% # combine nicotine and cotinine
-  #remove_missing() %>%
-  mutate(presence = case_when(presence > 0 ~ TRUE,
-                              TRUE ~ FALSE)) %>%
-  pivot_wider(names_from = "compound", values_from = "presence")
 
 uhplc_conc_wide <- uhplc_calculus_long %>%
   filter(batch == "batch2") %>%
@@ -353,29 +311,4 @@ polycorr_tib <- polycorr$rho %>%
   # ) %>%
   # filter(corr != 1)
 
-# objects with correlation statements about variables
 
-# if(nrow(filter(polycorr_tib, strength == "strong")) == 0){
-#   strong_correlations <- "No strong correlations were found"
-# } else {
-#   strong_correlations <- polycorr_tib %>%
-#     filter(strength == "strong") %>%
-#     #distinct(rho, .keep_all = T) %>%
-#     slice(seq(from = 2, to = nrow(.), by = 2)) %>%  # awkward solution to distinct not working
-#     mutate(statement = glue("{var} and {name} ({signif(corr, 3)})")) %>%
-#     .$statement %>%
-#     paste(collapse = ", ")
-# }
-#
-# if(nrow(filter(polycorr_tib, strength == "moderate")) == 0){
-#   moderate_correlations <- "No moderate correlations were found"
-# } else {
-# moderate_correlations <- polycorr_tib %>%
-#   filter(strength == "moderate") %>%
-#   arrange(desc(abs(corr))) %>%
-#   slice(seq(from = 2, to = nrow(.), by = 2)) %>%  # awkward solution to distinct not working
-#   #distinct(rho, .keep_all = TRUE) %>% # not working
-#   mutate(statement = glue("{var} and {name} ({signif(corr, 3)})")) %>%
-#   .$statement %>%
-#   paste(collapse = ", ")
-# }

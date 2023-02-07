@@ -10,20 +10,12 @@ library(purrr)
 # Upload data -------------------------------------------------------------
 
 # See README for details
-metadata <- read_tsv("inst/data/raw_data/metadata.tsv") # ids need to be changed to match key
+metadata <- read_tsv("inst/data/raw_data/metadata.tsv")
 lloq <- read_tsv("inst/data/raw_data/lloq.tsv")
 uhplc_data_raw <- read_csv("inst/data/raw_data/uhplc-results.csv")
 uhplc_data_raw2 <- read_csv("inst/data/raw_data/uhplc-results_batch2.csv")
-dental_inv <- read_csv("inst/data/raw_data/dental-inv.csv")
 sinusitis <- read_csv("inst/data/raw_data/sinusitis.csv")
 path_cond <- read_csv("inst/data/raw_data/path-conditions.csv")
-caries <- read_csv("inst/data/raw_data/caries.csv")
-periodont <- read_csv("inst/data/raw_data/periodontitis.csv")
-periap <- read_csv("inst/data/raw_data/periapical.csv")
-calculus <- read_csv("inst/data/raw_data/calculus.csv")
-calculus_full <- read_csv("inst/data/raw_data/calculus_full.csv")
-demography <- read_csv("inst/data/raw_data/demography.csv")
-
 
 # CMS = chronic maxillary sinusitis
 # IPR = periosteal reaction on visceral surface of ribs
@@ -77,38 +69,6 @@ uhplc_data_comb <- uhplc_data_batch1 %>%
   #select(sample, contains("calc"))
 
 
-# Compounds presence/absence
-
-# uhplc_calculus_bin <- uhplc_calculus %>%
-#   mutate(
-#     across(
-#       where(is.numeric),
-#       function(x) if_else(!is.na(x), T, F) # convert concentration to boolean
-#       )
-#     ) %>%
-#   pivot_longer( # convert to long form to include only compounds present or absent in both batches
-#     cols = -sample,
-#     names_to = c("compound", "batch"),
-#     names_pattern = "(.*)_(.*)",
-#     values_to = c("value")
-#     ) %>%
-#     mutate(compound = str_remove(compound, "_calc"), # redundant suffix
-#            value = as.numeric(value)) %>% # convert to 0s and 1s
-#     group_by(sample, compound) %>%
-#     summarise(value = sum(value))
-
-# create data frame with replicated compounds and remove compounds absent in all individuals
-# uhplc_calculus_replicated <- uhplc_calculus_bin %>%
-#   group_by(id,compound) %>%
-#   summarise(presence = sum(presence)) %>%
-#   filter(presence == 0 | presence == 2) %>%
-#   #filter(sum(presence) != 0) #%>% # remove compounds absent in all individuals in sample
-#   mutate(presence = if_else(presence == 2, 1, 0)) %>% # convert replications to presence/absence
-#   pivot_wider(names_from = compound, values_from = presence) %>%
-#   mutate(across(where(is.numeric), replace_na, 0)) %>% # replace NAs with 0 (not ideal solution, may be reconsidered)
-#   left_join(select(metadata, id, sample), by = "id")
-
-
 # Sinusitis data
 
 sinusitis_clean <- sinusitis %>% # convert yes/no to true/false
@@ -126,61 +86,6 @@ path_cond_clean <- path_cond %>%
                           x == "N" ~ FALSE)
                 )
          )
-#
-# # dental data
-#
-# # Caries rate
-#
-# # convert caries data from location to number of caries and caries rate
-#
-# surface <- c("mes", "dis", "occ", "buc", "lin", "root", "crown") # here occ = incisal
-#
-# caries_rate <- caries %>%
-#   pivot_longer(t11:t48, names_to = "tooth",
-#                values_to = "caries_score") %>%
-#   na.omit() %>%
-#   separate_rows(caries_score, sep = ";") %>% # one lesion per row
-#   mutate(
-#     caries_count = if_else(
-#     caries_score == "none", 0L, 1L
-#     )
-#   ) %>%
-#   group_by(id) %>%
-#   summarise(
-#     n_teeth = n(),
-#     count = sum(caries_count, na.rm = T), # crude caries rate
-#     caries_rate = count / n_teeth
-#   ) %>%
-#   select(id, caries_rate)
-#
-# # Median periodontal status
-#
-# periodont_status <- periodont %>%
-#   mutate(periodont_status = apply(.[,-1], MARGIN = 1, FUN = median, na.rm = T)) %>%
-#   select(id, periodont_status)
-#
-# # number of periapical lesions
-#
-# periap_num <- periap %>%
-#   mutate(across(-id, ~ if_else(.x == "none", 0, 1))) %>%
-#   mutate(periap_num = apply(.[,-1], MARGIN = 1, FUN = sum, na.rm = T)) %>%
-#   select(id, periap_num)
-#
-# # calculus index
-#
-# calc_index <- calculus_full %>%
-#   dental_longer(id) %>%
-#   calculus_index(simple = T) %>%
-#   select(!c(n_surf, score_sum))
-#
-# # Prepare data for EFA ----------------------------------------------------
-#
-# data_list <- list(path_cond_clean, sinusitis_clean, caries_rate, periodont_status, periap_num, uhplc_calculus_replicated, calc_index)
-#
-# efa_data <- data_list %>%
-#   reduce(inner_join, by = "id") %>%
-#   mutate(across(where(is.logical), as.numeric)) %>%
-#   filter(complete.cases(.))
 
 
 # Export data -------------------------------------------------------------

@@ -5,13 +5,13 @@
 
 library(here)
 library(readr)
+devtools::load_all()
 
 # upload data
 metadata <- read_tsv(here("inst/data/raw_data/metadata.tsv"))
 demography <- read_csv(here("inst/data/raw_data/demography.csv"))
 lloq <- read_tsv(here("inst/data/raw_data/lloq.tsv"))
 uhplc_data_comb <- read_csv(here("inst/data/derived_data/uhplc-data_combined.csv"))
-#uhplc_calculus <- read_csv(here("inst/data/derived_data/uhplc-calculus_cleaned.csv"))
 dental_inv <- read_csv(here("inst/data/raw_data/dental-inv.csv"))
 caries <- read_csv(here("inst/data/raw_data/caries.csv"))
 periodont <- read_csv(here("inst/data/raw_data/periodontitis.csv"))

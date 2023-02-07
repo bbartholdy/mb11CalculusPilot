@@ -7,7 +7,6 @@ For a full list of targeted compounds, see Supplementary Material.
 
 ```{r}
 #| label: detection-tbl-setup
-
 uhplc_calculus_detect <- uhplc_calculus_long %>%
 #uhplc_calculus_detect <- uhplc_calculus_demography %>%
   #remove_missing() %>%
@@ -115,13 +114,14 @@ quantity of compound extracted from the calculus ([@fig-detection-preservation]B
 ```{r}
 #| label: fig-detection-preservation
 #| fig-cap: "(A) Violin plot with overlaid box plots depicting the distribution of extracted quantities of each compound from batch 2 separated by state of preservation of the skeleton. (B) Extracted quantity (ng) of compound plotted against weights of the calculus samples from batch 2."
+#| fig-width: 5
+#| fig-height: 7
 
 preservation_plot <- uhplc_calculus_long %>%
   filter(
     !is.na(preservation),
     quant > 0,
     batch == "batch2",
-    #!compound %in% c("cbd", "cbn", "cocaine", "thc", "thca-a", "thcva"), # remove compounds not detected
     id != "MB329" # unusually high nicotine and cotinine quantity in batch 1
     ) %>% 
   ggplot(aes(x = preservation, y = quant)) +
@@ -140,10 +140,8 @@ preservation_plot <- uhplc_calculus_long %>%
 
 weight_quant_plot <- uhplc_calculus_long %>%
   filter(
-    #!is.na(preservation),
     batch == "batch2",
     quant > 0,
-    #!compound %in% c("cbd", "cbn", "cocaine", "thc", "thca-a", "thcva"), # remove compounds not detected
     id != "MB329" # unusually high nicotine and cotinine quantity in batch 1
     ) %>% 
   ggplot(aes(x = weight, y = quant)) +
@@ -152,28 +150,6 @@ weight_quant_plot <- uhplc_calculus_long %>%
     theme_bw() +
     theme(axis.title.y = element_blank()) +
     labs(y = "Quantity (ng)", x = "Weight (mg)")
-
-# weight_quant_plot <- uhplc_data_comb %>%
-#   select(sample, contains("batch2")) %>% 
-#   select(sample, batch2_weight, contains("calc")) %>% 
-#   pivot_longer(
-#     -c(sample, batch2_weight),
-#     names_to = c("compound", "batch"),
-#     names_pattern = "(.*)_(.*)",
-#     values_to = c("conc")
-#   ) %>% 
-#   mutate(compound = str_remove(compound, "_calc")) %>%
-#   #remove_missing() %>% 
-#   filter(
-#     conc > 0,
-#     id != "MB329" # unusually high nicotine and cotinine quantity in batch 1
-#     ) %>% 
-#   ggplot(aes(x = batch2_weight, y = conc)) +
-#     geom_point(col = viridisLite::viridis(1)) +
-#     facet_wrap(~ compound, scales = "free_y", labeller = labeller(compound = compound_names), dir = "v") +
-#     theme_bw() +
-#     theme(axis.title.y = element_blank()) +
-#     labs(y = "Quantity (ng)", x = "Weight (mg)")
 
 preservation_plot + weight_quant_plot + plot_annotation(tag_levels = "A")
 ```
@@ -197,7 +173,6 @@ tobacco_accuracy <- tobacco %>%
   group_by(sample, id, .drop = F) %>% 
   summarise(
     detection = sum(detection),
-    #compound = compound
     ) %>% 
   left_join(select(demography, id, pipe_notch, preservation, age), by = "id") %>% 
   mutate(
@@ -266,8 +241,7 @@ and may have been contaminated.
 corr_tib <- conc_cor %>% 
   as_tibble(rownames = "var") %>% 
   filter(var != "age",
-         var != "periodont_status") #%>% 
-  #mutate(across(everything(), signif, 3))
+         var != "periodont_status") 
 
 corr_tib_long <- corr_tib %>% 
   pivot_longer(
@@ -275,14 +249,13 @@ corr_tib_long <- corr_tib %>%
     names_to = "name",
     values_to = "corr"
   )
-# still need to remove everything under the diagonal (colour white?)
-#corr_tib[corr_tib == 1] <- kableExtra::cell_spec(corr_tib[corr_tib == 1], color = "transparent")
+
 corr_tib_out <- corr_tib %>%
   column_to_rownames("var") %>%
   as.matrix() %>% 
   signif(digits = 2)
 cols <- 0
-for(i in 7:nrow(corr_tib)){ # terrible solution for formatting table
+for(i in 7:nrow(corr_tib)){ # remove repeated values
   cols <- cols + 1 
   corr_tib_out[i,1:cols] <- ""
 } 
