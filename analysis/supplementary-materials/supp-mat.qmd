@@ -20,21 +20,21 @@ library(readr)
 devtools::load_all()
 
 # upload data
-metadata <- read_tsv(here("inst/data/raw_data/metadata.tsv"))
-demography <- read_csv(here("inst/data/raw_data/demography.csv"))
-lloq <- read_tsv(here("inst/data/raw_data/lloq.tsv"))
-uhplc_data_comb <- read_csv(here("inst/data/derived_data/uhplc-data_combined.csv"))
-#uhplc_calculus <- read_csv(here("inst/data/derived_data/uhplc-calculus_cleaned.csv"))
-dental_inv <- read_csv(here("inst/data/raw_data/dental-inv.csv"))
-caries <- read_csv(here("inst/data/raw_data/caries.csv"))
-periodont <- read_csv(here("inst/data/raw_data/periodontitis.csv"))
-periap <- read_csv(here("inst/data/raw_data/periapical.csv"))
-calculus <- read_csv(here("inst/data/raw_data/calculus.csv"))
-calculus_full <- read_csv(here("inst/data/raw_data/calculus_full.csv"))
-sinusitis_clean <- read_csv(here("inst/data/derived_data/sinusitis_cleaned.csv"))
-path_cond_clean <- read_csv(here("inst/data/derived_data/path-conditions_cleaned.csv"))
+metadata <- read_tsv(here("analysis/data/raw_data/metadata.tsv"))
+demography <- read_csv(here("analysis/data/raw_data/demography.csv"))
+lloq <- read_tsv(here("analysis/data/raw_data/lloq.tsv"))
+uhplc_data_comb <- read_csv(here("analysis/data/derived_data/uhplc-data_combined.csv"))
+#uhplc_calculus <- read_csv(here("analysis/data/derived_data/uhplc-calculus_cleaned.csv"))
+dental_inv <- read_csv(here("analysis/data/raw_data/dental-inv.csv"))
+caries <- read_csv(here("analysis/data/raw_data/caries.csv"))
+periodont <- read_csv(here("analysis/data/raw_data/periodontitis.csv"))
+periap <- read_csv(here("analysis/data/raw_data/periapical.csv"))
+calculus <- read_csv(here("analysis/data/raw_data/calculus.csv"))
+calculus_full <- read_csv(here("analysis/data/raw_data/calculus_full.csv"))
+sinusitis_clean <- read_csv(here("analysis/data/derived_data/sinusitis_cleaned.csv"))
+path_cond_clean <- read_csv(here("analysis/data/derived_data/path-conditions_cleaned.csv"))
 
-source(here("inst/scripts/setup-qmd.R"))
+source(here("analysis/scripts/setup-qmd.R"))
 ```
 
 ## Session information
@@ -128,12 +128,12 @@ Periodontitis score:
 - perf = perforated alveolar bone
 - blank = not scoreable
 
-### calculus
+### calculus_full
 
 | variable | description |
 |---|---|
 | id | unique identifier for the individual |
-| t11..t48 | Tooth number (FDI system) and deposit size (0-3) |
+| t11_bucc..t48_ip | Tooth number (FDI system) and surface (bucc = buccal; lin = lingual; ip = interproximal) and deposit size (0-3) |
 
 - 0 = no calculus
 - 1 = slight calculus
@@ -843,8 +843,17 @@ dental_long %>%
 
 ### AMTL
 
+Brief statement about amtl at site.
+
+```{r}
+dental_long %>% 
+  group_by(id) %>% 
+  amtl_ratio(.status = status, .add = T)
+```
+
 ### Caries
 
+<!--add a caries correction?-->
 Caries were scored as the location on each individual tooth. Multiple locations on
 a single tooth were separated with `;`. The size of caries was also
 recorded, but not used in further analysis. Large caries that cover multiple

@@ -95,11 +95,11 @@ dental_inv_long <- dental_inv %>% # Inventory
   right_join(demography) %>%
   select(!c(occupation, own_grave, tax, pipe_notch)) %>%
   pivot_longer(t11:t48, names_to = "tooth",
-               values_to = "status") %>%
-  mutate(status = case_when(status == "dna" ~ "m", # teeth missing due to DNA sampling recoded as missing
-                            TRUE ~ status))
+               values_to = "status") #%>% no reason to recode dna...
+  #mutate(status = case_when(status == "dna" ~ "m", # teeth missing due to DNA sampling recoded as missing. WILL affect aml calculations...
+                            #TRUE ~ status))
 
-teeth_list <- list(caries, periodont, periap, calculus)
+teeth_list <- list(caries, periodont, periap)#, calculus) # calculus_full too wide - one column per surface
 
 # convert all data frames in list to long format
 dental_long_list <- lapply(
@@ -125,8 +125,8 @@ dental_long <- reduce(
   rename(
     caries = score.x,
     periodont = score.y,
-    periap = score.x.x,
-    calculus = score.y.y
+    periap = score,
+    #calculus = score.y.y
     )
 
 
