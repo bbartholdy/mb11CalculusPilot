@@ -17,7 +17,10 @@ Imports:
     here,
     patchwork,
     psych,
+    rbbt (>= 0.0.0.9000),
     readr,
     stringr,
     tidyr
 Suggests: devtools
+Remotes:  
+    paleolimbot/rbbt
