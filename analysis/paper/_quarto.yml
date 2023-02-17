@@ -39,10 +39,10 @@ title-block-published: "Last updated"
 format:
   html:
     theme: cosmo
-    output-file: "draft-manuscript-3.html"
+    output-file: "preprint_v1.html"
   pdf:
     keep-tex: true
-    output-file: "draft-manuscript-3.pdf"
+    output-file: "preprint_v1.pdf"
     documentclass: article
     geometry:
       - top=30mm

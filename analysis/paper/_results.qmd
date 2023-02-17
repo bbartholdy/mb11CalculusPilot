@@ -75,7 +75,9 @@ auth_plot <- uhplc_data_long %>%
     theme(
       legend.position = "none",
       axis.title.x = element_blank(),
-      axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1)
+      axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1),
+      panel.grid.major.x = element_blank(),
+      panel.grid.minor.y = element_blank()
     )
 
 
@@ -90,13 +92,14 @@ compound_detect_plot <- uhplc_calculus_long %>%
     theme_bw() +
     scale_fill_viridis_d() +
     scale_x_discrete(labels = compound_names) +
+    scale_fill_viridis_d(labels = c(1,2)) +
     theme(
       axis.title.x = element_blank(),
       axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1),
       legend.position = "left",
       panel.grid.major.x = element_blank()
       ) +
-    labs(y = "Count")
+    labs(y = "Count", fill = "Batch")
 
 compound_detect_plot + auth_plot + plot_layout(widths = c(1,1.8)) + plot_annotation(tag_levels = "A")
 
@@ -148,7 +151,11 @@ weight_quant_plot <- uhplc_calculus_long %>%
     geom_point(col = viridisLite::viridis(1)) +
     facet_wrap(~ compound, scales = "free_y", labeller = labeller(compound = compound_names), dir = "v", ncol = 1) +
     theme_bw() +
-    theme(axis.title.y = element_blank()) +
+    theme(
+      axis.title.y = element_blank(),
+      axis.text.y = element_blank(),
+      axis.ticks.y = element_blank()
+    ) +
     labs(y = "Quantity (ng)", x = "Weight (mg)")
 
 preservation_plot + weight_quant_plot + plot_annotation(tag_levels = "A")

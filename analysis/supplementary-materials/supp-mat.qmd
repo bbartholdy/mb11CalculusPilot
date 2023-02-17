@@ -10,6 +10,9 @@ format:
   html:
     toc: true
     code-fold: true
+  pdf:
+    toc: true
+bibliography: "../paper/references.bib"
 ---
 
 ```{r}
@@ -48,7 +51,9 @@ print(sessionInfo(), locale = F)
     
 ## Data dictionary
 
-### metadata
+All raw data are available for download from Zenodo.
+
+### metadata.csv
 
 <!-- id	sample	element	KZ_sample	KZ_element	replicated	batch1_weight	batch2_weight -->
 
@@ -57,12 +62,13 @@ print(sessionInfo(), locale = F)
 | id | unique identifier for the individual |
 | sample | sample number for the UHPLC-MS/MS analysis |
 | element | which tooth (FDI notation) was sampled for UHPLC-MS/MS analysis |
+| KZ_element | which tooth (FDI notation) was sampled for aDNA in original study |
 | replicated | Whether the sample was included in the replication batch (TRUE/FALSE) |
 | batch1_weight | weight (mg) of sample in batch 1 |
 | batch2_weight | weight (mg) of sample in batch 2 |
 
 
-### dental-inv
+### dental-inv.csv
 
 Dental inventory
 
@@ -74,11 +80,11 @@ Dental inventory
 Dental inventory key:
 
 - p = present
-- m = missing (for unknown reason)
+- m = missing (for unknown reason - likely postmortem loss)
 - aml = ante-mortem loss
 - dna = removed for DNA sampling
 
-### caries
+### caries.csv
 
 Caries lesions location
 
@@ -92,14 +98,14 @@ Caries location key:
 - none = no caries present
 - mes = mesial
 - dis = distal
-- lin = lingual (and labial)
-- buc = buccal
+- lin = lingual
+- buc = buccal (and labial)
 - occ = occlusal
-- crown = crown (caries-related loss of much of/entire tooth crown)
+- crown = crown (large caries lesion covering multiple surfaces)
 - root = root
 - blank = tooth not present
 
-### periodontitis
+### periodontitis.csv
 
 | variable | description |
 |---|---|
@@ -115,7 +121,7 @@ Periodontitis score:
 
 - blank = tooth not present
 
-### periapical
+### periapical.csv
 
 | variable | description |
 |---|---|
@@ -128,7 +134,7 @@ Periodontitis score:
 - perf = perforated alveolar bone
 - blank = not scoreable
 
-### calculus_full
+### calculus_full.csv
 
 | variable | description |
 |---|---|
@@ -140,9 +146,7 @@ Periodontitis score:
 - 2 = moderate calculus
 - 3 = heavy calculus
 
-Scored according to Standards.
-
-### path-conditions
+### path-conditions.csv
 
 Pathological conditions
 
@@ -164,7 +168,7 @@ Pathological conditions
 
 ```{r}
 #| label: tbl-sampling
-#| tbl-cap: "Table showing which individuals were sampled in this study (element) and which individuals were sampled in the previous study (KZ_element)."
+#| tbl-cap: "Table showing which individuals were sampled in this study and which individuals were sampled in the previous study. When both TRUE, the individual was sampled twice."
 metadata %>% 
   select(id, element, KZ_element) %>% 
   mutate(
@@ -172,7 +176,8 @@ metadata %>%
                    TRUE ~ TRUE),
     KZ_element = case_when(is.na(KZ_element) ~ FALSE,
                    TRUE ~ TRUE),
-    )
+    ) %>%
+  knitr::kable(col.names = c("ID", "this study", "previous study"))
 ```
 
 
@@ -186,10 +191,15 @@ males <- demography %>%
 
 
 The sample consists of `r nrow(demography)` individuals, most of which are
-middle adult male individuals (@fig-age-distribution).
+middle adult male individuals (@fig-age-distribution). Middle adult males were
+preferentially targeted and the sample age and sex distribution is therefore not
+representative of the population. This was done to limit potential confounding
+factors, and because pipe notches, which served as a positive control for tobacco,
+are predominantly seen in male individuals at the site.
 
 ```{r}
 #| label: fig-age-distribution
+#| fig-cap: "Distribution of age and sex in the sample. f = female; pf = probable female; pm = probable male; m = male; eya = early young adult (18-24 years); lya = late young adult (25-34 years); ma = middle adult (35-49 years); old = old adult (50+ years)."
 demography %>%
   ggplot(aes(x = age, fill = sex)) +
     geom_bar() +
@@ -214,17 +224,17 @@ caries %>%
     geom_tile()
 ```
 
-Missing data across all dental datasets
+Missing data across all caries, periodontitis, and periapical datasets.
 
 ```{r}
 #| label: fig-missing-dental
 #| fig-cap: "Number of missing values per individual and tooth across all dental scores (caries, periodontitis, periapical lesions, calculus)."
 dental_long %>%
-  mutate(across(c(caries, periodont, periap, calculus), is.na)) %>%
-  select(c(caries, periodont, periap, calculus, id, tooth)) %>%
+  mutate(across(c(caries, periodont, periap), is.na)) %>%
+  select(c(caries, periodont, periap, id, tooth)) %>%
   #group_by(id, tooth) %>% 
   rowwise() %>% 
-  mutate(missing = sum(caries, periodont, periap, calculus)) %>% 
+  mutate(missing = sum(caries, periodont, periap)) %>% 
   ggplot(aes(x = tooth, y = id, fill = missing)) +
     geom_tile()
 ```
@@ -313,9 +323,10 @@ analysed on equipment used exclusively for oral samples.
 
 ```{r}
 #| label: tbl-lloq
-#| tbl-cap: "Target compounds and lower limits of quantitation."
+#| tbl-cap: "Target compounds and lower limits of quantitation (LLOQ)."
 lloq %>%
-  arrange(compound)
+  arrange(compound) %>% 
+  knitr::kable(col.names = c("Target", "LLOQ"))
 ```
 
 ```{r}
@@ -325,8 +336,9 @@ uhplc_calculus_long %>%
   filter(batch == "batch1") %>%
   #select(sample, contains("batch1")) %>%
   #rename_with(~ str_remove(.x, "_calc_batch1"), .cols = contains("_calc_batch1"))
-  pivot_wider(names_from = "compound", values_from = "quant") %>%
-  select(!c(extraction, batch))
+  select(!c(sample, conc, extraction, batch, presence)) %>%
+  pivot_wider(names_from = "compound", values_from = "quant") %>% 
+  knitr::kable()
 ```
 
 ```{r}
@@ -620,6 +632,7 @@ cotinine is used as a rough indicator of the accuracy of the method.
 #| label: fig-corr-notches
 # correlation between nicotine and cotinine conc, and pipe notches
 uhplc_calculus_long %>%
+  filter(compound %in% c("caffeine", "cotinine", "nicotine", "salicyl", "theophyl")) %>% 
   ggplot(aes(x = pipe_notch, y = conc)) +
     geom_point() +
     facet_wrap(~ compound + batch, scales = "free_y")
@@ -719,6 +732,8 @@ uhplc_accuracy <- uhplc_calculus_replicated %>%
                              presence == 1 & pipe_notch == "N" ~ NA, # can't be sure if this is true or not
                              TRUE ~ FALSE))
 
+replicated_accuracy <- 
+  
 # ratio of nicotine to cotinine
 tobacco_ratio <- tobacco %>%
   select(id, batch, compound, conc) %>% 
@@ -742,6 +757,11 @@ tobacco_ratio <- tobacco %>%
       preservation == "excellent" ~ 2
     )
   )
+```
+
+```{r}
+#| label: fig-notch-ratio
+#| fig-cap: "Relationship between ratio and number of pipe notches."
 
 tobacco_ratio %>%
   ggplot(aes(y = ratio, x = pipe_notch)) +
@@ -775,14 +795,14 @@ Accuracy in the old adult age category is
 `r scales::percent(filter(accuracy_age, age == "old")$mean, accuracy = 0.1)`.
 
 In the replicated samples only, tobacco detection was successful in
-`r nrow(filter(replicated_accuracy, pipe_notch == "Y", detection > 0))`
+`r nrow(filter(uhplc_accuracy, pipe_notch == "Y", presence > 0))`
 out of
-`r nrow(filter(replicated_accuracy, pipe_notch == "Y"))`
+`r nrow(filter(uhplc_accuracy, pipe_notch == "Y"))`
 pipe smokers
-(`r scales::percent(nrow(filter(replicated_accuracy, pipe_notch == "Y", detection > 0)) / nrow(filter(replicated_accuracy, pipe_notch == "Y")), accuracy = 0.1)`)
+(`r scales::percent(nrow(filter(uhplc_accuracy, pipe_notch == "Y", presence > 0)) / nrow(filter(uhplc_accuracy, pipe_notch == "Y")), accuracy = 0.1)`)
 Including individuals with absence of a pipe notch and concurrent absence of
 compounds as a correct identification, gives an overall accuracy of
-`r scales::percent(mean(replicated_accuracy$correct, na.rm = T), accuracy = 0.1)`.
+`r scales::percent(mean(uhplc_accuracy$correct, na.rm = T), accuracy = 0.1)`.
 
 
 Nicotine and cotinine detection successfully identified
@@ -827,6 +847,10 @@ pipe between adjacent and isomeric teeth, and which differs from the occlusal
 wear that occurs through mastication. Wear occurring between adjacent and isomeric
 teeth were counted as a single pipe notch.
 
+Some of the teeth were missing because they have been sent elsewhere for DNA
+sampling. These teeth were considered present when determining antemortem loss
+ratios, and absent when scoring caries, periodontitis, and calculus.
+
 ```{r}
 #| label: fig-dental-plots
 #| layout-ncol: 2
@@ -834,6 +858,7 @@ teeth were counted as a single pipe notch.
 #|   - "Antemortem tooth loss in sample."
 #|   - "Periodontal scores in the sample."
 dental_long %>%
+  mutate(status = case_when(status == "dna" ~ "p")) %>% 
   dental_plot(fill = status)
 
 dental_long %>%
@@ -843,22 +868,39 @@ dental_long %>%
 
 ### AMTL
 
-Brief statement about amtl at site.
+Ratio of antemortem lost teeth per present teeth at the site.
 
 ```{r}
+#| label: fig-aml-id
+#| fig-cap: "AMTL ratio per individual."
 dental_long %>% 
   group_by(id) %>% 
+  amtl_ratio(.status = status, .add = T)
+```
+
+```{r}
+#| label: fig-aml-class
+#| fig-cap: "AMTL ratio per tooth class."
+dental_long %>% 
+  group_by(class) %>% 
+  amtl_ratio(.status = status, .add = T)
+```
+
+```{r}
+#| label: fig-aml-type
+#| fig-cap: "AMTL ratio per tooth type."
+dental_long %>% 
+  group_by(type) %>% 
   amtl_ratio(.status = status, .add = T)
 ```
 
 ### Caries
 
 <!--add a caries correction?-->
-Caries were scored as the location on each individual tooth. Multiple locations on
-a single tooth were separated with `;`. The size of caries was also
+Caries were scored as the location on each individual tooth. Multiple locations
+on a single tooth were separated with `;`. The size of caries was also
 recorded, but not used in further analysis. Large caries that cover multiple
-surfaces with an unknown origin were recorded as 'crown'. Caries counts were
-extracted based on the number of locations recorded.
+surfaces with an unknown origin were recorded as 'crown'.
 
 | code | surface |
 |---|---|
@@ -922,11 +964,13 @@ caries_count %>%
   caries_ratio(.caries = count, class, id) %>%
   ggplot(aes(x = class, y = ratio)) +
     geom_violin(aes(fill = class)) +
-    geom_boxplot(width = 0.1)
+    geom_boxplot(width = 0.1) +
+    theme_minimal()
 ```
 
 
 ```{r}
+#| label: fig-caries-ratio
 upper_order <- c(paste0("t", 18:11), paste0("t", 21:28))
 lower_order <- c(paste0("t", 48:41), paste0("t", 31:38))
 
@@ -978,12 +1022,9 @@ maxilla / mandible + plot_layout(guides = "collect")
 
 ### Periodontitis
 
-```{r}
-#| label: fig-periodont
-dental_long %>%
-  filter(!is.na(periodont)) %>% 
-  dental_plot(fill = periodont)
-```
+Periodontitis was scored qualitatively on a scale from 0-3 as the amount of
+horizontal bone loss from the CEJ to the alveolar bone, accounting for ca. 2mm
+of gingival thickness.
 
 ### Calculus
 
@@ -1032,8 +1073,25 @@ calc_index %>%
 No apparent influence of lower anterior calculus index on the presence/absence
 of a compound (or vice versa).
 
-
 ## Pathological conditions
+
+Pathological conditions and lesions that occur frequently in the population were
+included in the analysis. Data were
+dichotomised to presence/absence to allow statistical analysis. A conservative
+approach was taken, so when in doubt, absence of a disease was assumed.
+Osteoarthritis was considered present in cases where eburnation was visible
+on one or more joint surfaces.
+Vertebral osteophytosis is identified by marginal lipping and/or osteophyte
+formation on the margin of the superior and inferior surfaces of the vertebral
+body.
+Cribra orbitalia was diagnosed based on the presence of pitting on the superior
+surface of the orbit. No distinction was made between active or healing lesions.
+Degenerative disc disease, or spondylosis, is identified as a large diffuse
+depression of the
+superior and/or inferior surfaces of the vertebral body [@rogersPalaeopathologyJoint2000].
+Schmorl's nodes are identified as any cortical depressions on the surface of
+the vertebral body. A note was made whether the lesion perforated the vertebral
+margin, but both perforating and non-perforating lesions were recorded as present.
 
 Data on chronic maxillary sinusitis from @casnaUrbanizationRespiratory2021 were
 included in this study to assess the relationship between upper respiratory

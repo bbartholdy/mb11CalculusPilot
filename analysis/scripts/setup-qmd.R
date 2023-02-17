@@ -82,7 +82,7 @@ uhplc_conc_wide <- uhplc_calculus_long %>%
   # mutate(presence = case_when(presence > 0 ~ TRUE,
   #                             TRUE ~ FALSE)) %>%
   select(
-    !c(presence, quant, weight, occupation, own_grave, tax, pipe_notch, sex, age, preservation, completeness)
+    !c(presence, quant, weight, pipe_notch, sex, age, preservation, completeness)
     ) %>%
   remove_missing() %>%
   pivot_wider(names_from = "compound", values_from = "conc") %>%
@@ -93,7 +93,7 @@ uhplc_conc_wide <- uhplc_calculus_long %>%
 
 dental_inv_long <- dental_inv %>% # Inventory
   right_join(demography) %>%
-  select(!c(occupation, own_grave, tax, pipe_notch)) %>%
+  select(!c(pipe_notch)) %>%
   pivot_longer(t11:t48, names_to = "tooth",
                values_to = "status") #%>% no reason to recode dna...
   #mutate(status = case_when(status == "dna" ~ "m", # teeth missing due to DNA sampling recoded as missing. WILL affect aml calculations...

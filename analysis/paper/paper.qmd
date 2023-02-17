@@ -63,11 +63,16 @@ from her studies. Additionally, we owe special thanks to Vincent Falger and Kees
 de Groot from the Middenbeemster Historical Society for their input on early
 draft manuscripts and a lovely guided tour of Middenbeemster.
 
+This research has received funding from the European Research Council under the
+European Union’s Horizon 2020 research and innovation program, grant agreement
+number STG–677576 (“HARVEST”).
+
 ## Data Availability Statement
 
-All raw data, analysis scripts, and the source code for the manuscript and
+All raw data is available on Zenodo (<https://doi.org/10.5281/zenodo.7648757>).
+Analysis scripts, and the source code for the manuscript and
 supplementary materials are available as a research compendium<!--Zenodo link-->
-using the structure defined in the **rrtools** R package [@Rrrtools].
+using the structure recommended by the **rrtools** R package [@Rrrtools].
 
 ## References {-}
 
