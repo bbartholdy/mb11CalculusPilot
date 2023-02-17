@@ -1,8 +1,8 @@
 Package: mb11CalculusPilot
 Title: Research compendium
-Version: 0.0.0.9000
+Version: 0.0.1
 Authors@R:
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"))
+    person("Bjørn Peare", "Bartholdy", , "b.p.bartholdy@arch.leidenuniv.nl", role = c("aut", "cre"))
 Description: Research compendium for 'Multiproxy analysis exploring patterns of diet and disease in dental calculus and skeletal remains from a 19th century Dutch population'.
 License: MIT + file LICENSE
 ByteCompile: true
@@ -13,11 +13,11 @@ RoxygenNote: 7.2.1
 Imports: 
     dplyr,
     ggplot2,
+    glue,
     here,
     patchwork,
     psych,
     readr,
     stringr,
     tidyr
-Suggests: devtools,
-    git2r
+Suggests: devtools
