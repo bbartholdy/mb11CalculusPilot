@@ -4,25 +4,33 @@
 # mb11CalculusPilot
 
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/bbartholdy/mb11CalculusPilot/main?urlpath=rstudio)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.7649825.svg)](https://zenodo.org/badge/DOI/10.5281/zenodo.7649825)
 
 This repository contains the data and code for our paper:
 
-> Authors, (YYYY). *Title of your paper goes here*. Name of journal/book
-> <https://doi.org/xxx/xxx>
+> Authors, (YYYY). *Multiproxy analysis exploring patterns of diet and
+> disease in dental calculus and skeletal remains from a 19th century
+> Dutch population*. Name of journal/book <https://doi.org/xxx/xxx>
 
 Our pre-print is online here:
 
-> Authors, (YYYY). *Title of your paper goes here*. Name of
-> journal/book, Accessed 17 Feb 2023. Online at
-> <https://doi.org/xxx/xxx>
+> Bartholdy, B.P., Hasselstrøm, J.B., Sørensen, L.K., Casna, M.,
+> Hoogland, M., Historisch Genootschap Beemster, & Henry, A.G. (2023).
+> *Multiproxy analysis exploring patterns of diet and disease in dental
+> calculus and skeletal remains from a 19th century Dutch population*.
+> Zenodo, Accessed 17 Feb 2023. Online at
+> <https://doi.org/10.5281/zenodo.7649151>
 
 ### How to cite
 
 Please cite this compendium as:
 
-> Authors, (2023). *Compendium of R code and data for Title of your
-> paper goes here*. Accessed 17 Feb 2023. Online at
-> <https://doi.org/xxx/xxx>
+> Bartholdy, B.P., Hasselstrøm, J.B., Sørensen, L.K., Casna, M.,
+> Hoogland, M., Historisch Genootschap Beemster, & Henry, A.G., (2023).
+> *Compendium of R code and data for Multiproxy analysis exploring
+> patterns of diet and disease in dental calculus and skeletal remains
+> from a 19th century Dutch population*. Accessed 17 Feb 2023. Online at
+> <https://doi.org/10.5281/zenodo.7649825>
 
 ## Contents
 
@@ -50,12 +58,12 @@ software](https://cloud.r-project.org/) itself and optionally [RStudio
 Desktop](https://rstudio.com/products/rstudio/download/).
 
 You can download the compendium as a zip from from this URL:
-[master.zip](/archive/master.zip). After unzipping: - open the `.Rproj`
-file in RStudio - run `devtools::install()` to ensure you have the
-packages this analysis depends on (also listed in the
-[DESCRIPTION](/DESCRIPTION) file). - finally, open
-`analysis/paper/paper.Rmd` and knit to produce the `paper.docx`, or run
-`rmarkdown::render("analysis/paper/paper.Rmd")` in the R console
+[main.zip](/archive/main.zip). After unzipping: - open the `.Rproj` file
+in RStudio - run `devtools::install()` to ensure you have the packages
+this analysis depends on (also listed in the [DESCRIPTION](/DESCRIPTION)
+file). - finally, open `analysis/paper/paper.qmd` and knit to produce
+the `paper.docx`, or run `rmarkdown::render("analysis/paper/paper.qmd")`
+in the R console
 
 ### Licenses
 
