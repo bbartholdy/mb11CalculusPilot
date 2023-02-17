@@ -46,17 +46,40 @@ calculus_index <- function(.data, simple = FALSE){
 #'
 #' @param .data Data frame in long format, with one tooth surface per row, and one calculus score per surface.
 #' @param .caries Caries count variable.
-#' @param ... Can be used to add grouping variable(s). Group by tooth, tooth type, individual, etc.
+#' @param ... Can be used to add arguments to `group_by()`. Group by tooth, tooth type, individual, etc.
 #' @return Returns a data frame with caries ratio per group.
 #' @export
 
 caries_ratio <- function(.data, .caries, ...){
   .data %>%
-    group_by(..., .add = T) %>%
+    group_by(..., .add = T) %>% # .add = T is unnecessary. can be added with ... in call to function
     summarise(
       #n_teeth = n(),
       n_teeth = sum(!is.na( {{ .caries }} ), na.rm = T),
       count = sum( {{ .caries }} , na.rm = T),
       ratio = count / n_teeth
+    )
+}
+
+#' Calculate antemortem tooth loss
+#'
+#' @details Calculate the caries ratio for each tooth type. Calculated as the number
+#' of caries divided by the number of visible surfaces.
+#'
+#' @param .data Data frame in long format, with one tooth surface per row, and one calculus score per surface.
+#' @param .status character. dental status (p, m, aml, dna).
+#' @param ... Can be used to add grouping variable(s). Group by tooth, tooth type, individual, etc.
+#' @return Returns a data frame with amtl ratio per group.
+#' @export
+
+amtl_ratio <- function(.data, .status, ...){ # add .missing = "m", .loss = "aml" arguments
+  .data %>%
+    group_by(...) %>% # .add = T is required if using group_by prior to call to amtl_ratio()
+    # remove group_by and add elipses to summarise()?
+    summarise(
+      n_teeth = sum( {{ .status }} != "m"),
+      #n_teeth = sum(!is.na( {{ .amtl }} ), na.rm = T),
+      count = sum( {{ .status }} == "aml"),
+      ratio = count / n_teeth # need to remove the postmortem loss teeth? What if a tooth is missing? how to calculate??
     )
 }
