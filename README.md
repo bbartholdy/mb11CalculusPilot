@@ -4,7 +4,7 @@
 # mb11CalculusPilot
 
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/bbartholdy/mb11CalculusPilot/main?urlpath=rstudio)
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.7649825.svg)](https://zenodo.org/badge/DOI/10.5281/zenodo.7649825)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.7649825.svg)](https://doi.org/10.5281/zenodo.7649151)
 
 This repository contains the data and code for our paper:
 
