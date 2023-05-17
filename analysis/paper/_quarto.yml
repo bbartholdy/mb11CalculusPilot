@@ -2,7 +2,7 @@ project:
   type: default
   output-dir: _output
   execute-dir: project
-  #pre-render: ../scripts/setup-qmd.R
+  pre-render: ../scripts/setup-qmd.R
 title: "Multiproxy analysis exploring patterns of diet and disease in dental calculus and skeletal remains from a 19th century Dutch population"
 author:
   - Bjørn Peare Bartholdy:
@@ -39,10 +39,10 @@ title-block-published: "Last updated"
 format:
   html:
     theme: cosmo
-    output-file: "preprint_v1.html"
+    output-file: "preprint_v1.2.html"
   pdf:
     keep-tex: true
-    output-file: "preprint_v1.pdf"
+    output-file: "preprint_v1.2.pdf"
     documentclass: article
     geometry:
       - top=30mm

@@ -23,146 +23,25 @@ library(readr)
 devtools::load_all()
 
 # upload data
-metadata <- read_tsv(here("analysis/data/raw_data/metadata.tsv"))
-demography <- read_csv(here("analysis/data/raw_data/demography.csv"))
-lloq <- read_tsv(here("analysis/data/raw_data/lloq.tsv"))
-uhplc_data_comb <- read_csv(here("analysis/data/derived_data/uhplc-data_combined.csv"))
-#uhplc_calculus <- read_csv(here("analysis/data/derived_data/uhplc-calculus_cleaned.csv"))
-dental_inv <- read_csv(here("analysis/data/raw_data/dental-inv.csv"))
-caries <- read_csv(here("analysis/data/raw_data/caries.csv"))
-periodont <- read_csv(here("analysis/data/raw_data/periodontitis.csv"))
-periap <- read_csv(here("analysis/data/raw_data/periapical.csv"))
-calculus <- read_csv(here("analysis/data/raw_data/calculus.csv"))
-calculus_full <- read_csv(here("analysis/data/raw_data/calculus_full.csv"))
-sinusitis_clean <- read_csv(here("analysis/data/derived_data/sinusitis_cleaned.csv"))
-path_cond_clean <- read_csv(here("analysis/data/derived_data/path-conditions_cleaned.csv"))
+# metadata <- read_tsv(here("analysis/data/raw_data/metadata.tsv"))
+# demography <- read_csv(here("analysis/data/raw_data/demography.csv"))
+# lloq <- read_tsv(here("analysis/data/raw_data/lloq.tsv"))
+# uhplc_data_comb <- read_csv(here("analysis/data/derived_data/uhplc-data_combined.csv"))
+# #uhplc_calculus <- read_csv(here("analysis/data/derived_data/uhplc-calculus_cleaned.csv"))
+# dental_inv <- read_csv(here("analysis/data/raw_data/dental-inv.csv"))
+# caries <- read_csv(here("analysis/data/raw_data/caries.csv"))
+# periodont <- read_csv(here("analysis/data/raw_data/periodontitis.csv"))
+# periap <- read_csv(here("analysis/data/raw_data/periapical.csv"))
+# calculus <- read_csv(here("analysis/data/raw_data/calculus.csv"))
+# calculus_full <- read_csv(here("analysis/data/raw_data/calculus_full.csv"))
+# sinusitis_clean <- read_csv(here("analysis/data/derived_data/sinusitis_cleaned.csv"))
+# path_cond_clean <- read_csv(here("analysis/data/derived_data/path-conditions_cleaned.csv"))
 
 source(here("analysis/scripts/setup-qmd.R"))
 ```
-
-## Session information
-
-This report was generated on `r Sys.time()` using the following computational environment and dependencies:
-
-```{r}
-print(sessionInfo(), locale = F)
-```
-
     
-## Data dictionary
 
-All raw data are available for download from Zenodo.
-
-### metadata.csv
-
-<!-- id	sample	element	KZ_sample	KZ_element	replicated	batch1_weight	batch2_weight -->
-
-| variable | description |
-|---|---|
-| id | unique identifier for the individual |
-| sample | sample number for the UHPLC-MS/MS analysis |
-| element | which tooth (FDI notation) was sampled for UHPLC-MS/MS analysis |
-| KZ_element | which tooth (FDI notation) was sampled for aDNA in original study |
-| replicated | Whether the sample was included in the replication batch (TRUE/FALSE) |
-| batch1_weight | weight (mg) of sample in batch 1 |
-| batch2_weight | weight (mg) of sample in batch 2 |
-
-
-### dental-inv.csv
-
-Dental inventory
-
-| variable | description |
-|---|---|
-| id | unique identifier for the individual |
-| t11..t48 | Tooth number (FDI system) and status |
-
-Dental inventory key:
-
-- p = present
-- m = missing (for unknown reason - likely postmortem loss)
-- aml = ante-mortem loss
-- dna = removed for DNA sampling
-
-### caries.csv
-
-Caries lesions location
-
-| variable | description |
-|---|---|
-| id | unique identifier for the individual |
-| t11..t48 | Tooth number (FDI system) and location of caries |
-
-Caries location key:
-
-- none = no caries present
-- mes = mesial
-- dis = distal
-- lin = lingual
-- buc = buccal (and labial)
-- occ = occlusal
-- crown = crown (large caries lesion covering multiple surfaces)
-- root = root
-- blank = tooth not present
-
-### periodontitis.csv
-
-| variable | description |
-|---|---|
-| id | unique identifier for the individual |
-| t11..t48 | Tooth number (FDI system) and periodontitis score (0-3) |
-
-Periodontitis score:
-
-- 0 = none
-- 1 = slight
-- 2 = moderate
-- 3 = severe 
-
-- blank = tooth not present
-
-### periapical.csv
-
-| variable | description |
-|---|---|
-| id | unique identifier for the individual |
-| t11..t48 | Tooth number (FDI system) and periapical lesion |
-
-- none = no lesion
-- bucc = buccal
-- lin = lingual
-- perf = perforated alveolar bone
-- blank = not scoreable
-
-### calculus_full.csv
-
-| variable | description |
-|---|---|
-| id | unique identifier for the individual |
-| t11_bucc..t48_ip | Tooth number (FDI system) and surface (bucc = buccal; lin = lingual; ip = interproximal) and deposit size (0-3) |
-
-- 0 = no calculus
-- 1 = slight calculus
-- 2 = moderate calculus
-- 3 = heavy calculus
-
-### path-conditions.csv
-
-Pathological conditions
-
-- OA = osteoarthritis
-- IVDD = intervertebral disc disease
-- TB = tuberculosis
-- DISH = diffuse idiopathic skeletal hyperostosis
-- VOP = vertebral osteophytosis
-- SN = schmorl's nodes
-- DDD = degenerative disc disease
-- PNBF = periosteal new bone formation
-- OD = osteochondritis dissecans
-- CF = cribra femora
-- CO = cribra orbitalia
-
-## Sample
+## Samples
 
 ### Selection
 
@@ -177,6 +56,7 @@ metadata %>%
     KZ_element = case_when(is.na(KZ_element) ~ FALSE,
                    TRUE ~ TRUE),
     ) %>%
+  arrange(id) %>% 
   knitr::kable(col.names = c("ID", "this study", "previous study"))
 ```
 
@@ -188,7 +68,6 @@ metadata %>%
 males <- demography %>%
   filter(sex == "m" | sex == "pm")
 ```
-
 
 The sample consists of `r nrow(demography)` individuals, most of which are
 middle adult male individuals (@fig-age-distribution). Middle adult males were
@@ -245,8 +124,6 @@ dental_long %>%
 
 ```{r}
 #| label: setup-uhplc
-
-
 
 # presence/absence data frame
 uhplc_calculus_bin <- uhplc_calculus_long %>%
@@ -640,6 +517,7 @@ uhplc_calculus_long %>%
 
 
 ```{r}
+#| label: tobacco-accuracy-setup
 tobacco <- uhplc_calculus_long %>%
   filter(compound %in% c("nicotine", "cotinine")) %>% 
   mutate(detection = if_else(is.na(conc), FALSE, TRUE))
@@ -723,8 +601,10 @@ uhplc_accuracy <- uhplc_calculus_replicated %>%
   left_join(select(demography, id, pipe_notch), by = "id") %>% 
   filter(compound == "nicotine" | compound == "cotinine") %>%
   group_by(id) %>% 
-  arrange(desc(presence)) %>%
-  slice(which(compound == "nicotine" || compound == "cotinine")) %>%
+  arrange(desc(presence), .by_group = T) %>%
+  distinct(id, .keep_all = T) %>% 
+  #slice(which(str_detect(compound, "nicotine|cotinine"))) #%>%
+  # slice(which(compound == "nicotine" | compound == "cotinine")) %>%
   mutate(
     pipe_notch = if_else(pipe_notch > 0, "Y", "N"),
     correct = case_when(presence == 1 & pipe_notch == "Y" ~ TRUE,
@@ -732,8 +612,6 @@ uhplc_accuracy <- uhplc_calculus_replicated %>%
                              presence == 1 & pipe_notch == "N" ~ NA, # can't be sure if this is true or not
                              TRUE ~ FALSE))
 
-replicated_accuracy <- 
-  
 # ratio of nicotine to cotinine
 tobacco_ratio <- tobacco %>%
   select(id, batch, compound, conc) %>% 
@@ -1167,3 +1045,133 @@ between caffeine concentration and dental calculus index, but since we targeted 
 calculus, this may inadvertently have been controlled for during sample collection.
 
 <!-- correlations on caries and calculus separated by quadrant/tooth type -->
+
+## Data dictionary
+
+All raw data are available for download from Zenodo (<https://doi.org/10.5281/zenodo.7648757>).
+
+### lloq.tsv
+
+| variable | description |
+|---|---|
+| compound | name of target compound |
+| lloq | Lower limit of quantitation |
+
+### metadata.csv
+
+<!-- id	sample	element	KZ_sample	KZ_element	replicated	batch1_weight	batch2_weight -->
+
+| variable | description |
+|---|---|
+| id | unique identifier for the individual |
+| sample | sample number for the UHPLC-MS/MS analysis |
+| element | which tooth (FDI notation) was sampled for UHPLC-MS/MS analysis |
+| KZ_element | which tooth (FDI notation) was sampled for aDNA in original study |
+| replicated | Whether the sample was included in the replication batch (TRUE/FALSE) |
+| batch1_weight | weight (mg) of sample in batch 1 |
+| batch2_weight | weight (mg) of sample in batch 2 |
+
+
+### dental-inv.csv
+
+Dental inventory
+
+| variable | description |
+|---|---|
+| id | unique identifier for the individual |
+| t11..t48 | Tooth number (FDI system) and status |
+
+Dental inventory key:
+
+- p = present
+- m = missing (for unknown reason - likely postmortem loss)
+- aml = ante-mortem loss
+- dna = removed for DNA sampling
+
+### caries.csv
+
+Caries lesions location
+
+| variable | description |
+|---|---|
+| id | unique identifier for the individual |
+| t11..t48 | Tooth number (FDI system) and location of caries |
+
+Caries location key:
+
+- none = no caries present
+- mes = mesial
+- dis = distal
+- lin = lingual
+- buc = buccal (and labial)
+- occ = occlusal
+- crown = crown (large caries lesion covering multiple surfaces)
+- root = root
+- blank = tooth not present
+
+### periodontitis.csv
+
+| variable | description |
+|---|---|
+| id | unique identifier for the individual |
+| t11..t48 | Tooth number (FDI system) and periodontitis score (0-3) |
+
+Periodontitis score:
+
+- 0 = none
+- 1 = slight
+- 2 = moderate
+- 3 = severe 
+
+- blank = tooth not present
+
+### periapical.csv
+
+| variable | description |
+|---|---|
+| id | unique identifier for the individual |
+| t11..t48 | Tooth number (FDI system) and periapical lesion |
+
+- none = no lesion
+- bucc = buccal
+- lin = lingual
+- perf = perforated alveolar bone
+- blank = not scoreable
+
+### calculus_full.csv
+
+| variable | description |
+|---|---|
+| id | unique identifier for the individual |
+| t11_bucc..t48_ip | Tooth number (FDI system) and surface (bucc = buccal; lin = lingual; ip = interproximal) and deposit size (0-3) |
+
+- 0 = no calculus
+- 1 = slight calculus
+- 2 = moderate calculus
+- 3 = heavy calculus
+
+### path-conditions.csv
+
+Pathological conditions
+
+- OA = osteoarthritis
+- IVDD = intervertebral disc disease
+- TB = tuberculosis
+- DISH = diffuse idiopathic skeletal hyperostosis
+- VOP = vertebral osteophytosis
+- SN = schmorl's nodes
+- DDD = degenerative disc disease
+- PNBF = periosteal new bone formation
+- OD = osteochondritis dissecans
+- CF = cribra femora
+- CO = cribra orbitalia
+
+
+## Session information
+
+This report was generated on `r Sys.time()` using the following computational environment and dependencies:
+
+```{r}
+print(sessionInfo(), locale = F)
+```
+

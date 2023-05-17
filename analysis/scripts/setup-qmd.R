@@ -8,8 +8,30 @@ library(glue)
 library(purrr)
 library(psych)
 library(patchwork)
+library(readr)
 
+devtools::load_all()
 try(generate_bib())
+
+# upload data
+#metadata <- read_tsv(here("analysis/data/raw_data/metadata.tsv"))
+#demography <- read_csv(here("analysis/data/raw_data/demography.csv"))
+#lloq <- read_tsv(here("analysis/data/raw_data/lloq.tsv"))
+#uhplc_data_comb <- read_csv(here("analysis/data/derived_data/uhplc-data_combined.csv"))
+#dental_inv <- read_csv(here("analysis/data/raw_data/dental-inv.csv"))
+#caries <- read_csv(here("analysis/data/raw_data/caries.csv"))
+#periodont <- read_csv(here("analysis/data/raw_data/periodontitis.csv"))
+#periap <- read_csv(here("analysis/data/raw_data/periapical.csv"))
+#calculus <- read_csv(here("analysis/data/raw_data/calculus.csv"))
+#calculus_full <- read_csv(here("analysis/data/raw_data/calculus_full.csv"))
+#sinusitis_clean <- read_csv(here("analysis/data/derived_data/sinusitis_cleaned.csv"))
+#path_cond_clean <- read_csv(here("analysis/data/derived_data/path-conditions_cleaned.csv"))
+
+#source(here("analysis/scripts/setup-qmd.R"))
+#source(here("analysis/supplementary-materials/supp-mat.qmd"), local = knitr::knit_global())
+# set viridis as default pallette
+
+
 
 # UHPLC analysis ----------------------------------------------------------
 
