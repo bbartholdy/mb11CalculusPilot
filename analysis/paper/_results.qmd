@@ -23,7 +23,7 @@ uhplc_calculus_detect <- uhplc_calculus_long %>%
 #| tbl-cap: "Target compound including whether it was detected (TRUE) or not (FALSE) in each batch, as well as the lower limit of quantitation (LLOQ) in ng. CBD = cannabidiol; CBN = cannabinol; THC = tetrahydrocannabinol; THCA-A = tetrahydrocannabinolic acid A; THCVA = tetrahydrocannabivarin acid."
 uhplc_calculus_detect %>%
   left_join(compound_name_abbrev, by = c("compound" = "abbrev")) %>% 
-  full_join(lloq, by = c("name" = "compound")) %>%
+  left_join(lloq, by = c("name" = "compound")) %>%
   mutate(across(batch1:batch2, ~ replace_na(.x, FALSE))) %>%
   filter(!(batch1 == FALSE & batch2 == FALSE)) %>% 
   select(name, batch1, batch2, lloq) %>% 
