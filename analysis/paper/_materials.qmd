@@ -12,7 +12,7 @@ and the surrounding Beemsterpolder were buried between AD 1615 and 1866
 between AD 1829 and 1866, when the majority of individuals were interred
 [@palmerActivityReconstruction2016]. The main occupation of the inhabitants
 was dairy farming, consisting largely of manual labour prior to the industrial
-revolution [@aten400JaarBeemster2012; @palmerActivityReconstruction2016].
+revolution [@aten400Jaar2012; @palmerActivityReconstruction2016].
 
 To reduce the number of potentially confounding factors to account for
 in the analysis, we preferentially selected males from the middle adult age category

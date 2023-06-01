@@ -24,11 +24,11 @@ Nicotine and its principal/main metabolite, cotinine, were strongly positively c
 both in concentration and presence/absence in individuals (@tbl-pearson and @fig-polycorr).
 The detection of nicotine and cotinine is not surprising, as pipe-smoking in the
 Beemsterpolder is well-documented in the literature
-[@aten400JaarBeemster2012; @boumanBegravenis2017], and visible on the skeletal
+[@aten400Jaar2012; @boumanBegravenis2017], and visible on the skeletal
 remains as pipe notches [@lemmersMiddenbeemster2013].
 There is also documented medicinal use of nicotine in the Beemsterpolder,
 where a tobacco-smoke enema was used for headaches, respiratory problems, colds,
-and drowsiness from around 1780 to 1830 [@aten400JaarBeemster2012].
+and drowsiness from around 1780 to 1830 [@aten400Jaar2012].
 In our sample, we also detected nicotine and cotinine (replicated)
 in an old adult, probable female individual.
 In this particular case it is unlikely that the compounds entered the dental
@@ -82,7 +82,7 @@ has long been used for its
 pain-relieving properties [@bruinsmaBijdragenTot1872, p. 119]. It is also present
 in many plant-based foods
 [@duthieNaturalSalicylates2011; @malakarNaturallyOccurring2017], including
-potatoes, which were a staple of the Beemsterpolder diet [@aten400JaarBeemster2012].
+potatoes, which were a staple of the Beemsterpolder diet [@aten400Jaar2012].
 The extracted quantity from our samples decreased over the three washes, followed
 by a sharp increase in the final calculus extraction, which is what we would expect
 to see if the salicylic acid was incorporated during life [@fig-auth-plot-batch2].
@@ -125,8 +125,8 @@ were detected.
 The absence of opioids could be a result of the people ascribing more to the
 "traditional" rather than "scientific" medicine, although laudanum and
 another opium containing concoction was part of the "traditional" medicine in
-the Netherlands [@leuwProhibitionLegalizationDutch1994], including Middenbeemster
-[@aten400JaarBeemster2012]. It was also generally
+the Netherlands [@leuwProhibitionLegalization1994], including Middenbeemster
+[@aten400Jaar2012]. It was also generally
 considered a drug of the upper class [@scheltemaOpiumTrade1907], and may have been
 more common in urban centers.
 The absence could also be attributed to postmortem degradation.
