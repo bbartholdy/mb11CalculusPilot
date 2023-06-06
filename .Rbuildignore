@@ -10,3 +10,4 @@
 ^\.binder/Dockerfile$
 ^\.binder$
 ^data-raw$
+^analysis$

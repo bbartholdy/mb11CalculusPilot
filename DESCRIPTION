@@ -15,6 +15,7 @@ Imports:
     ggplot2,
     glue,
     here,
+    magrittr,
     patchwork,
     psych,
     rbbt (>= 0.0.0.9000),
