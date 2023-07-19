@@ -52,7 +52,7 @@ number STG–677576 (“HARVEST”).
 
 ## Data Availability Statement {-}
 
-All raw data is available on Zenodo (<https://doi.org/10.5281/zenodo.7648757>).
+All raw data is available on Zenodo (<https://doi.org/10.5281/zenodo.8061483>).
 Analysis scripts, and the source code for the manuscript and
 supplementary materials are available as a research compendium
 (<https://doi.org/10.5281/zenodo.7649825>)

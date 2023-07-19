@@ -11,7 +11,7 @@ caries_ratio(.data, .caries, ...)
 
 \item{.caries}{Caries count variable.}
 
-\item{...}{Can be used to add grouping variable(s). Group by tooth, tooth type, individual, etc.}
+\item{...}{Can be used to add arguments to \code{group_by()}. Group by tooth, tooth type, individual, etc.}
 }
 \value{
 Returns a data frame with caries ratio per group.

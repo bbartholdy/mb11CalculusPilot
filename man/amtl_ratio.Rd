@@ -4,12 +4,12 @@
 \alias{amtl_ratio}
 \title{Calculate antemortem tooth loss}
 \usage{
-amtl_ratio(.data, .amtl, ...)
+amtl_ratio(.data, .status, ...)
 }
 \arguments{
 \item{.data}{Data frame in long format, with one tooth surface per row, and one calculus score per surface.}
 
-\item{.amtl}{AMTL count variable.}
+\item{.status}{character. dental status (p, m, aml, dna).}
 
 \item{...}{Can be used to add grouping variable(s). Group by tooth, tooth type, individual, etc.}
 }
