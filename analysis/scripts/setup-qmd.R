@@ -161,19 +161,16 @@ dental_long <- reduce(
 surface <- c("mes", "dis", "occ", "buc", "lin", "root", "crown") # here occ = incisal
 
 caries_count <- dental_long %>%
-  # pivot_longer(t11:t48, names_to = "tooth",
-  #              values_to = "caries_score") %>%
-  #na.omit() %>%
   separate_rows(caries, sep = ";") %>% # one lesion per row
   mutate(
     caries_count = if_else(
-      caries == "none", 0L, 1L # convert lesion location to binary (present = 1; absent = 0)
+      caries == "none", 0L, 1L, missing = NA # convert lesion location to binary (present = 1; absent = 0)
     )
   ) %>%
   group_by(id, tooth) %>%
   summarise(
     #n_teeth = n(),
-    count = sum(caries_count, na.rm = T),
+    count = sum(caries_count),
   ) %>%
   tooth_position() %>%
   ungroup()
