@@ -4,7 +4,7 @@
 #' @importFrom here here
 
 generate_bib <- function(){
-  cite_keys <- bbt_detect_citations(list.files(here("analysis/paper/"), "*.qmd", full.names = T))
+  cite_keys <- bbt_detect_citations(list.files(here("analysis/"), "*.qmd", full.names = T, recursive = T))
   ignore_keys <- grep("fig-|tbl-", cite_keys, value = T)
   bbt_write_bib(
     here("analysis/paper/references.bib"),

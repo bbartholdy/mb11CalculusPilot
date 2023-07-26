@@ -7,3 +7,6 @@
 *.html
 /.luarc.json
 **/_freeze/
+/*.R
+**/_output
+**/_archive

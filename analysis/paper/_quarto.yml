@@ -40,6 +40,7 @@ format:
   html:
     theme: cosmo
     output-file: "preprint-for-PCI_v1.html"
+    keep-md: true
   pdf:
     keep-tex: true
     output-file: "preprint-for-PCI_v1.pdf"
