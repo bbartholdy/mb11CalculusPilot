@@ -5,6 +5,7 @@
 *_files
 *_cache
 *.html
+*.pdf
 /.luarc.json
 **/_freeze/
 /*.R

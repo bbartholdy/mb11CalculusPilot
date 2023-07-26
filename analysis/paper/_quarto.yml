@@ -57,7 +57,7 @@ format:
     output-file: "draft-manuscript-3.docx"
 #output-file: "_output/draft-manuscript-2"
 execute:
-  freeze: true
+  freeze: auto
   echo: false
   warning: false
 knitr:

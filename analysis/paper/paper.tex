@@ -7,7 +7,6 @@
 ]{article}
 
 \usepackage{amsmath,amssymb}
-\usepackage{lmodern}
 \usepackage{iftex}
 \ifPDFTeX
   \usepackage[T1]{fontenc}
@@ -17,6 +16,10 @@
   \usepackage{unicode-math}
   \defaultfontfeatures{Scale=MatchLowercase}
   \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else  
+    % xetex/luatex font selection
 \fi
 % Use upquote if available, for straight quotes in verbatim environments
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
@@ -143,10 +146,12 @@
 \@ifpackageloaded{subcaption}{}{\usepackage{subcaption}}
 \makeatother
 \makeatletter
-\@ifpackageloaded{tcolorbox}{}{\usepackage[many]{tcolorbox}}
+\@ifpackageloaded{tcolorbox}{}{\usepackage[skins,breakable]{tcolorbox}}
 \makeatother
 \makeatletter
 \@ifundefined{shadecolor}{\definecolor{shadecolor}{rgb}{.97, .97, .97}}
+\makeatother
+\makeatletter
 \makeatother
 \makeatletter
 \makeatother
@@ -171,7 +176,7 @@ sinusitis; caffeine; tobacco},
 \title{Multiproxy analysis exploring patterns of diet and disease in
 dental calculus and skeletal remains from a 19th century Dutch
 population}
-\author{Bjørn Peare Bartholdy\textsuperscript{1,*} \and Jørgen B. Hasselstrøm\textsuperscript{2} \and Lambert K. Sørensen\textsuperscript{2} \and Maia Casna\textsuperscript{1} \and Menno Hoogland\textsuperscript{1} \and Historisch Genootschap Beemster\textsuperscript{3} \and Amanda G. Henry\textsuperscript{1}}
+\author{}
 \date{}
 
 \begin{document}
@@ -215,7 +220,7 @@ method allows us to directly address specific individuals, which can be
 especially useful in individuals that are not always well-documented in
 historic documentation, such as rural populations, children and women.
 \end{abstract}
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[interior hidden, borderline west={3pt}{0pt}{shadecolor}, frame hidden, breakable, boxrule=0pt, sharp corners, enhanced]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[breakable, interior hidden, boxrule=0pt, sharp corners, frame hidden, enhanced, borderline west={3pt}{0pt}{shadecolor}]}{\end{tcolorbox}}\fi
 
 \textsuperscript{1} Department of Archaeological Sciences, Leiden
 University\\
@@ -461,8 +466,8 @@ index for each individual were converted to an ordinal score from 0 to 4
 by using quartiles. Polychoric correlation was applied to the paired
 dichotomous variables and dichotomous-ordinal variables.
 
-All statistical analysis was conducted in R version 4.3.0 (2023-04-21),
-Already Tomorrow, (R Core Team, 2020). Data wrangling was conducted with
+All statistical analysis was conducted in R version 4.3.1 (2023-06-16),
+Beagle Scouts, (R Core Team, 2020). Data wrangling was conducted with
 the \textbf{tidyverse} (Hadley Wickham et al., 2019) and visualisations
 were created using \textbf{ggplot2} (H. Wickham, 2016). Polychoric
 correlations were calculated with the \textbf{psych} package (Revelle,
@@ -485,14 +490,16 @@ was detected (TRUE) or not (FALSE) in each batch, as well as the lower
 limit of quantitation (LLOQ) in ng. CBD = cannabidiol; CBN = cannabinol;
 THC = tetrahydrocannabinol; THCA-A = tetrahydrocannabinolic acid A;
 THCVA = tetrahydrocannabivarin acid.}\tabularnewline
-\toprule()
+\toprule\noalign{}
 Compound & Batch 1 & Batch 2 & LLOQ \\
-\midrule()
+\midrule\noalign{}
 \endfirsthead
-\toprule()
+\toprule\noalign{}
 Compound & Batch 1 & Batch 2 & LLOQ \\
-\midrule()
+\midrule\noalign{}
 \endhead
+\bottomrule\noalign{}
+\endlastfoot
 CBD & TRUE & FALSE & 0.050 \\
 CBN & TRUE & FALSE & 0.050 \\
 Caffeine & TRUE & TRUE & 0.050 \\
@@ -504,7 +511,6 @@ THC & TRUE & FALSE & 0.100 \\
 THCA-A & TRUE & FALSE & 0.025 \\
 THCVA & TRUE & FALSE & 0.010 \\
 Theophylline & TRUE & TRUE & 0.010 \\
-\bottomrule()
 \end{longtable}
 
 The pattern we expect to see in authentic compounds representing
@@ -588,15 +594,15 @@ detected in batch 2 and may have been contaminated.
 
 \hypertarget{tbl-pearson}{}
 \begin{longtable}[]{@{}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.1566}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.0843}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.1084}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.0843}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.1084}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.0843}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.1566}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.1084}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.1084}}@{}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.1548}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.0952}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.1071}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.0833}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.1071}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.0833}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.1548}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.1071}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.1071}}@{}}
 \caption{\label{tbl-pearson}Pearson correlation (\emph{r}) on
 dichotomous skeletal lesions and compound concentrations (ng/mg) from
 the second batch. Correlations between pairs of dichotomous variables
@@ -605,7 +611,7 @@ osteoarthritis; VOP = vertebral osteophytosis; SN = Schmorl's nodes; DDD
 = degenerative disc disease; CO = cribra orbitalia; CMS = chronic
 maxillary sinusitis; SA = salicylic acid; PN = pipe
 notches.}\tabularnewline
-\toprule()
+\toprule\noalign{}
 \begin{minipage}[b]{\linewidth}\raggedright
 \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
 Caries
@@ -624,9 +630,9 @@ Caffeine
 \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
 Cotinine
 \end{minipage} \\
-\midrule()
+\midrule\noalign{}
 \endfirsthead
-\toprule()
+\toprule\noalign{}
 \begin{minipage}[b]{\linewidth}\raggedright
 \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
 Caries
@@ -645,22 +651,24 @@ Caffeine
 \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
 Cotinine
 \end{minipage} \\
-\midrule()
+\midrule\noalign{}
 \endhead
-OA & -0.19 & -0.074 & 0.21 & 0.07 & 0.14 & 0.28 & 0.00098 & -0.067 \\
-VOP & -0.061 & -0.16 & 0.34 & 0.061 & 0.25 & -0.06 & 0.013 & -0.13 \\
-SN & -0.22 & 0.16 & 0.095 & 0.089 & 0.17 & 0.24 & 0.16 & 0.093 \\
-DDD & 0.032 & 0.0037 & 0.19 & -0.39 & -0.077 & 0.31 & 0.06 & -0.0086 \\
-CO & 0.14 & -0.051 & 0.2 & 0.14 & -0.2 & -0.11 & 0.19 & -0.065 \\
-CMS & -0.18 & 0.28 & 0.0017 & -0.27 & 0.032 & 0.19 & 0.36 & 0.22 \\
-Caries & & -0.13 & -0.27 & -0.19 & -0.037 & -0.16 & 0.079 & -0.16 \\
+\bottomrule\noalign{}
+\endlastfoot
+OA & -0.12 & -0.074 & 0.21 & 0.07 & 0.14 & 0.28 & 0.00098 & -0.067 \\
+VOP & -0.088 & -0.16 & 0.34 & 0.061 & 0.25 & -0.06 & 0.013 & -0.13 \\
+SN & -0.24 & 0.16 & 0.095 & 0.089 & 0.17 & 0.24 & 0.16 & 0.093 \\
+DDD & -0.0038 & 0.0037 & 0.19 & -0.39 & -0.077 & 0.31 & 0.06 &
+-0.0086 \\
+CO & 0.064 & -0.051 & 0.2 & 0.14 & -0.2 & -0.11 & 0.19 & -0.065 \\
+CMS & -0.19 & 0.28 & 0.0017 & -0.27 & 0.032 & 0.19 & 0.36 & 0.22 \\
+Caries & & -0.2 & -0.36 & -0.15 & -0.17 & -0.21 & -0.0045 & -0.22 \\
 Nicotine & & & -0.21 & 0.01 & -0.014 & 0.43 & 0.14 & 0.98 \\
 SA & & & & 0.14 & 0.37 & 0.038 & 0.17 & -0.17 \\
 Calculus & & & & & 0.13 & -0.15 & -0.13 & 0.031 \\
 PN & & & & & & -0.16 & 0.18 & -0.0068 \\
 Theophylline & & & & & & & 0.51 & 0.36 \\
 Caffeine & & & & & & & & 0.078 \\
-\bottomrule()
 \end{longtable}
 
 Point-biserial correlation was conducted on paired continuous and
@@ -675,17 +683,16 @@ Polychoric correlation was conducted on the dichotomised compounds and
 pathological conditions, as well as the discretised dental diseases.
 Salicylic acid was removed due to its ubiquitous presence in the sample,
 and is likely to cause spurious correlations. Strong correlations were
-found between cotinine and nicotine (0.851). Moderate correlations were
-found between OA and DDD (0.484), VOP and periodontitis (0.491), SN and
-cotinine (0.558), DDD and calculus (-0.421), CMS and caffeine (0.528),
-caries and periodontitis (0.486), caries and theophylline (-0.491),
-periodontitis and caries (0.486), periodontitis and caffeine (0.515),
-nicotine and CMS (0.496), calculus and caries (0.502), age-at-death and
-theophylline (-0.447), theophylline and age-at-death (-0.447), caffeine
-and periodontitis (0.515), cotinine and CMS (0.425). Remaining
-correlations were weak or absent (Figure~\ref{fig-polycorr}).
-Correlations with age will be depressed because age was largely
-controlled for in the sample selection.
+found between cotinine and nicotine (0.847). Moderate correlations were
+found between OA and DDD (0.47), VOP and periodontitis (0.487), SN and
+cotinine (0.559), DDD and calculus (-0.416), CMS and caffeine (0.53),
+caries and periodontitis (0.523), periodontitis and VOP (0.487),
+periodontitis and age-at-death (0.407), nicotine and SN (0.53), calculus
+and DDD (-0.416), age-at-death and theophylline (-0.45), theophylline
+and age-at-death (-0.45), caffeine and periodontitis (0.494), cotinine
+and CMS (0.427). Remaining correlations were weak or absent
+(Figure~\ref{fig-polycorr}). Correlations with age will be depressed
+because age was largely controlled for in the sample selection.
 
 \begin{figure}
 
@@ -909,7 +916,7 @@ periodontal and respiratory pathogens enter the bloodstream (Azarpazhooh
 sample, the percentage of chronic maxillary sinusitis (37.0\%) is lower
 than in another (more representative) male sample (44.1\%) (Casna et
 al., 2021), and the caries percentage is similarly lower in our sample
-(12.7\%) than a more representative sample (22.9\%) (Lemmers et al.,
+(17.6\%) than a more representative sample (22.9\%) (Lemmers et al.,
 2013).\\
 We used the presence/absence of a pipe notch and concurrent detection of
 tobacco as a crude estimate of the accuracy of the method, which we
@@ -1022,7 +1029,7 @@ Statement}\label{data-availability-statement}}
 \addcontentsline{toc}{subsection}{Data Availability Statement}
 
 All raw data is available on Zenodo
-(\url{https://doi.org/10.5281/zenodo.7648757}). Analysis scripts, and
+(\url{https://doi.org/10.5281/zenodo.8061483}). Analysis scripts, and
 the source code for the manuscript and supplementary materials are
 available as a research compendium
 (\url{https://doi.org/10.5281/zenodo.7649825}) using the structure
@@ -1066,7 +1073,7 @@ Arcavi, L., \& Benowitz, N. L. (2004). Cigarette {Smoking} and
 {Infection}. \emph{Archives of Internal Medicine}, \emph{164}(20),
 2206--2216. \url{https://doi.org/10.1001/archinte.164.20.2206}
 
-\leavevmode\vadjust pre{\hypertarget{ref-aten400JaarBeemster2012}{}}%
+\leavevmode\vadjust pre{\hypertarget{ref-aten400Jaar2012}{}}%
 Aten, D., Bossaers, K. W. J. M., \& Misset, C. (2012). \emph{400 jaar
 Beemster: 1612-2012}. {Stichting Uitgeverij Noord-Holland}.
 
@@ -1245,7 +1252,7 @@ Lemmers, S. A. M., Schats, R., Hoogland, M. L. P., \& Waters-Rist, A.
 (2013). Fysisch antropologische analyse Middenbeemster. In \emph{De
 begravingen bij de Keyserkerk te Middenbeemster} (pp. 35--60).
 
-\leavevmode\vadjust pre{\hypertarget{ref-leuwProhibitionLegalizationDutch1994}{}}%
+\leavevmode\vadjust pre{\hypertarget{ref-leuwProhibitionLegalization1994}{}}%
 Leuw, E., \& Marshall, I. H. (1994). \emph{Between {Prohibition} and
 {Legalization}: {The Dutch Experiment} in {Drug Policy}}. {Kugler
 Publications}. \url{https://books.google.com?id=2mAVkStNG5EC}
