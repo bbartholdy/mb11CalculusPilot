@@ -16,6 +16,8 @@ NULL
 #' Produce detailed tooth region information from tooth number (FDI notation)
 #'
 #' @param .data data frame containing tooth number (t + FDI notation)
+#' @importFrom dplyr if_else case_when
+#' @importFrom stringr str_detect
 #' @return Returns a data frame with tooth number, region (maxilla, mandible),
 #' position (anterior, posterior), side, tooth_type (incisor, canine, etc.)
 #' @export tooth_position
@@ -112,6 +114,7 @@ dental_longer <- function(.data, cols){
 #'
 #' @param .data A data frame containing one column with a unique identifier and
 #' multiple columns with calculus scores from each surface of a tooth.
+#' @importFrom dplyr group_by summarise arrange slice select filter anti_join
 #' @return Returns a warning if data frame does not fulfill criterion.
 #' @export dentition_checker
 dentition_checker <- function(.data){
@@ -141,58 +144,6 @@ dentition_checker <- function(.data){
 
 #' Function to convert compound abbreviations to full name
 
-# compound_name_repair <- function(.data){
-#   # repair abbreviated compound names
-#     .data %>%
-#     rename(
-#       "THCA-A" = "thca-a",
-#       "Cocaine" = "cocaine",
-#       "Caffeine" = "caffeine",
-#       "Theophylline" = "theophyl",
-#       "Cotinine" = "cotinine",
-#       "Nicotine" = "nicotine",
-#       "Salicylic acid" = "salicyl",
-#       "CBN" = "cbn",
-#       "THCVA" = "thcva",
-#       "THC" = "thc",
-#       "CBD" = "cbd"
-#     )
-# }
-
-# compound_name_repair <- function(.data, ...){
-#   # repair abbreviated compound names
-#   .data %>%
-#     pivot_wider( {{ ... }} ) %>%
-#     rename(
-#       "THCA-A" = "thca-a",
-#       "Cocaine" = "cocaine",
-#       "Caffeine" = "caffeine",
-#       "Theophylline" = "theophyl",
-#       "Cotinine" = "cotinine",
-#       "Nicotine" = "nicotine",
-#       "Salicylic acid" = "salicyl",
-#       "CBN" = "cbn",
-#       "THCVA" = "thcva",
-#       "THC" = "thc",
-#       "CBD" = "cbd"
-#     )
-# }
-
-# compound_name_repair <- function(.data, var){
-#
-#   # repair abbreviated compound names
-#   compound_name_abbrev <- data.frame(
-#     name = c("THCA-A", "Cocaine", "Caffeine", "Theophylline", "Cotinine", "Nicotine",
-#              "Salicylic acid", "CBN", "THCVA", "THC", "CBD"),
-#     abbrev = c("thca-a", "cocaine", "caffeine", "theophyl", "cotinine", "nicotine", "salicyl",
-#                "cbn", "thcva", "thc", "cbd")
-#   )
-#
-#   .data %>%
-#     left_join(compound_name_abbrev, by = c(var = "abbrev"))
-# }
-
-
 # compound_name_repair <- function(variable,value){
 #   compound_names <- list(
 #     "thca-a" = "THCA-A",
@@ -214,6 +165,8 @@ dentition_checker <- function(.data){
 #'
 #' @param .data correlation tibble. Long format.
 #' @param strength character. Strength of correlation ("weak", "moderate", or "strong").
+#' @importFrom dplyr mutate case_when filter slice
+#' @importFrom glue glue
 #' @export
 cor_statement <- function(.data, strength){
 
@@ -247,7 +200,6 @@ cor_statement <- function(.data, strength){
   return(correlations)
 }
 
-#' @export
 compound_names <- c(
   "thca-a" = "THCA-A",
   "cocaine" = "Cocaine",

@@ -3,6 +3,8 @@
 #' @param .data Data frame containing...
 #' @param fill What variable is used for the 'fill' argument. Passed to ggplot().
 #' @param notation Currently not in use. May be used to support different notation in the future.
+#' @importFrom dplyr filter mutate
+#' @import patchwork
 #' @export dental_plot
 
 dental_plot <- function(.data, fill, notation){
@@ -36,6 +38,6 @@ dental_plot <- function(.data, fill, notation){
     theme(axis.title.x = element_blank(),
           panel.grid = element_blank())
 
-  require(patchwork)
+  #requireNamespace(patchwork)
   maxilla / mandible + plot_layout(guides = "collect")
 }

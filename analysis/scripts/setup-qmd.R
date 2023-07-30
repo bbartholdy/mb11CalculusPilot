@@ -13,25 +13,6 @@ library(readr)
 devtools::load_all()
 try(generate_bib())
 
-# upload data
-#metadata <- read_tsv(here("analysis/data/raw_data/metadata.tsv"))
-#demography <- read_csv(here("analysis/data/raw_data/demography.csv"))
-#lloq <- read_tsv(here("analysis/data/raw_data/lloq.tsv"))
-#uhplc_data_comb <- read_csv(here("analysis/data/derived_data/uhplc-data_combined.csv"))
-#dental_inv <- read_csv(here("analysis/data/raw_data/dental-inv.csv"))
-#caries <- read_csv(here("analysis/data/raw_data/caries.csv"))
-#periodont <- read_csv(here("analysis/data/raw_data/periodontitis.csv"))
-#periap <- read_csv(here("analysis/data/raw_data/periapical.csv"))
-#calculus <- read_csv(here("analysis/data/raw_data/calculus.csv"))
-#calculus_full <- read_csv(here("analysis/data/raw_data/calculus_full.csv"))
-#sinusitis_clean <- read_csv(here("analysis/data/derived_data/sinusitis_cleaned.csv"))
-#path_cond_clean <- read_csv(here("analysis/data/derived_data/path-conditions_cleaned.csv"))
-
-#source(here("analysis/scripts/setup-qmd.R"))
-#source(here("analysis/supplementary-materials/supp-mat.qmd"), local = knitr::knit_global())
-# set viridis as default pallette
-
-
 
 # UHPLC analysis ----------------------------------------------------------
 
@@ -69,20 +50,8 @@ quant_filter <- uhplc_data_long %>%
   filter(sum > 0) %>%
   select(!sum)
 
-# uhplc_calculus_id <- uhplc_calculus %>%
-#   mutate(sample = as.character(sample)) %>%
-#   left_join(select(metadata, id, sample), by = "sample") # add individual IDs to data frame
-
 uhplc_calculus_long <- uhplc_data_long %>%
-  # pivot_longer(
-  #   -c(sample, id),
-  #   names_to = c("compound", "batch"),
-  #   names_pattern = "(.*)_(.*)",
-  #   values_to = c("quant")
-  # ) %>%
   filter(extraction == "calc") %>%
-  #mutate(compound = str_remove(compound, "_calc")) %>%
-  #remove_missing() %>%
   left_join(weight) %>%  # add weight of calculus samples
   mutate(presence = if_else(quant > 0, 1, quant)) %>%
   group_by(id, sample, compound, batch) %>%
@@ -92,17 +61,7 @@ uhplc_calculus_long <- uhplc_data_long %>%
 
 uhplc_conc_wide <- uhplc_calculus_long %>%
   filter(batch == "batch2") %>%
-  #left_join(select(metadata, id, batch2_weight)) %>%
-  #remove_missing() %>%
   ungroup() %>%
-  # mutate(compound = case_when(compound == "nicotine" ~ "tobacco",
-  #                             compound == "cotinine" ~ "tobacco",
-  #                             TRUE ~ compound)) %>%
-  # group_by(id, sample, compound) %>%
-  # summarise(presence = sum(presence)) #%>% # combine nicotine and cotinine
-  #remove_missing() %>%
-  # mutate(presence = case_when(presence > 0 ~ TRUE,
-  #                             TRUE ~ FALSE)) %>%
   select(
     !c(presence, quant, weight, pipe_notch, sex, age, preservation, completeness)
     ) %>%
@@ -117,9 +76,7 @@ dental_inv_long <- dental_inv %>% # Inventory
   right_join(demography) %>%
   select(!c(pipe_notch)) %>%
   pivot_longer(t11:t48, names_to = "tooth",
-               values_to = "status") #%>% no reason to recode dna...
-  #mutate(status = case_when(status == "dna" ~ "m", # teeth missing due to DNA sampling recoded as missing. WILL affect aml calculations...
-                            #TRUE ~ status))
+               values_to = "status")
 
 teeth_list <- list(caries, periodont, periap)#, calculus) # calculus_full too wide - one column per surface
 
@@ -183,24 +140,6 @@ caries_ratio_id <- caries_count %>%
 
 caries_ratio_site <- caries_count %>%
   caries_ratio(.caries = count)
-
-# caries_ratio <- caries %>%
-#   pivot_longer(t11:t48, names_to = "tooth",
-#                values_to = "caries_score") %>%
-#   na.omit() %>%
-#   separate_rows(caries_score, sep = ";") %>% # one lesion per row
-#   mutate(
-#     caries_count = if_else(
-#       caries_score == "none", 0L, 1L
-#     )
-#   ) %>%
-#   group_by(id) %>%
-#   summarise(
-#     n_teeth = n(),
-#     count = sum(caries_count, na.rm = T), # crude caries rate
-#     caries_ratio = count / n_teeth
-#   ) %>%
-#   select(id, caries_ratio)
 
 # Median periodontal status
 
@@ -317,17 +256,6 @@ polycorr <- polychoric(explore_discrete)
 polycorr_tib <- polycorr$rho %>%
   as_tibble(rownames = "var") %>%
   pivot_longer(-var, values_to = "corr") #%>%
-  # mutate(
-  #   strength = case_when(
-  #     abs(corr) >= 0.8 ~ "strong",
-  #     abs(corr) < 0.8 & abs(corr) >= 0.4 ~ "moderate",
-  #     abs(corr) < 0.4 ~ "weak"
-  #   ),
-  #   direction = case_when(
-  #     corr > 0 ~ "positive",
-  #     corr < 0 ~ "negative"
-  #   )
-  # ) %>%
-  # filter(corr != 1)
+
 
 

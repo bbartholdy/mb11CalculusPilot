@@ -27,16 +27,27 @@
 #' \describe{
 #'   \item{compound}{Name of the compound.}
 #'   \item{lloq}{Lower limit of quantitation (ng)}
-#'   \item{element}{FDI notation for tooth/teeth sampled for each individual.}
-#'   \item{KZ_sample}{Dental calculus sample number on tubes from previous study.}
-#'   \item{KZ_element}{FDI notation for tooth/teeth sampled from the previous study for each individual.}
-#'   \item{replicated}{Whether or not the sample was replicated in a separate UHPLC-MS/MS analysis.}
-#'   \item{batch1_weight}{weight (mg) of dental calculus sample analysed in the first batch.}
-#'   \item{batch2_weight}{weight (mg) of dental calculus sample analysed in the replication batch.}
 #'   ...
 #' }
 #' @source https://doi.org/10.5281/zenodo.8010630
 "lloq"
+
+#' UHPLC analysis data from both batches
+#'
+#' Contains the results for each sample from each extraction step (washes, and dissolution)
+#' analysed by UHPLC in the first and second (replication) batch.
+#' @format ## `uhplc_data_comb`
+#' A data frame with 42 rows and 91 columns:
+#' \describe{
+#'   \item{sample}{number on the sample tube.}
+#'   \item{<compound>_wash{1..3}_batch{1..2}}{Absolute quantity (ng) of compound detected in sample washes.}
+#'   \item{<compound>_calc_batch{1..2}}{Absolute quantity (ng) of compound detected after sample dissolution.}
+#'   \item{batch{1..2}_weight}{Weight of the calculus sample in mg.}
+#'   ...
+#' }
+#' @source https://doi.org/10.5281/zenodo.8010630
+"uhplc_data_comb"
+
 
 #' Middenbeemster sample demographics
 #'
