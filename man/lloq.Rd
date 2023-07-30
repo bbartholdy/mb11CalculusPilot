@@ -11,12 +11,6 @@ A data frame with 76 rows and 2 columns:
 \describe{
 \item{compound}{Name of the compound.}
 \item{lloq}{Lower limit of quantitation (ng)}
-\item{element}{FDI notation for tooth/teeth sampled for each individual.}
-\item{KZ_sample}{Dental calculus sample number on tubes from previous study.}
-\item{KZ_element}{FDI notation for tooth/teeth sampled from the previous study for each individual.}
-\item{replicated}{Whether or not the sample was replicated in a separate UHPLC-MS/MS analysis.}
-\item{batch1_weight}{weight (mg) of dental calculus sample analysed in the first batch.}
-\item{batch2_weight}{weight (mg) of dental calculus sample analysed in the replication batch.}
 ...
 }
 }

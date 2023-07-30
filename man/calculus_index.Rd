@@ -8,6 +8,8 @@ calculus_index(.data, simple = FALSE)
 }
 \arguments{
 \item{.data}{Data frame in long format, with one tooth surface per row, and one calculus score per surface.}
+
+\item{simple}{Whether data should be grouped by id (TRUE) or id and quadrant (FALSE).}
 }
 \value{
 Returns a data frame with four rows per individual containing the calculated calculus
