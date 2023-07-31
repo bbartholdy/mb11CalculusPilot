@@ -32,13 +32,13 @@ author:
 affiliations:
   - id: leiden
     name: Department of Archaeological Sciences, Leiden University
-    address: Einsteinweg 2, 2333 CC, Leiden, Netherlands
+    #address: Einsteinweg 2, 2333 CC, Leiden, Netherlands
   - id: aarhus
     name: Department of Forensic Medicine, Aarhus University
-    address: Palle Juul-Jensens Boulevard 99, 8200, Aarhus N, Denmark
+    #address: Palle Juul-Jensens Boulevard 99, 8200, Aarhus N, Denmark
   - id: hgb
     name: Historisch Genootschap Beemster
-    address: Postbus 73, 1462 ZH, Middenbeemster, Netherlands
+    #address: Postbus 73, 1462 ZH, Middenbeemster, Netherlands
 title-block-published: "Last updated"
 format:
   html:

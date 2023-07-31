@@ -11,7 +11,7 @@ source(here("analysis/scripts/setup-qmd.R"))
 options(ggplot.discrete.colour = function() scale_fill_viridis_d())
 ```
  
-Keywords: {{< meta keywords >}}
+<!-- Keywords: {{< meta keywords >}} -->
 
 <!-- Highlights: {{< meta highlights >}} -->
 
