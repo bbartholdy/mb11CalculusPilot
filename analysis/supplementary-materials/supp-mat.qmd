@@ -8,6 +8,8 @@ knitr:
     message: false
 format: 
   html:
+    format-links: false
+    echo: true
     toc: true
     code-fold: true
     embed-resources: true
