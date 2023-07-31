@@ -5,37 +5,41 @@ project:
   pre-render: ../scripts/setup-qmd.R
 title: "Multiproxy analysis exploring patterns of diet and disease in dental calculus and skeletal remains from a 19th century Dutch population"
 author:
-  - Bjørn Peare Bartholdy:
-      correspondence: "yes"
-      email: b.p.bartholdy@arch.leidenuniv.nl
-      orcid: 0000-0003-1689-0557
-      institute:
-        - leiden
-  - Jørgen B. Hasselstrøm:
-      institute: aarhus
-  - Lambert K. Sørensen:
-      institute: aarhus
-  - Maia Casna:
-      institute: leiden
-  - Menno Hoogland:
-      institute: leiden
-  - Historisch Genootschap Beemster:
-      institute: hgb
-  - Amanda G. Henry:
-      institute: leiden
-institute:
-  - leiden:
-      name: Department of Archaeological Sciences, Leiden University
-      address: Einsteinweg 2, 2333 CC, Leiden, Netherlands
-  - aarhus:
-      name: Department of Forensic Medicine, Aarhus University
-      address: Palle Juul-Jensens Boulevard 99, 8200, Aarhus N, Denmark
-  - hgb:
-      name: Historisch Genootschap Beemster
-      address: Postbus 73, 1462 ZH, Middenbeemster, Netherlands
+  - name: Bjørn Peare Bartholdy
+    corresponding: true
+    email: b.p.bartholdy@arch.leidenuniv.nl
+    #orcid: 0000-0003-1689-0557
+    affiliations:
+      - ref: leiden
+  - name: Jørgen B. Hasselstrøm
+    affiliations:
+      - ref: aarhus
+  - name: Lambert K. Sørensen
+    affiliations:
+      - ref: aarhus
+  - name: Maia Casna
+    affiliations:
+      - ref: leiden
+  - name: Menno Hoogland
+    affiliations:
+      - ref: leiden
+  - name: Historisch Genootschap Beemster
+    affiliations:
+      - ref: hgb
+  - name: Amanda G. Henry
+    affiliations:
+      - ref: leiden
+affiliations:
+  - id: leiden
+    name: Department of Archaeological Sciences, Leiden University
+    address: Einsteinweg 2, 2333 CC, Leiden, Netherlands
+  - id: aarhus
+    name: Department of Forensic Medicine, Aarhus University
+    address: Palle Juul-Jensens Boulevard 99, 8200, Aarhus N, Denmark
+  - id: hgb
+    name: Historisch Genootschap Beemster
+    address: Postbus 73, 1462 ZH, Middenbeemster, Netherlands
 title-block-published: "Last updated"
-#date: now
-#date-format: long
 format:
   html:
     theme: cosmo
@@ -52,7 +56,10 @@ format:
     include-in-header:
       text: |
         \usepackage{lineno}
-        \linenumbers
+    template-partials:
+      - ../templates/_authors.tex
+      - ../templates/_affiliations.tex
+      - ../templates/before-body.tex
   docx:
     output-file: "draft-manuscript-3.docx"
 #output-file: "_output/draft-manuscript-2"
@@ -66,10 +73,10 @@ knitr:
     comment: "#>"
     fig-path: "../figures/"
     fig-dpi: 600
-filters:
-  - ../templates/scholarly-metadata.lua
-  - ../templates/author-info-blocks.lua
-  #- ../templates/pagebreak.lua
+# filters:
+#   - ../templates/scholarly-metadata.lua
+#   - ../templates/author-info-blocks.lua
+#   - ../templates/pagebreak.lua
 bibliography: references.bib
 csl: "apa.csl" # Insert path for the bib-style
 abstract: |

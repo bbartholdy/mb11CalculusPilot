@@ -1,0 +1,31 @@
+%% modified from: https://github.com/quarto-journals/plos/blob/main/_extensions/plos/partials/before-body.tex
+\begin{flushleft}
+{\Large
+\textbf\newline{$title$}
+}
+\newline
+\\
+% Insert author names, affiliations and corresponding author email
+$by-author:_authors.tex()[, ]$
+\\
+\bigskip
+$by-affiliation:_affiliations.tex()[\\ ]$
+\bigskip
+
+
+\end{flushleft}
+
+\linenumbers
+
+$if(abstract)$
+\begin{abstract}
+$abstract$
+\end{abstract}
+$endif$
+
+% Use the asterisk to denote corresponding authorship and provide email address in note below.
+$for(by-author)$
+$if(by-author.attributes.corresponding)$
+* $by-author.email$
+$endif$
+$endfor$
