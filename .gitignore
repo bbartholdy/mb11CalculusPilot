@@ -11,3 +11,5 @@
 /*.R
 **/_output
 **/_archive
+
+/.quarto/
