@@ -61,8 +61,7 @@ The **analysis** directory contains:
 
 ## How to run in your browser or download and run locally
 
-**If you are running Linux, you will need to install `gfortran`.**
-
+**If you are running Linux, you will need to install `gfortran`**,
 e.g. `sudo apt install gfortran` for Ubuntu.
 
 This research compendium has been developed using the statistical programming
