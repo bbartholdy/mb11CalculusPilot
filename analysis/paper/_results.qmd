@@ -15,6 +15,36 @@ uhplc_calculus_detect <- uhplc_calculus_long %>%
   distinct(compound, batch) %>%
   pivot_wider(names_from = batch, values_from = batch) %>% 
   mutate(across(!compound, ~ if_else(!is.na(.x), TRUE, FALSE)))
+
+corr_weight_quant <- uhplc_calculus_long %>% 
+  ungroup() %>% 
+  filter(batch == "batch2",
+    quant > 0) %>% 
+  select(id, weight, compound, quant) %>% 
+  pivot_wider(names_from = compound, values_from = quant) %>% 
+  select(where(is.numeric)) %>% 
+  cor(use = "pairwise.complete.obs") %>% 
+  .[1,]
+
+max_quant <- uhplc_calculus_long %>% 
+  filter(batch == "batch2",
+    id != "MB329"
+    ) %>%
+  group_by(compound) %>% 
+  summarise(
+    max_quant = max(quant, na.rm = T),
+    pos_y = 0.8 * max_quant
+    )
+
+corr_labels <- tibble(
+  compound = names(corr_weight_quant)[-1],
+  corr = signif(corr_weight_quant[-1], 2),
+) %>% 
+  inner_join(max_quant) %>% 
+  arrange(compound) 
+#%>% 
+#  mutate(corr = as.character(corr))
+#corr_labels$compounds <- prettified_names[corr_labels$compounds]
 ```
 
 <!-- May need to limit the list to compounds that were detected in either batch and keep the full list in supplementary materials -->
@@ -45,7 +75,7 @@ an increase between wash 3 and the dissolved calculus in all samples.
 The patterns are consistent across batches 1 and 2.
 Nicotine and cotinine have the same relative quantities in the samples, i.e., the
 sample with the highest extracted quantity of nicotine also had the highest extracted
-quantity of cotinine [@fig-auth-plot-batch2].
+quantity of cotinine (@fig-auth-plot-batch2).
 
 ```{r}
 #| label: fig-auth-plot-batch2
@@ -90,9 +120,9 @@ compound_detect_plot <- uhplc_calculus_long %>%
     geom_bar(position = "dodge") +
     #facet_wrap(~ batch) +
     theme_bw() +
-    scale_fill_viridis_d() +
+    #scale_fill_viridis_d() +
     scale_x_discrete(labels = compound_names) +
-    scale_fill_viridis_d(labels = c(1,2)) +
+    scale_fill_viridis_d(labels = c(1,2), end = 0.6) +
     theme(
       axis.title.x = element_blank(),
       axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1),
@@ -116,16 +146,16 @@ quantity of compound extracted from the calculus ([@fig-detection-preservation]B
 
 ```{r}
 #| label: fig-detection-preservation
-#| fig-cap: "(A) Violin plot with overlaid box plots depicting the distribution of extracted quantities of each compound from batch 2 separated by state of preservation of the skeleton. (B) Extracted quantity (ng) of compound plotted against weights of the calculus samples from batch 2."
-#| fig-width: 5
-#| fig-height: 7
+#| fig-cap: "(A) Violin plot with overlaid box plots depicting the distribution of extracted quantities of each compound from batch 2 separated by state of preservation of the skeleton. (B) Extracted quantity (ng) of compound plotted against weights of the calculus samples from batch 2. r = Pearson correlation coefficient."
+#| fig-width: 4.2
+#| fig-asp: 1.6
 
 preservation_plot <- uhplc_calculus_long %>%
   filter(
     !is.na(preservation),
     quant > 0,
     batch == "batch2",
-    id != "MB329" # unusually high nicotine and cotinine quantity in batch 1
+    #id != "MB329" # unusually high nicotine and cotinine quantity in batch 1
     ) %>% 
   ggplot(aes(x = preservation, y = quant)) +
     geom_violin(aes(fill = preservation), alpha = 0.6) +
@@ -145,16 +175,30 @@ weight_quant_plot <- uhplc_calculus_long %>%
   filter(
     batch == "batch2",
     quant > 0,
-    id != "MB329" # unusually high nicotine and cotinine quantity in batch 1
+    #id != "MB329" # unusually high nicotine and cotinine quantity in batch 1
     ) %>% 
   ggplot(aes(x = weight, y = quant)) +
+    geom_smooth(method = "lm", se = F, col = viridisLite::viridis(1, begin = 0.6)) +
     geom_point(col = viridisLite::viridis(1)) +
-    facet_wrap(~ compound, scales = "free_y", labeller = labeller(compound = compound_names), dir = "v", ncol = 1) +
+    geom_text(
+      data = corr_labels, 
+      aes(x = 24, y = pos_y, label = paste("r =", corr)),
+      #vjust = -1, hjust = -0.1) +
+      ) +
+      
+    facet_wrap(
+      ~ compound,
+      scales = "free_y",
+      labeller = labeller(compound = compound_names),
+      dir = "v",
+      ncol = 1
+      ) +
+
     theme_bw() +
     theme(
-      axis.title.y = element_blank(),
-      axis.text.y = element_blank(),
-      axis.ticks.y = element_blank()
+     axis.title.y = element_blank(),
+     axis.text.y = element_blank(),
+     axis.ticks.y = element_blank()
     ) +
     labs(y = "Quantity (ng)", x = "Weight (mg)")
 
@@ -243,7 +287,7 @@ and may have been contaminated.
 
 ```{r}
 #| label: tbl-pearson
-#| tbl-cap: "Pearson correlation (*r*) on dichotomous skeletal lesions and compound concentrations (ng/mg) from the second batch. Correlations between pairs of dichotomous variables are removed due to incompatibility with a Pearson correlation. OA = osteoarthritis; VOP = vertebral osteophytosis; SN = Schmorl's nodes; DDD = degenerative disc disease; CO = cribra orbitalia; CMS = chronic maxillary sinusitis; SA = salicylic acid; PN = pipe notches."
+#| tbl-cap: "Pearson correlation (*r*) on dichotomous skeletal lesions and compound concentrations (ng/mg) from the second batch. Correlations between pairs of dichotomous variables are removed due to incompatibility with a Pearson correlation. Moderate and strong correlations in **bold**. OA = osteoarthritis; VOP = vertebral osteophytosis; SN = Schmorl's nodes; DDD = degenerative disc disease; CO = cribra orbitalia; CMS = chronic maxillary sinusitis; SA = salicylic acid; PN = pipe notches."
 
 corr_tib <- conc_cor %>% 
   as_tibble(rownames = "var") %>% 
@@ -260,7 +304,7 @@ corr_tib_long <- corr_tib %>%
 corr_tib_out <- corr_tib %>%
   column_to_rownames("var") %>%
   as.matrix() %>% 
-  signif(digits = 2)
+  round(digits = 2)
 cols <- 0
 for(i in 7:nrow(corr_tib)){ # remove repeated values
   cols <- cols + 1 
@@ -269,18 +313,31 @@ for(i in 7:nrow(corr_tib)){ # remove repeated values
 corr_names <- c("Caries", "Nicotine", "SA", "Calculus", "PN", "Theophylline", "Caffeine", "Cotinine")
 row.names(corr_tib_out) <- c(row.names(corr_tib_out)[1:6], corr_names)
 corr_tib_out <- corr_tib_out[-nrow(corr_tib),] # remove last row because it has no values (all duplicate coefficients)
+#mode(corr_tib_out) <- "numeric"
+options(knitr.kable.NA = "")
 corr_tib_out %>% 
+  as_tibble(rownames = "var") %>% 
+  mutate(across(!var, as.numeric)) %>% 
+  tibble::column_to_rownames("var") %>% 
+  mutate(across(everything(), ~kableExtra::cell_spec(.x, bold = if_else(.x >= 0.4, T, F)))) %>%   mutate(across(everything(), ~ str_remove_all(.x, "NA"))) %>% 
+  #kableExtra::cell_spec(bold = if_else(corr_tib_out >= 0.4, T, F)) #%>% 
+  #kableExtra::spec_color(na_color = "fff") %>% 
   knitr::kable(col.names = corr_names)
+  #kableExtra::kbl(col.names = corr_names) %>% 
+  
+  
 ```
 
 ```{r}
 prettified_names_lower <- sapply(prettified_names, str_to_lower)
 
 corr_tib_out <- corr_tib_long %>%
-  mutate(across(where(is.character), plyr::revalue, prettified_names_lower, warn_missing = F))
+  mutate(across(where(is.character), plyr::revalue, prettified_names_lower, warn_missing = F)) %>% 
+  mutate(corr = signif(corr, 2))
 
 polycorr_tib_out <- polycorr_tib %>%
-  mutate(across(where(is.character), plyr::revalue, prettified_names_lower, warn_missing = F))
+  mutate(across(where(is.character), plyr::revalue, prettified_names_lower, warn_missing = F)) %>% 
+  mutate(corr = signif(corr, 2))
 ```
 
 Point-biserial correlation was conducted on paired continuous and dichotomous
@@ -304,10 +361,13 @@ in the sample selection.
 ```{r}
 #| label: fig-polycorr
 #| fig-cap: "Plot of the polychoric correlations (*rho*). Larger circles and increased opacity indicates a stronger correlation coefficient. OA = osteoarthritis; VOP = vertebral osteophytosis; SN = Schmorl’s nodes; DDD = degenerative disc disease; CO = cribra orbitalia; CMS = chronic maxillary sinusitis; SA = salicylic acid."
+#| fig-width: 5
+#| fig-height: 4
 polycorr$rho %>%
   ggcorrplot::ggcorrplot(
     method = "circle", type = "lower", 
-    colors = c(viridisLite::plasma(1, begin = 0), "white", viridisLite::plasma(1, begin = 1)),
+    outline.color = "grey40",
+    colors = c(viridisLite::plasma(1, begin = 0), "white", viridisLite::inferno(1, begin = 0.7)),
     legend.title = expression(rho)
     ) +
   scale_x_discrete(labels = prettified_names) +

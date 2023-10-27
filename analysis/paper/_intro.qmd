@@ -24,20 +24,18 @@ and ability to survive over long periods of time
 
 <!--how are compounds incorporated in dental calculus-->
 Alkaloids may enter the oral cavity via two pathways: (1) direct
-incorporation through oral consumption of alkaloid-containing plants, whether
+incorporation through ingestion of alkaloid-containing plants, whether
 deliberate or accidental;
 and (2) passive diffusion as alkaloids and other compounds are transferred from
-plasma to saliva, and then into the oral cavity through the salivary glands
-in the hours to days following consumption [@coneInterpretationOral2007]. The
-relation to plasma
-is why there is often a close correlation between presence (not concentration)
-of drugs in oral fluid and blood
-[@coneInterpretationOral2007; @willeRelationshipOral2009; @milmanOralFluid2011].
-The second pathway allows the identification of parent compounds that are not
-consumed orally, as long as they, or their metabolites, are excreted through saliva.
+plasma to saliva, and then gradually secreted into the oral cavity through the
+salivary glands in the hours-to-days following ingestion [@coneInterpretationOral2007].
+The second pathway allows the identification of parent compounds that do not enter
+the mouth (e.g. injection), as long as they, or their metabolites, are excreted
+through the saliva, thus eventually entering the oral cavity.
+
 <!--cite e.g. injection or topical The second pathway may also be more
 detectable, as the excretion of compounds through saliva may take hours to days
-whereas compounds spend less time in the oral cavity during direct consumption-->.
+whereas compounds spend less time in the oral cavity during direct consumption.-->
 
 Many of the components involved in the formation and growth of dental calculus
 originate from oral fluid. Proteins, bacteria, salts and other compounds are
@@ -50,6 +48,13 @@ preserved within the dental calculus. Barring intentional or accidental removal 
 the calculus during life,
 burial, excavation, and post-excavation cleaning, the alkaloids can then be detected
 by various methods to show a record of consumption during life.
+Because drugs may be transferred from plasma to saliva,
+there is often a close correlation between drugs detected in
+oral fluid and blood, though there are differences in detected concentrations
+[@coneInterpretationOral2007; @willeRelationshipOral2009; @milmanOralFluid2011].
+This was also shown to be true for dental calculus and blood [@sorensenDrugsCalculus2021],
+making dental calculus a potentially useful substance for detecting ancient
+alkaloids and other dietary compounds.
 
 <!--brief description of method validation-->
 In this study we use a ultra-high-performance liquid chromatography-tandem mass

@@ -260,7 +260,13 @@ Data analysis was performed using Analyst 1.7 and MultiQuant 3.0.3 (Sciex).
 Raw quantities of compounds are presented in ng and concentrations as ng / mg.
 
 The samples in the replication batch were processed in the same way, but
-analysed on equipment used exclusively for oral samples.
+analysed on different equipment used exclusively for oral samples.
+
+Raw quantities of compounds detected in the dissolved calculus from batches
+1 and 2 are presented in @tbl-uhplc-batch-1 and @tbl-uhplc-batch-2. Since
+these tables may or may not be legible in PDF format, not to mention that they
+don't adhere to FAIR principles in this format, the raw data can be downloaded
+from Zenodo (https://doi.org/10.5281/zenodo.8061483).
 
 ```{r}
 #| label: tbl-lloq
@@ -272,9 +278,10 @@ lloq %>%
 
 ```{r}
 #| label: tbl-uhplc-batch-1
-#| tbl-cap: "Results from the UHPLC analysis first batch. Quantity of compound in the dissolved calculus, represented in ng."
+#| tbl-cap: "Results from the UHPLC analysis first batch. Quantity of compound in the dissolved calculus, represented in ng and rounded to 3 digits after the decimal."
 uhplc_calculus_long %>%
   filter(batch == "batch1") %>%
+  mutate(quant = round(quant, 3)) %>% 
   select(!c(sample, conc, extraction, batch, presence)) %>%
   pivot_wider(names_from = "compound", values_from = "quant") %>% 
   knitr::kable()
@@ -282,9 +289,10 @@ uhplc_calculus_long %>%
 
 ```{r}
 #| label: tbl-uhplc-batch-2
-#| tbl-cap: "Results from the UHPLC analysis second batch. Quantity of compound in calculus after third wash, represented in ng."
+#| tbl-cap: "Results from the UHPLC analysis second batch. Quantity of compound in calculus after third wash, represented in ng and rounded to 3 digits after the decimal."
 uhplc_calculus_long %>%
   filter(batch == "batch2") %>%
+  mutate(quant = round(quant, 3)) %>% 
   pivot_wider(names_from = "compound", values_from = "quant") %>%
   select(!c(extraction, batch)) %>% 
   knitr::kable()

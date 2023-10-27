@@ -3,20 +3,19 @@ In this study we were able to extract and identify multiple alkaloids and salicy
 acid from the
 dental calculus of individuals from Middenbeemster, a 19th century Dutch
 archaeological site. We applied ultra-high-performance liquid chromatography-tandem
-mass spectrometry (UHPLC-MS/MS), a method that was validated by co-occurrence
+mass spectrometry (UHPLC-MS/MS) using a method that was validated by co-occurrence
 of drugs and metabolites in dental calculus and blood [@sorensenDrugsCalculus2021].
 Here we have shown that the method can also be successfully applied to archaeological
 dental calculus.
 We extend findings from previous studies on alkaloids in archaeological samples
-by extracting multiple different alkaloids from dental calculus, including
-nicotine, cotinine, caffeine, theophylline, and salicylic
-acid in multiple individuals. The detection of these compounds was
-solidified in a replication analysis on different samples from the same
-individuals.
+by detecting multiple different alkaloids in dental calculus, including
+nicotine, cotinine, caffeine, theophylline, and salicylic acid. The detection of
+these compounds was solidified in a replication analysis on different samples
+from the same individuals.
 Cocaine and multiple cannabinoids were also detected during the first
 analysis, but were not replicated.
-We discuss the implications of these findings in light of historical and
-archaeological evidence for the consumption of these drugs.
+We contextualize these findings within the historical and
+archaeological evidence for consumption of these drugs and dietary compounds.
 
 <!-- compounds detected with potential sources, and those that were surprisingly missing -->
 <!-- nicotine and cotinine: tobacco, obviously...-->
@@ -43,7 +42,7 @@ secondhand smoke, or the aforementioned tobacco-smoke enema.
         - longer time in body than mouth (consumption)
 -->
 
-<!-- theophylline and caffeine: coffee and tea? -->
+<!-- theophylline and caffeine: anyone fancy a cuppa? -->
 Theophylline and caffeine were positively correlated in our samples, though to a
 lesser extent than nicotine and cotinine, so we are unable to determine if they
 originated from the same source (@tbl-pearson and @fig-polycorr).
@@ -73,9 +72,11 @@ However, In addition to oral factors
 affecting alkaloid uptake in dental calculus, there is some indication that
 theobromine does not preserve well in the archaeological record
 [@velskoDentalCalculus2017], and frequent consumption of all three items would
-be difficult to parse.
+be difficult to parse. Additionally, we do not understand well enough the
+effect of the burial on these specific compounds, and the original concentration of
+the compounds in plants can be quite variable [@kingCautionaryTales2017].
 
-<!-- salicylic acid: diet, medicine, or environmental??? -->
+<!-- salicylic acid: diet, medicine, or environment??? -->
 Salicylic acid was found in all but one individual in our sample.
 It can be extracted from the bark of willow trees, *Salix alba*, and
 has long been used for its
@@ -85,16 +86,15 @@ in many plant-based foods
 potatoes, which were a staple of the Beemsterpolder diet [@aten400Jaar2012].
 The extracted quantity from our samples decreased over the three washes, followed
 by a sharp increase in the final calculus extraction, which is what we would expect
-to see if the salicylic acid was incorporated during life [@fig-auth-plot-batch2].
-However, it has been shown that salicilyc acid is a very mobile organic acid and
-the ubiquitous presence may be due to environmental contamination, which would
-also explain the high quantity in the washes
-[@chenCa2Dependent2001; @badriRegulationFunction2009].
-Given the multiple plausible sources of this residue, it will be necessary to
-explore the extent to which salicylic acid can leach
-into the dental calculus from the soil, and what the rate of degradation is for
-salicylic acid when trapped in dental calculus.
-<!-- perhaps using an oral biofilm model ;) -->
+to see if the salicylic acid was incorporated during life (@fig-auth-plot-batch2).
+It is important to note that, especially with salicylic acid, there is a possibility
+for the compound to enter the calculus through contact with the surrounding soil.
+Salicylic acid is a very mobile organic acid
+[@chenCa2Dependent2001; @badriRegulationFunction2009] and the ubiqutous presence
+in our samples may be explained by the compound leching into the dental calculus
+from the burial environment.
+We can therefore not confidently rule out environmental contamination without
+analysing samples from the surrounding soil.
 
 <!-- cannabinoids: oh cool! medicinal? wait, where did they go..? -->
 Cannabinoids---specifically THC, THCA-A, THCVA, CBD, CBN---were found in the
@@ -104,17 +104,16 @@ was also grown in the Netherlands [@bruinsmaBijdragenTot1872].
 Administration was most common in the form of concoctions containing various portions
 of the cannabis plant for ingestion; not until the late 19th century did it become
 recommended to smoke it for more immediate effects [@clarkeCannabisEvolution2013].
-A Dutch medicinal use of hemp involved an emulsion prepared from the seeds of
-the plants to treat pain and various stomach ailments. Another
-preparation involving the roots of the plants was used for inflammation, gout,
-and joint pains [@clarkeCannabisEvolution2013].
-The ability to detect cannabinoids in calculus may be limited by their reduced ability
-to diffuse from serum to salivary glands due to an affinity for protein-binding,
-[@coneInterpretationOral2007],
-meaning detection would rely on oral consumption. Even then,
-the overall instability of some cannabinoids could also affect detection
+Dutch medicinal preparations were used to treat a variety of ailments and symptoms,
+including pain, inflammation, various stomach ailments, gout, and joint pains
+[@clarkeCannabisEvolution2013].
+Because cannabinoids have an affinity for protein-binding, they are less likely
+to diffuse from serum to saliva [@coneInterpretationOral2007]. This may make them
+difficult to detect in dental calculus unless the cannibinoids were consumed
+orally; even then,
+the overall instability of some cannabinoids could also limit detection
 [@sorensenEffectAntioxidants2018; @lindholstLongTerm2010].
-However, given the lack of replication, we cannot with security confirm that
+Given the lack of replication, we cannot with security confirm that
 cannabis was used by the Beemster population.
  
 <!-- opioids: Damn... that would've been awesome -->
@@ -130,9 +129,9 @@ the Netherlands [@leuwProhibitionLegalization1994], including Middenbeemster
 considered a drug of the upper class [@scheltemaOpiumTrade1907], and may have been
 more common in urban centers.
 The absence could also be attributed to postmortem degradation.
-It has been shown that, while abundant in opium, morphine
-degrades rapidly, while thebaine and papaverine are more resistant to various
-ageing processes [@chovanecOpiumMasses2012]. The latter were also absent from
+It has been shown that, while morphine is abundant in opium, it
+degrades rapidly. Thebaine and papaverine are more resistant to various
+ageing processes [@chovanecOpiumMasses2012], however, these were also absent from
 our samples.
 
 <!-- authentication -->
@@ -145,13 +144,8 @@ practice in 1884. Coca arrived in Europe as early as 1771, but as botanical
 specimens rather than for consumption, and there were also issues importing enough
 viable specimens of coca for cocaine extraction
 [@mortimerHistoryCoca1901 p. 179; @abucaCocaTrade2019, p.108].
-We considered it possible that it would be present in a sample with
-most individuals originating from the early- to mid-19th century. If corroborated,
-this would have been the first case of coca-leaf-consumption in Europe.
-In our replication batch, we included all
-of the individuals who had been cocaine-positive in the first batch. We were
-unable to replicate any of the cocaine results, and we were unable to detect the
-principal metabolite, benzoylecgonine, in either batch.
+This would have been the first case of coca-leaf-consumption in Europe; however,
+we were unable to replicate any of the cocaine results in the second batch.
 We suspect that the original detection of cocaine was a result of lab contamination
 during analysis.<!--and hope this will serve as a reminder of the importance of replication.-->
 
@@ -165,7 +159,7 @@ We found a positive correlation between CMS and nicotine, which may be
 indicative of the impact tobacco smoking had on the respiratory health of the
 Beemster inhabitants.
 Tobacco smoke may play a significant role in diseases
-of the upper respiratory tract, including chronic maxillary sinusities
+of the upper respiratory tract, including chronic maxillary sinusitis
 [@rehImpactTobacco2012]. Although
 the mechanisms by which smoking increases the risk of infections is not fully
 understood, solid evidence has been presented linking tobacco smoke to
@@ -173,7 +167,8 @@ increased mucosal permeability and impairment of mucociliary clearance
 [@arcaviCigaretteSmoking2004]. Such changes, together with an altered immunologic
 response, are thought to predispose to the development of chronic maxillary sinusitis
 [@slavinDiagnosisManagement2005].  
-We also observed a moderate positive correlation between chronic maxillary sinusitis and caffeine which
+We also observed a moderate positive correlation between chronic maxillary sinusitis
+and caffeine which
 contradicts previous research linking chronic coffee consumption with a positive
 effect on the respiratory system, suggesting a preventive association between
 caffeine intake and pneumonia
@@ -233,13 +228,13 @@ communities, e.g. biofilms [@takahashiOralMicrobiome2015].
 <!-- How it facilitates scientific research -->
 
 <!-- limitations of the platform show which questions would be unanswered -->
-Because we targeted individuals with moderate-to-large calculus deposits,
-it is likely a biased sample. The presence of calculus may increase the
+Targeting individuals with moderate-to-large calculus deposits likely biased our
+sample, as the presence of calculus may increase the
 risk of premature death
-[@yaussyCalculusSurvivorship2019], and periodontal disease (which may or may not
-be associated with dental calculus build-up) is a risk-factor for
-respiratory diseases, if periodontal and respiratory pathogens
-enter the bloodstream
+[@yaussyCalculusSurvivorship2019]. Additionally, periodontal disease (often linked
+to the presence of calculus)
+is a risk-factor for respiratory diseases, if periodontal and respiratory
+pathogens enter the bloodstream
 [@azarpazhoohSystematicReview2006; @scannapiecoRoleOral1999; @scannapiecoPotentialAssociations2001].
 In our sample, the percentage of chronic maxillary sinusitis
 (`r scales::percent(mean(explore_select$CMS, na.rm = T), accuracy = 0.1)`)
@@ -253,29 +248,28 @@ as a crude estimate of the accuracy of the method, which we found to be around
 This is a very rough estimate, as the presence of a pipe notch is likely not a
 perfect indicator of whether or not someone consumed tobacco.
 Dental calculus is also
-more transient than for example bone, as it can be mechanically removed,
-intentionally or unintentionally, during life, eliminating
-all trace of the alkaloids consumed prior to its removal.  
-Quantitation of the detected compounds may have limited value in archaeological
-samples due to degradation, and will greatly affect our correlations related to
-concentration.
+more transient than for example bone, as it can become dislodged during life,
+intentionally or unintentionally, eliminating all trace of the alkaloids consumed
+prior to its removal.  
 Following burial, compound stability over
 time will play a large role, as will microbial degradation of compounds by bacteria
 and fungi in soil [@liuNicotinedegradingMicroorganisms2015], as well as
 the soil environment, such as temperature, pH, and oxygen availability
 [@mackiePreservationMetaproteome2017; @lindholstLongTerm2010].  
+Due to this, quantitation of the detected compounds may have limited value in
+archaeological samples due to degradation, and will greatly affect our correlations
+related to concentration.
 The detected quantity of a compound will also depend on the quantity in dental
-calculus during life, which is largely controlled by quantity of consumption,
+calculus during life, which is largely controlled by the quantity consumed,
 how often the
 calculus was disrupted/removed, metabolic breakdown of the compound, and inter-
-and intra-individual factors related to stages of biofilm formation, maturation,
-and mineralisation
+and intra-individual factors related to stages of biofilm maturation
 [@lustmannScanningElectron1976; @velskoMicrobialDifferences2019; @zijngeBiofilmArchitecture2010].
-In short, this means it is not really possible to detect the absence of a compound.
-The absence of a compound is not evidence of absence of consumption. This complicates
+In short, this means it is not really possible to equate the absence of a compound
+as evidence for the absence of consumption, which complicates
 the interpretation of our results.
 We have attempted to minimise errors occurring due to this limitation by including
-a relatively large sample of individuals and replicating our analysis. Although
+a relatively large sample of individuals and replicating our analysis. Although,
 given the relatively low detection rate seen in tobacco, this remains a major
 limitation, and will likely be compounded by increasing antiquity of the samples.
 
@@ -298,9 +292,13 @@ and urine sampling [@coneSalivaTesting1993; @valenDetermination212017].
 These *in vivo* studies are a valuable
 source of method validation and can help determine the feasibility of detecting
 certain alkaloids in oral fluid and, subsequently, dental calculus. Archaeologists,
-though, will likely be responsible for exploring dental calculus specific
+though, will likely be responsible for exploring dental-calculus-specific
 incorporation and retention of alkaloids, as well as their long-term preservation
-in the burial environment.<!-- move to discussion in disseration: Here, *in vitro* studies may provide valuable insights-->
+in the burial environment. Finally, following our experience with salicylic acid,
+we encourage all future studies to ensure that a control sample is taken from the
+soil, either from the soil surrounding the individual, or, ideally, directly from
+the skeletal remains. This should preferably happen before cleaning, but there will
+often be soil left over in cavities (e.g. nasal cavity, orbit, auditory meatus).
 
 <!-- How it will facilitate the specific topic of research (e.g. archaeology) -->
 

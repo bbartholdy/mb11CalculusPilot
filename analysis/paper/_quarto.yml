@@ -43,11 +43,11 @@ title-block-published: "Last updated"
 format:
   html:
     theme: cosmo
-    output-file: "preprint-for-PCI_v1.html"
+    output-file: "preprint-for-PCI_v2.html"
     keep-md: true
   pdf:
     keep-tex: true
-    output-file: "preprint-for-PCI_v1.pdf"
+    output-file: "preprint-for-PCI_v2.pdf"
     documentclass: article
     geometry:
       - top=30mm
@@ -97,7 +97,7 @@ abstract: |
   By detecting these compounds we are able to show the consumption of tea and
   coffee and smoking of tobacco on an individual scale, which is also confirmed
   by historic documentation and identification of pipe notches in the dentition.
-  Nicotine and/or cotinine was present in 60% of individuals with at least one
+  Nicotine and/or cotinine was present in 56% of individuals with at least one
   visible pipe notch.
   We find some influence of skeletal preservation on the detection
   of alkaloids and salicylic acid, with higher quantities of compounds extracted
@@ -115,7 +115,7 @@ abstract: |
   as medicine or diet, or consumed in a different manner. This method allows us
   to directly address specific individuals, which can be especially useful in
   individuals that are not always well-documented in historic documentation,
-  such as rural populations, children and women.
+  such as rural populations, and especially children and women.
 keywords: |
   dental calculus; LC-MS/MS; alkaloids; dental pathology; sinusitis; caffeine; tobacco
 #highlights: |

@@ -9,13 +9,15 @@ auricular and pubic surface appearance, cranial suture closure, and epiphyseal f
 [@Standards1994; @SucheyBrooks1990; @buckberryAuricular2002; @lovejoyAuricular1985; @meindlSutureClosure1985],
 and divided into the following categories:
 early young adult (18-24 years), late young adult (25-34 years), middle adult (
-35-49 years), old adult (50+ years).
+35-49 years), old adult (50+ years). Preservation was visually scored on a
+four-stage scale (excellent, good, fair, poor) based on the surface condition of
+the bones and the extent of taphonomic degradation.
 
 #### Paleopathology
 
 Pathological conditions and lesions that occur frequently in the population were
 included in the analysis. Data were
-dichotomised to presence/absence to allow statistical analysis.
+dichotomised to presence/absence to allow for statistical analysis.
 Osteoarthritis was considered present in cases where eburnation was visible
 on one or more joint surfaces.
 Vertebral osteophytosis is identified by marginal lipping and/or osteophyte

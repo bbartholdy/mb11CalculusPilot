@@ -4,6 +4,7 @@
 #| cache: false
 
 library(here)
+library(knitr)
 #library(readr)
 #devtools::load_all()
 source(here("analysis/scripts/setup-qmd.R"))
@@ -44,7 +45,10 @@ options(ggplot.discrete.colour = function() scale_fill_viridis_d())
 We wish to thank Kirsten Ziesemer for helping track down the calculus samples
 from her studies. Additionally, we owe special thanks to Vincent Falger and Kees
 de Groot from the Middenbeemster Historical Society for their input on early
-draft manuscripts and a lovely guided tour of Middenbeemster.
+draft manuscripts and a lovely guided tour of Middenbeemster. We also thank
+Louise Le Meillour for taking on our preprint and providing helpful comments,
+and Mario Zimmerman and two other anonymous reviewers for their time and invaluable
+insights.
 
 This research has received funding from the European Research Council under the
 European Union’s Horizon 2020 research and innovation program, grant agreement

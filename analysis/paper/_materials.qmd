@@ -9,14 +9,18 @@ construction started in 1618 (Hakvoort 2013). The excavated cemetery is associat
 with the Keyserkerk church, where the inhabitants of the Middenbeemster village
 and the surrounding Beemsterpolder were buried between AD 1615 and 1866
 [@lemmersMiddenbeemster2013]. Archival documents are available for those buried
-between AD 1829 and 1866, when the majority of individuals were interred
-[@palmerActivityReconstruction2016]. The main occupation of the inhabitants
+between AD 1829 and 1866, when the majority of individuals were interred.
+The main occupation of the inhabitants
 was dairy farming, consisting largely of manual labour prior to the industrial
 revolution [@aten400Jaar2012; @palmerActivityReconstruction2016].
 
-To reduce the number of potentially confounding factors to account for
-in the analysis, we preferentially selected males from the middle adult age category
-(35-49 years). The sample consists of `r nrow(filter(demography, sex == "m"))` males,
+For our sample, we preferentially selected males from the middle adult age category
+(35-49 years) to minimise the effect of confounding cultural and biological factors.
+Previous research on Middenbeemster has shown a gendered division of labour
+[@palmerActivityReconstruction2016], and there are biological differences in
+dental calculus formation and drug metabolism that are related to age and sex
+[@huangDecipheringGenetic2023; @unoSexAgedependent2017; @whiteDentalCalculus1997].
+The sample consists of `r nrow(filter(demography, sex == "m"))` males,
 `r nrow(filter(demography, sex == "pm"))` probable males,
 `r nrow(filter(demography, sex == "pf"))` probable females, and
 `r nrow(filter(demography, sex == "f"))` female (@fig-sample-demography).
