@@ -147,7 +147,7 @@ quantity of compound extracted from the calculus ([@fig-detection-preservation]B
 ```{r}
 #| label: fig-detection-preservation
 #| fig-cap: "(A) Violin plot with overlaid box plots depicting the distribution of extracted quantities of each compound from batch 2 separated by state of preservation of the skeleton. (B) Extracted quantity (ng) of compound plotted against weights of the calculus samples from batch 2. r = Pearson correlation coefficient."
-#| fig-width: 4.2
+#| fig-width: 4.8
 #| fig-asp: 1.6
 
 preservation_plot <- uhplc_calculus_long %>%
