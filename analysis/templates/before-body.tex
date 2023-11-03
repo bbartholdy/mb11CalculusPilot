@@ -1,29 +1,29 @@
 %% modified from: https://github.com/quarto-journals/plos/blob/main/_extensions/plos/partials/before-body.tex
-\begin{flushleft}
-{\LARGE
-\textbf\newline{$title$}
-}
-\newline
 
-\vspace{12pt}
+\maketitle
+
+\begin{center}
+
+\thispagestyle{fancy}
+
 % Insert author names, affiliations and corresponding author email
 
-$by-author:_authors.tex()[, ]$
-\\
-\bigskip
+$by-author:_authors.tex()[, ]$\vspace{12pt}
+
+\rule{\textwidth}{1.8pt}\vspace{8pt}
+
+\end{center}
+
 $by-affiliation:_affiliations.tex()[\\ ]$
-\newline
 
 % Use the asterisk to denote corresponding authorship and provide email address in note below.
 $for(by-author)$
 $if(by-author.attributes.corresponding)$
-* $by-author.email$
+* \small{$by-author.email$}
 $endif$
 $endfor$
 
-\end{flushleft}
-
-\linenumbers
+\vspace{12pt}
 
 $if(abstract)$
 \begin{abstract}
@@ -32,5 +32,8 @@ $abstract$
 $endif$
 
 $if(keywords)$
-Keywords: $for(keywords)$ $keywords$ $endfor$
-$endif$
+\small \textbf{Keywords:} $for(keywords)$ $keywords$ $endfor$ $endif$ \\
+
+\vfill
+
+\newgeometry{top=30mm,left=30mm}

@@ -50,9 +50,15 @@ Louise Le Meillour for taking on our preprint and providing helpful comments,
 and Mario Zimmerman and two other anonymous reviewers for their time and invaluable
 insights.
 
+## Funding {-}
+
 This research has received funding from the European Research Council under the
 European Union’s Horizon 2020 research and innovation program, grant agreement
 number STG–677576 (“HARVEST”).
+
+## Conflict of interest disclosure {-}
+
+The authors have no conflicts to declare.
 
 ## Data Availability Statement {-}
 
@@ -62,9 +68,6 @@ supplementary materials are available as a research compendium
 (<https://doi.org/10.5281/zenodo.7649825>)
 using the structure recommended by the **rrtools** R package [@Rrrtools].
 
-## Conflict of interest disclosure {-}
-
-The authors have no conflicts to declare.
 
 ## References {-}
 

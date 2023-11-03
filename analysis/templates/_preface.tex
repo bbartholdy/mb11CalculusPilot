@@ -1,0 +1,20 @@
+\usepackage{fancyhdr, graphicx}
+\usepackage[hidelinks]{hyperref}
+
+\fancyhead{\vspace{70pt}}
+\renewcommand{\headrulewidth}{1.8pt}
+
+\makeatletter
+\def\@maketitle{%
+  \newpage
+  \hfill\href{https://doi.org/10.24072/pci.archaeo.100389}{\includegraphics[width=3.5cm]{badge_PCI_Archaeology.png}}\hfill
+  \null
+ \begin{center}
+{\LARGE
+\textbf\newline{\@title}
+}
+%\newline
+
+\end{center}
+  \par}
+\makeatother
