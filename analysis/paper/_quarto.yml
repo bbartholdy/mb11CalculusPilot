@@ -41,13 +41,9 @@ affiliations:
     #address: Postbus 73, 1462 ZH, Middenbeemster, Netherlands
 title-block-published: "Last updated"
 format:
-  html:
-    theme: cosmo
-    output-file: "preprint-for-PCI_v3.html"
-    keep-md: true
   pdf:
     keep-tex: true
-    output-file: "preprint-for-PCI_v3.pdf"
+    output-file: "plos-submission_v1.pdf"
     documentclass: article
     number-sections: true
     geometry:
@@ -61,8 +57,6 @@ format:
       - ../templates/_authors.tex
       - ../templates/_affiliations.tex
       - ../templates/before-body.tex
-  docx:
-    output-file: "draft-manuscript-3.docx"
 execute:
   freeze: auto
   echo: false
