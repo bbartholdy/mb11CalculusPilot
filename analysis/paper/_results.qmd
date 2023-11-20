@@ -77,11 +77,13 @@ Nicotine and cotinine have the same relative quantities in the samples, i.e., th
 sample with the highest extracted quantity of nicotine also had the highest extracted
 quantity of cotinine (@fig-auth-plot-batch2).
 
+*Fig 2 (fig-auth-plot-batch2): (A) Number of samples in which each compound was detected in the first and second batch. (B) Quantity (ng) of each compound extracted from each sample in batch 2. The plot displays the extracted quantity across the three washes and final calculus extraction (calc). Each coloured line represents a different calculus sample. CBD = cannabidiol; CBN = cannabinol; THC = tetrahydrocannabinol; THCA-A = tetrahydrocannabinolic acid A; THCVA = tetrahydrocannabivarin acid.*
+
 ```{r}
 #| label: fig-auth-plot-batch2
 #| fig-cap: "(A) Number of samples in which each compound was detected in the first and second batch. (B) Quantity (ng) of each compound extracted from each sample in batch 2. The plot displays the extracted quantity across the three washes and final calculus extraction (calc). Each coloured line represents a different calculus sample. CBD = cannabidiol; CBN = cannabinol; THC = tetrahydrocannabinol; THCA-A = tetrahydrocannabinolic acid A; THCVA = tetrahydrocannabivarin acid."
-#| fig-width: 8
-#| fig-height: 6
+#| fig-width: 7
+#| fig-asp: 0.75
 
 auth_plot <- uhplc_data_long %>%
   filter(
@@ -143,6 +145,8 @@ may be linked to the preservation of the skeleton, with better preservation lead
 to increased extraction quantity ([@fig-detection-preservation]A). We also
 find a weak positive correlation between the weight of the calculus sample and the
 quantity of compound extracted from the calculus ([@fig-detection-preservation]B).
+
+*Fig 3 (fig-detection-preservation): (A) Violin plot with overlaid box plots depicting the distribution of extracted quantities of each compound from batch 2 separated by state of preservation of the skeleton. (B) Extracted quantity (ng) of compound plotted against weights of the calculus samples from batch 2. r = Pearson correlation coefficient.*
 
 ```{r}
 #| label: fig-detection-preservation
@@ -358,11 +362,13 @@ Remaining correlations were weak or absent (@fig-polycorr).
 Correlations with age will be depressed because age was largely controlled for
 in the sample selection.
 
+*Fig 4 (fig-polycorr): Plot of the polychoric correlations (*rho*). Larger circles and increased opacity indicates a stronger correlation coefficient. OA = osteoarthritis; VOP = vertebral osteophytosis; SN = Schmorl’s nodes; DDD = degenerative disc disease; CO = cribra orbitalia; CMS = chronic maxillary sinusitis; SA = salicylic acid.*
+
 ```{r}
 #| label: fig-polycorr
 #| fig-cap: "Plot of the polychoric correlations (*rho*). Larger circles and increased opacity indicates a stronger correlation coefficient. OA = osteoarthritis; VOP = vertebral osteophytosis; SN = Schmorl’s nodes; DDD = degenerative disc disease; CO = cribra orbitalia; CMS = chronic maxillary sinusitis; SA = salicylic acid."
 #| fig-width: 5
-#| fig-height: 4
+#| fig-asp: 0.8
 polycorr$rho %>%
   ggcorrplot::ggcorrplot(
     method = "circle", type = "lower", 

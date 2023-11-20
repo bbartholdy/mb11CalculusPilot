@@ -1,16 +1,18 @@
 %% modified from: https://github.com/quarto-journals/plos/blob/main/_extensions/plos/partials/before-body.tex
 
-\maketitle
+%\maketitle
 
 \begin{center}
 
-\thispagestyle{fancy}
+%\thispagestyle{fancy}
+
+\LARGE{$title$}
 
 % Insert author names, affiliations and corresponding author email
 
 $by-author:_authors.tex()[, ]$\vspace{12pt}
 
-\rule{\textwidth}{1.8pt}\vspace{8pt}
+%\rule{\textwidth}{1.8pt}\vspace{8pt}
 
 \end{center}
 
@@ -25,6 +27,8 @@ $endfor$
 
 \vspace{12pt}
 
+\linenumbers
+
 $if(abstract)$
 \begin{abstract}
 $abstract$
@@ -34,6 +38,6 @@ $endif$
 $if(keywords)$
 \small \textbf{Keywords:} $for(keywords)$ $keywords$ $endfor$ $endif$ \\
 
-\vfill
+%\vfill
 
-\newgeometry{top=30mm,left=30mm}
+%\newgeometry{top=30mm,left=30mm}

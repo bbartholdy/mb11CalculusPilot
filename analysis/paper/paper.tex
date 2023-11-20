@@ -38,7 +38,7 @@
   \KOMAoptions{parskip=half}}
 \makeatother
 \usepackage{xcolor}
-\usepackage[top=10mm,bottom=10mm,left=30mm,heightrounded]{geometry}
+\usepackage[top=30mm,bottom=30mm,left=30mm,heightrounded]{geometry}
 \setlength{\emergencystretch}{3em} % prevent overfull lines
 \setcounter{secnumdepth}{5}
 % Make \paragraph and \subparagraph free-standing
@@ -114,26 +114,7 @@
 \usepackage[normalem]{ulem}
 \usepackage{makecell}
 \usepackage{xcolor}
-\usepackage{fancyhdr, graphicx}
-\usepackage[hidelinks]{hyperref}
-
-\fancyhead{\vspace{70pt}}
-\renewcommand{\headrulewidth}{1.8pt}
-
-\makeatletter
-\def\@maketitle{%
-  \newpage
-  \hfill\href{https://doi.org/10.24072/pci.archaeo.100389}{\includegraphics[width=3.5cm]{badge_PCI_Archaeology.png}}\hfill
-  \null
- \begin{center}
-{\LARGE
-\textbf\newline{\@title}
-}
-%\newline
-
-\end{center}
-  \par}
-\makeatother
+\usepackage{lineno}
 \makeatletter
 \makeatother
 \makeatletter
@@ -157,9 +138,9 @@
   \newcommand\listtablename{List of Tables}
 \fi
 \ifdefined\figurename
-  \renewcommand*\figurename{Figure}
+  \renewcommand*\figurename{Fig}
 \else
-  \newcommand\figurename{Figure}
+  \newcommand\figurename{Fig}
 \fi
 \ifdefined\tablename
   \renewcommand*\tablename{Table}
@@ -216,38 +197,46 @@ Beemster \and Amanda G. Henry}
 \begin{document}
 %% modified from: https://github.com/quarto-journals/plos/blob/main/_extensions/plos/partials/before-body.tex
 
-\maketitle
+%\maketitle
 
 \begin{center}
 
-\thispagestyle{fancy}
+%\thispagestyle{fancy}
+
+\LARGE{Multiproxy analysis exploring patterns of diet and disease in
+dental calculus and skeletal remains from a 19th century Dutch
+population}
 
 % Insert author names, affiliations and corresponding author email
 
 \normalsize{Bjørn Peare
-Bartholdy}\textsuperscript{1*}, \normalsize{Jørgen B.
-Hasselstrøm}\textsuperscript{2}, \normalsize{Lambert K.
-Sørensen}\textsuperscript{2}, \normalsize{Maia
+Bartholdy}\textsuperscript{1,2*}, \normalsize{Jørgen B.
+Hasselstrøm}\textsuperscript{3}, \normalsize{Lambert K.
+Sørensen}\textsuperscript{3}, \normalsize{Maia
 Casna}\textsuperscript{1}, \normalsize{Menno
 Hoogland}\textsuperscript{1}, \normalsize{Historisch Genootschap
-Beemster}\textsuperscript{3}, \normalsize{Amanda G.
+Beemster}\textsuperscript{4}, \normalsize{Amanda G.
 Henry}\textsuperscript{1}\vspace{12pt}
 
-\rule{\textwidth}{1.8pt}\vspace{8pt}
+%\rule{\textwidth}{1.8pt}\vspace{8pt}
 
 \end{center}
 
 \textsuperscript{\footnotesize{1}}\textit{\small{Department of
 Archaeological Sciences, Leiden
-University}}\\ \textsuperscript{\footnotesize{2}}\textit{\small{Department
+University}}\\ \textsuperscript{\footnotesize{2}}\textit{\small{Faculty
+of Mechanical, Maritime and Materials Engineering, Delft University of
+Technology}}\\ \textsuperscript{\footnotesize{3}}\textit{\small{Department
 of Forensic Medicine, Aarhus
-University}}\\ \textsuperscript{\footnotesize{3}}\textit{\small{Historisch
+University}}\\ \textsuperscript{\footnotesize{4}}\textit{\small{Historisch
 Genootschap Beemster}}
 
 % Use the asterisk to denote corresponding authorship and provide email address in note below.
-* \small{b.p.bartholdy@arch.leidenuniv.nl}
+* \small{b.p.bartholdy@tudelft.nl}
 
 \vspace{12pt}
+
+\linenumbers
 
 \begin{abstract}
 Dental calculus is an excellent source of information on the dietary
@@ -257,45 +246,40 @@ their metabolites in dental calculus provides direct evidence of
 consumption by individuals within a population. We conducted a study on
 41 individuals from Middenbeemster, a 19th century rural Dutch
 archaeological site. Skeletal and dental analysis was performed to
-explore potential relationships between pathological conditions/lesions
-and the presence of alkaloids. We also explored other factors
-potentially affecting the detection of alkaloids, including sample
-weight and skeletal preservation. Dental calculus was sampled and
-analysed using ultra-high-performance liquid chromatography-tandem mass
-spectrometry (UHPLC-ESI-MS/MS). We were able to detect nicotine,
-cotinine, caffeine, theophylline, and salicylic acid. By detecting these
-compounds we are able to show the consumption of tea and coffee and
-smoking of tobacco on an individual scale, which is also confirmed by
-historic documentation and identification of pipe notches in the
-dentition. Nicotine and/or cotinine was present in 56\% of individuals
-with at least one visible pipe notch. We find some influence of skeletal
-preservation on the detection of alkaloids and salicylic acid, with
+explore potential relationships between pathological lesions and
+presence of alkaloids. Dental calculus was analysed using
+ultra-high-performance liquid chromatography-tandem mass spectrometry
+(UHPLC-ESI-MS/MS). We were able to detect nicotine, cotinine, caffeine,
+theophylline, and salicylic acid, suggesting the consumption of tea and
+coffee and smoking of tobacco on an individual scale, which is also
+confirmed by historic documentation and identification of pipe notches
+in the dentition. Nicotine and/or cotinine was present in 56\% of
+individuals with at least one visible pipe notch. There is some
+influence of skeletal preservation on the detection of alkaloids, with
 higher quantities of compounds extracted from well-preserved
-individuals, and also observe a relationship between weight of the
-calculus sample and raw quantity of the detected compounds, and we were
-able to detect alkaloids in samples as small as 2 mg. We found
-correlations between chronic maxillary sinusitis and the presence of
-multiple alkaloids. We show that there are many limitations that will
-need to be addressed going forward with this type of analysis, and
-stress the need for more systematic research on the consumption of
-alkaloid-containing items and their subsequent concentration and
-preservation in dental calculus, in addition to how mode of consumption
-may affect concentrations on different parts of the dentition. Despite
-the limitations, this preliminary study illustrates the many benefits of
-using calculus to target a variety of compounds that could have been
-ingested as medicine or diet, or consumed in a different manner. This
-method allows us to directly address specific individuals, which can be
-especially useful in individuals that are not always well-documented in
-historic documentation, such as rural populations, and especially
-children and women.
+individuals, and we observe a positive relationship between weight of
+the calculus sample and quantity of detected compounds, as well as
+between chronic maxillary sinusitis and the presence of multiple
+alkaloids. There are many limitations that will need to be addressed
+going forward with this type of analysis; we stress the need for more
+systematic research on the consumption of alkaloid-containing items and
+their subsequent concentration and preservation in dental calculus, in
+addition to how mode of consumption may affect concentrations in the
+dentition. Despite the limitations, this preliminary study illustrates
+many benefits of using calculus to target a variety of compounds that
+could have been consumed as medicine or diet. This method allows us to
+directly address specific individuals, which can be especially useful in
+individuals that are not always well-documented in historic
+documentation, such as rural populations, and especially children and
+women.
 \end{abstract}
 
 \small \textbf{Keywords:}  dental calculus; LC-MS/MS; alkaloids; dental
 pathology; sinusitis; caffeine; tobacco   \\
 
-\vfill
+%\vfill
 
-\newgeometry{top=30mm,left=30mm}\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[borderline west={3pt}{0pt}{shadecolor}, frame hidden, boxrule=0pt, interior hidden, sharp corners, enhanced, breakable]}{\end{tcolorbox}}\fi
+%\newgeometry{top=30mm,left=30mm}\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[frame hidden, sharp corners, interior hidden, boxrule=0pt, enhanced, borderline west={3pt}{0pt}{shadecolor}, breakable]}{\end{tcolorbox}}\fi
 
 \hypertarget{introduction}{%
 \section{Introduction}\label{introduction}}
@@ -393,24 +377,16 @@ shown a gendered division of labour (Palmer et al., 2016), and there are
 biological differences in dental calculus formation and drug metabolism
 that are related to age and sex (Huang et al., 2023; Uno et al., 2017;
 White, 1997). The sample consists of 27 males, 11 probable males, 2
-probable females, and 1 female (Figure~\ref{fig-sample-demography}). We
+probable females, and 1 female (\textbf{?@fig-sample-demography}). We
 selected males due to a higher occurrence of pipe notches and dental
 calculus deposits than females (unpublished observation).
 
-\begin{figure}
-
-{\centering \includegraphics{paper_files/figure-pdf/fig-sample-demography-1.pdf}
-
-}
-
-\caption{\label{fig-sample-demography}Overview of sample demography.
-Left plot is the first batch and right plot is the replication batch
-with 29 of the individuals from the first batch. eya = early young adult
-(18-24 years); lya = late young adult (25-34 years); ma = middle adult
-(35-49 years); old = old adult (50+ years). Male? = probable male;
-Female? = probable female.}
-
-\end{figure}
+\emph{Fig 1 (fig-sample-demography): Overview of sample demography. Left
+plot is the first batch and right plot is the replication batch with 29
+of the individuals from the first batch. eya = early young adult (18-24
+years); lya = late young adult (25-34 years); ma = middle adult (35-49
+years); old = old adult (50+ years). Male? = probable male; Female? =
+probable female.}
 
 \hypertarget{methods}{%
 \section{Methods}\label{methods}}
@@ -540,9 +516,9 @@ index for each individual were converted to an ordinal score from 0 to 4
 by using quartiles. Polychoric correlation was applied to the paired
 dichotomous variables and dichotomous-ordinal variables.
 
-All statistical analysis was conducted in R version 4.3.1 (2023-06-16),
-Beagle Scouts, (R Core Team, 2020). Data wrangling was conducted with
-the \textbf{tidyverse} (Wickham et al., 2019) and visualisations were
+All statistical analysis was conducted in R version 4.3.2 (2023-10-31),
+Eye Holes, (R Core Team, 2020). Data wrangling was conducted with the
+\textbf{tidyverse} (Wickham et al., 2019) and visualisations were
 created using \textbf{ggplot2} (Wickham, 2016). Polychoric correlations
 were calculated with the \textbf{psych} package (Revelle, 2022).
 
@@ -601,15 +577,9 @@ calculus in all samples. The patterns are consistent across batches 1
 and 2. Nicotine and cotinine have the same relative quantities in the
 samples, i.e., the sample with the highest extracted quantity of
 nicotine also had the highest extracted quantity of cotinine
-(Figure~\ref{fig-auth-plot-batch2}).
+(\textbf{?@fig-auth-plot-batch2}).
 
-\begin{figure}
-
-{\centering \includegraphics{paper_files/figure-pdf/fig-auth-plot-batch2-1.pdf}
-
-}
-
-\caption{\label{fig-auth-plot-batch2}(A) Number of samples in which each
+\emph{Fig 2 (fig-auth-plot-batch2): (A) Number of samples in which each
 compound was detected in the first and second batch. (B) Quantity (ng)
 of each compound extracted from each sample in batch 2. The plot
 displays the extracted quantity across the three washes and final
@@ -618,32 +588,22 @@ calculus sample. CBD = cannabidiol; CBN = cannabinol; THC =
 tetrahydrocannabinol; THCA-A = tetrahydrocannabinolic acid A; THCVA =
 tetrahydrocannabivarin acid.}
 
-\end{figure}
-
 To see if preservation of the skeletal remains had any effect on the
 detection of compounds, we compare extracted quantities of compounds to
 the various levels of skeletal preservation. Our results from batch 2
 suggest that detection of a compound may be linked to the preservation
 of the skeleton, with better preservation leading to increased
-extraction quantity (Figure~\ref{fig-detection-preservation}A). We also
+extraction quantity (\textbf{?@fig-detection-preservation}A). We also
 find a weak positive correlation between the weight of the calculus
 sample and the quantity of compound extracted from the calculus
-(Figure~\ref{fig-detection-preservation}B).
+(\textbf{?@fig-detection-preservation}B).
 
-\begin{figure}
-
-{\centering \includegraphics{paper_files/figure-pdf/fig-detection-preservation-1.pdf}
-
-}
-
-\caption{\label{fig-detection-preservation}(A) Violin plot with overlaid
+\emph{Fig 3 (fig-detection-preservation): (A) Violin plot with overlaid
 box plots depicting the distribution of extracted quantities of each
 compound from batch 2 separated by state of preservation of the
 skeleton. (B) Extracted quantity (ng) of compound plotted against
 weights of the calculus samples from batch 2. r = Pearson correlation
 coefficient.}
-
-\end{figure}
 
 The presence of pipe notch(es) in an individual and concurrent detection
 of nicotine and/or cotinine is used as a crude indicator of the accuracy
@@ -765,23 +725,15 @@ periodontitis and age-at-death (0.41), nicotine and SN (0.53), calculus
 and DDD (-0.42), age-at-death and theophylline (-0.45), theophylline and
 age-at-death (-0.45), caffeine and periodontitis (0.49), cotinine and
 CMS (0.43). Remaining correlations were weak or absent
-(Figure~\ref{fig-polycorr}). Correlations with age will be depressed
+(\textbf{?@fig-polycorr}). Correlations with age will be depressed
 because age was largely controlled for in the sample selection.
 
-\begin{figure}
-
-{\centering \includegraphics{paper_files/figure-pdf/fig-polycorr-1.pdf}
-
-}
-
-\caption{\label{fig-polycorr}Plot of the polychoric correlations
-(\emph{rho}). Larger circles and increased opacity indicates a stronger
+\emph{Fig 4 (fig-polycorr): Plot of the polychoric correlations
+(}rho\emph{). Larger circles and increased opacity indicates a stronger
 correlation coefficient. OA = osteoarthritis; VOP = vertebral
 osteophytosis; SN = Schmorl's nodes; DDD = degenerative disc disease; CO
 = cribra orbitalia; CMS = chronic maxillary sinusitis; SA = salicylic
 acid.}
-
-\end{figure}
 
 \hypertarget{discussion}{%
 \section{Discussion}\label{discussion}}
@@ -805,7 +757,7 @@ evidence for consumption of these drugs and dietary compounds.
 
 Nicotine and its principal/main metabolite, cotinine, were strongly
 positively correlated, both in concentration and presence/absence in
-individuals (Table~\ref{tbl-pearson} and Figure~\ref{fig-polycorr}). The
+individuals (Table~\ref{tbl-pearson} and \textbf{?@fig-polycorr}). The
 detection of nicotine and cotinine is not surprising, as pipe-smoking in
 the Beemsterpolder is well-documented in the literature (Aten et al.,
 2012; Bouman, 2017), and visible on the skeletal remains as pipe notches
@@ -823,7 +775,7 @@ enema.
 Theophylline and caffeine were positively correlated in our samples,
 though to a lesser extent than nicotine and cotinine, so we are unable
 to determine if they originated from the same source
-(Table~\ref{tbl-pearson} and Figure~\ref{fig-polycorr}). Caffeine and
+(Table~\ref{tbl-pearson} and \textbf{?@fig-polycorr}). Caffeine and
 theophylline have very similar chemical structures, so we expect they
 would experience similar rates of incorporation and degradation,
 allowing us to interpret the ratio and correlations between the
@@ -863,7 +815,7 @@ the Beemsterpolder diet (Aten et al., 2012). The extracted quantity from
 our samples decreased over the three washes, followed by a sharp
 increase in the final calculus extraction, which is what we would expect
 to see if the salicylic acid was incorporated during life
-(Figure~\ref{fig-auth-plot-batch2}). It is important to note that,
+(\textbf{?@fig-auth-plot-batch2}). It is important to note that,
 especially with salicylic acid, there is a possibility for the compound
 to enter the calculus through contact with the surrounding soil.
 Salicylic acid is a very mobile organic acid (Badri \& Vivanco, 2009;

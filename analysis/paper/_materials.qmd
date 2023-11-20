@@ -27,6 +27,8 @@ The sample consists of `r nrow(filter(demography, sex == "m"))` males,
 We selected males due to a higher
 occurrence of pipe notches and dental calculus deposits than females (unpublished observation).
 
+*Fig 1 (fig-sample-demography): Overview of sample demography. Left plot is the first batch and right plot is the replication batch with 29 of the individuals from the first batch. eya = early young adult (18-24 years); lya = late young adult (25-34 years); ma = middle adult (35-49 years); old = old adult (50+ years). Male? = probable male; Female? = probable female.*
+
 <!-- use plot to show original and replicated sample demographics? -->
 ```{r}
 #| label: fig-sample-demography
