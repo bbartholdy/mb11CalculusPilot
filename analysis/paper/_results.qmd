@@ -261,14 +261,13 @@ The presence of pipe notch(es) in an individual and concurrent detection of nico
 and/or cotinine is used as a crude indicator of the accuracy of the method. Only
 males were used in accuracy calculations, as pipe notches are ubiquitous in males,
 but not in females.
-In batch 2, the method was able to detect some form
-of tobacco in
+In batch 2, the method was able to detect some form of tobacco in
 `r nrow(filter(tobacco_accuracy, pipe_notch == "Y", detection > 0))`
 of `r nrow(filter(tobacco_accuracy, pipe_notch == "Y"))`
 individuals with a pipe notch
 (`r scales::percent(nrow(filter(tobacco_accuracy, pipe_notch == "Y", detection > 0)) / nrow(filter(tobacco_accuracy, pipe_notch == "Y")), accuracy = 0.1)`).
-When also considering correct the absence of a tobacco alkaloid together with the absence
-of a pipe notch, the accuracy of the method is
+When also considering correct the absence of a tobacco alkaloid together with the
+absence of a pipe notch, the accuracy of the method is
 `r scales::percent(mean(tobacco_accuracy$correct, na.rm = T), accuracy = 0.1)`.
 Accuracy in the old adult age category is
 `r scales::percent(filter(accuracy_age, age == "old")$mean, accuracy = 0.1)`,
