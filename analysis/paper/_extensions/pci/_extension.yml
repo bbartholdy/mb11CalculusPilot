@@ -1,0 +1,23 @@
+title: PCI
+author: Alexis Simon
+version: 1.0.0
+quarto-required: ">=1.4.0"
+contributes:
+  formats:
+    common:
+      csl: peer-community-journal-pci_Zotero.csl
+      knitr:
+        opts_chunk:
+          echo: false
+    pdf:
+      documentclass: scrartcl
+      classoption: [11.5pt]
+      papersize: a4
+      linestretch: 1.5
+      block-headings: false
+      #template: templates/pcj-submission.tex
+      include-in-header: _preamble.tex
+      #include-before-body: partials/before-body.tex
+      template-partials:
+        - partials/title.tex
+        - partials/before-body.tex

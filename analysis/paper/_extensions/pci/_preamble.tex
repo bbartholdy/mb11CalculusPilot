@@ -1,0 +1,41 @@
+\usepackage[sfdefault]{roboto}
+\usepackage{unicode-math}
+\usepackage[a4paper,headheight=13pt,footskip=20pt,margin=2.54cm]{geometry}
+\usepackage{indentfirst}
+
+% Modify section headings
+\usepackage{titlesec}
+\titleformat{\section}{\normalfont\large\bfseries\centering}{}{.5em}{}
+\titleformat{\subsection}{\normalfont\bfseries}{}{.5em}{}
+\titleformat{\subsubsection}[runin]{\normalfont\itshape}{\thesubsubsection.}{.5em}{\addperiod}
+\newcommand{\addperiod}[1]{#1.} %https://tex.stackexchange.com/questions/137193/adding-a-period-after-section
+
+\setlength{\parindent}{1.5em}
+\setlength{\parskip}{0pt plus 1pt}
+\linespread{1.1}
+
+% Defining document colors
+\usepackage{xcolor}
+\definecolor{darkgray}{HTML}{808080}
+\definecolor{mediumgray}{HTML}{6D6E70}
+\definecolor{ligthgray}{HTML}{d9d9d9}
+\definecolor{pciblue}{HTML}{346E92}
+\definecolor{opengreen}{HTML}{77933c}
+
+\usepackage[pdfborder={0 0 0},   
+    colorlinks=true,
+    linkcolor=pciblue,
+    urlcolor=pciblue,
+    citecolor=pciblue]{hyperref}  % sets link border to white
+
+%\urlstyle{same}
+
+% Adjust caption style
+\usepackage[aboveskip=12pt,labelfont=bf,labelsep=endash,singlelinecheck=off,format=plain,margin=1.5cm]{caption}
+\captionsetup{justification=justified,font=footnotesize}
+
+%\usepackage{graphbox}  % loads graphicx ppackage with extended options for vertical alignment of figures
+%\usepackage{floatrow}
+%\floatsetup[figure]{capposition=\captionside} % causes error with figure: Undefined control sequence. \flrow@typ@figure ->capposition=\captionside 
+%\floatsetup[table]{style=plaintop}
+%\usepackage[font=small,labelfont=bf,labelsep=endash,justification=justified]{caption} %center caption relative to figure/table
