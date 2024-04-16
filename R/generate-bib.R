@@ -10,6 +10,7 @@ generate_bib <- function(){
     here("analysis/paper/references.bib"),
     keys = cite_keys,
     ignore = ignore_keys,
+    translator = "bibtex",
     overwrite = T
   )
 }

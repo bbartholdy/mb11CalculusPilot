@@ -44,6 +44,9 @@ affiliations:
     #address: Postbus 73, 1462 ZH, Middenbeemster, Netherlands
 title-block-published: "Last updated"
 format:
+  plos-pdf:
+    keep-tex: true
+    output-file: "plos-submission_v1.pdf"
   pdf:
     keep-tex: true
     output-file: "plos-submission_v1.pdf"
