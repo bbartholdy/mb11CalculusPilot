@@ -10,13 +10,6 @@ library(knitr)
 source(here("analysis/scripts/setup-qmd.R"))
 
 options(ggplot.discrete.colour = function() scale_fill_viridis_d())
-knitr::opts_chunk$set(
-  fig.show = "hide",
-  fig.path = "../figures/plos-",
-  dev = "tiff",
-  dev.args = list("tiff" = list(compression = "lzw"))
-  #fig.keep = "none"
-)
 ```
  
 <!-- Keywords: {{< meta keywords >}} -->

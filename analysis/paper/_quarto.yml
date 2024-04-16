@@ -7,11 +7,10 @@ title: "Multiproxy analysis exploring patterns of diet and disease in dental cal
 author:
   - name: Bjørn Peare Bartholdy
     corresponding: true
-    email: b.p.bartholdy@tudelft.nl
+    email: b.p.bartholdy@arch.leidenuniv.nl
     #orcid: 0000-0003-1689-0557
     affiliations:
       - ref: leiden
-      - ref: tud
   - name: Jørgen B. Hasselstrøm
     affiliations:
       - ref: aarhus
@@ -33,8 +32,6 @@ author:
 affiliations:
   - id: leiden
     name: Department of Archaeological Sciences, Leiden University
-  - id: tud
-    name: Faculty of Mechanical, Maritime and Materials Engineering, Delft University of Technology
     #address: Einsteinweg 2, 2333 CC, Leiden, Netherlands
   - id: aarhus
     name: Department of Forensic Medicine, Aarhus University
@@ -47,24 +44,28 @@ format:
   pci-pdf:
     output-file: "pcj-submission_v1.pdf"
     shift-heading-level-by: -1
+  html:
+    theme: cosmo
+    output-file: "preprint-for-PCI_v3.html"
+    keep-md: true
   pdf:
     keep-tex: true
-    output-file: "plos-submission_v1.pdf"
+    output-file: "preprint-for-PCI_v3.pdf"
     documentclass: article
     number-sections: true
-    fig-pos: false
     geometry:
-      - top=30mm
-      - bottom=30mm
+      - top=10mm
+      - bottom=10mm
       - left=30mm
       - heightrounded
     include-in-header:
-    #   file: ../templates/_preface.tex
-      text: \usepackage{lineno}
+      file: ../templates/_preface.tex
     template-partials:
       - ../templates/_authors.tex
       - ../templates/_affiliations.tex
       - ../templates/before-body.tex
+  docx:
+    output-file: "draft-manuscript-3.docx"
 execute:
   freeze: auto
   echo: false
@@ -73,10 +74,8 @@ knitr:
   opts_chunk:
     message: false
     comment: "#>"
-    fig-path: "../figures/plos-"
+    fig-path: "../figures/"
     fig-dpi: 600
-language:
-  crossref-fig-title: "Fig"
 bibliography: references.bib
 csl: "apa.csl" # Insert path for the bib-style
 abstract: |

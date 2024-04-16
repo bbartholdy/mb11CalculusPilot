@@ -14,6 +14,17 @@
 \setlength{\parskip}{0pt plus 1pt}
 \linespread{1.1}
 
+% Adjust caption style
+\usepackage[labelfont=bf,
+    labelsep=endash,
+    singlelinecheck=off,
+    format=plain,
+    margin=1.5cm,
+    aboveskip=12pt,
+    belowskip=12pt,
+    font=footnotesize,
+    justification=justified]{caption}
+
 % Defining document colors
 \usepackage{xcolor}
 \definecolor{darkgray}{HTML}{808080}
@@ -22,20 +33,6 @@
 \definecolor{pciblue}{HTML}{346E92}
 \definecolor{opengreen}{HTML}{77933c}
 
-\usepackage[pdfborder={0 0 0},   
-    colorlinks=true,
-    linkcolor=pciblue,
-    urlcolor=pciblue,
-    citecolor=pciblue]{hyperref}  % sets link border to white
-
+%\usepackage[colorlinks=true,linkcolor=pciblue,urlcolor=pciblue,citecolor=pciblue]{hyperref} % Not working - links in pdf not changing colour. 
+                                                         %Probably because hyperref is no the last package to be loaded, which it needs to be.
 %\urlstyle{same}
-
-% Adjust caption style
-\usepackage[aboveskip=12pt,labelfont=bf,labelsep=endash,singlelinecheck=off,format=plain,margin=1.5cm]{caption}
-\captionsetup{justification=justified,font=footnotesize}
-
-%\usepackage{graphbox}  % loads graphicx ppackage with extended options for vertical alignment of figures
-%\usepackage{floatrow}
-%\floatsetup[figure]{capposition=\captionside} % causes error with figure: Undefined control sequence. \flrow@typ@figure ->capposition=\captionside 
-%\floatsetup[table]{style=plaintop}
-%\usepackage[font=small,labelfont=bf,labelsep=endash,justification=justified]{caption} %center caption relative to figure/table
