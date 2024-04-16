@@ -4,9 +4,11 @@
 \PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
 %
 \documentclass[
-]{article}
+  11.5pt,
+  leqno]{scrartcl}
 
 \usepackage{amsmath,amssymb}
+\usepackage{setspace}
 \usepackage{iftex}
 \ifPDFTeX
   \usepackage[T1]{fontenc}
@@ -38,18 +40,8 @@
   \KOMAoptions{parskip=half}}
 \makeatother
 \usepackage{xcolor}
-\usepackage[top=30mm,bottom=30mm,left=30mm,heightrounded]{geometry}
 \setlength{\emergencystretch}{3em} % prevent overfull lines
-\setcounter{secnumdepth}{5}
-% Make \paragraph and \subparagraph free-standing
-\ifx\paragraph\undefined\else
-  \let\oldparagraph\paragraph
-  \renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
-\fi
-\ifx\subparagraph\undefined\else
-  \let\oldsubparagraph\subparagraph
-  \renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
-\fi
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
 
 
 \providecommand{\tightlist}{%
@@ -76,30 +68,78 @@
 \makeatletter
 \def\fps@figure{htbp}
 \makeatother
+% definitions for citeproc citations
+\NewDocumentCommand\citeproctext{}{}
+\NewDocumentCommand\citeproc{mm}{%
+  \begingroup\def\citeproctext{#2}\cite{#1}\endgroup}
+\makeatletter
+ % allow citations to break across lines
+ \let\@cite@ofmt\@firstofone
+ % avoid brackets around text for \cite:
+ \def\@biblabel#1{}
+ \def\@cite#1#2{{#1\if@tempswa , #2\fi}}
+\makeatother
 \newlength{\cslhangindent}
 \setlength{\cslhangindent}{1.5em}
 \newlength{\csllabelwidth}
 \setlength{\csllabelwidth}{3em}
-\newlength{\cslentryspacingunit} % times entry-spacing
-\setlength{\cslentryspacingunit}{\parskip}
-\newenvironment{CSLReferences}[2] % #1 hanging-ident, #2 entry spacing
- {% don't indent paragraphs
-  \setlength{\parindent}{0pt}
+\newenvironment{CSLReferences}[2] % #1 hanging-indent, #2 entry-spacing
+ {\begin{list}{}{%
+  \setlength{\itemindent}{0pt}
+  \setlength{\leftmargin}{0pt}
+  \setlength{\parsep}{0pt}
   % turn on hanging indent if param 1 is 1
   \ifodd #1
-  \let\oldpar\par
-  \def\par{\hangindent=\cslhangindent\oldpar}
+   \setlength{\leftmargin}{\cslhangindent}
+   \setlength{\itemindent}{-1\cslhangindent}
   \fi
   % set entry spacing
-  \setlength{\parskip}{#2\cslentryspacingunit}
- }%
- {}
+  \setlength{\itemsep}{#2\baselineskip}}}
+ {\end{list}}
 \usepackage{calc}
-\newcommand{\CSLBlock}[1]{#1\hfill\break}
-\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{#1}}
-\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{#1}\break}
+\newcommand{\CSLBlock}[1]{\hfill\break\parbox[t]{\linewidth}{\strut\ignorespaces#1\strut}}
+\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{\strut#1\strut}}
+\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{\strut#1\strut}}
 \newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
 
+\usepackage[sfdefault]{roboto}
+\usepackage{unicode-math}
+\usepackage[a4paper,headheight=13pt,footskip=20pt,margin=2.54cm]{geometry}
+\usepackage{indentfirst}
+
+% Modify section headings
+\usepackage{titlesec}
+\titleformat{\section}{\normalfont\large\bfseries\centering}{}{.5em}{}
+\titleformat{\subsection}{\normalfont\bfseries}{}{.5em}{}
+\titleformat{\subsubsection}[runin]{\normalfont\itshape}{\thesubsubsection.}{.5em}{\addperiod}
+\newcommand{\addperiod}[1]{#1.} %https://tex.stackexchange.com/questions/137193/adding-a-period-after-section
+
+\setlength{\parindent}{1.5em}
+\setlength{\parskip}{0pt plus 1pt}
+\linespread{1.1}
+
+% Adjust caption style
+\usepackage[labelfont=bf,
+    labelsep=endash,
+    singlelinecheck=off,
+    format=plain,
+    margin=1.5cm,
+    aboveskip=12pt,
+    belowskip=12pt,
+    font=footnotesize,
+    justification=justified]{caption}
+
+% Defining document colors
+\usepackage{xcolor}
+\definecolor{darkgray}{HTML}{808080}
+\definecolor{mediumgray}{HTML}{6D6E70}
+\definecolor{ligthgray}{HTML}{d9d9d9}
+\definecolor{pciblue}{HTML}{346E92}
+\definecolor{opengreen}{HTML}{77933c}
+
+%\usepackage[colorlinks=true,linkcolor=pciblue,urlcolor=pciblue,citecolor=pciblue]{hyperref} % Not working - links in pdf not changing colour. 
+                                                         %Probably because hyperref is no the last package to be loaded, which it needs to be.
+%\urlstyle{same}
 \usepackage{booktabs}
 \usepackage{longtable}
 \usepackage{array}
@@ -114,11 +154,6 @@
 \usepackage[normalem]{ulem}
 \usepackage{makecell}
 \usepackage{xcolor}
-\usepackage{lineno}
-\makeatletter
-\makeatother
-\makeatletter
-\makeatother
 \makeatletter
 \@ifpackageloaded{caption}{}{\usepackage{caption}}
 \AtBeginDocument{%
@@ -138,9 +173,9 @@
   \newcommand\listtablename{List of Tables}
 \fi
 \ifdefined\figurename
-  \renewcommand*\figurename{Fig}
+  \renewcommand*\figurename{Figure}
 \else
-  \newcommand\figurename{Fig}
+  \newcommand\figurename{Figure}
 \fi
 \ifdefined\tablename
   \renewcommand*\tablename{Table}
@@ -155,23 +190,16 @@
 \newcommand*\listoflistings{\listof{codelisting}{List of Listings}}
 \makeatother
 \makeatletter
+\makeatother
+\makeatletter
 \@ifpackageloaded{caption}{}{\usepackage{caption}}
 \@ifpackageloaded{subcaption}{}{\usepackage{subcaption}}
-\makeatother
-\makeatletter
-\@ifpackageloaded{tcolorbox}{}{\usepackage[skins,breakable]{tcolorbox}}
-\makeatother
-\makeatletter
-\@ifundefined{shadecolor}{\definecolor{shadecolor}{rgb}{.97, .97, .97}}
-\makeatother
-\makeatletter
-\makeatother
-\makeatletter
 \makeatother
 \ifLuaTeX
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
-\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\usepackage{bookmark}
+
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \urlstyle{same} % disable monospaced font for URLs
 \hypersetup{
@@ -180,137 +208,60 @@
   pdfkeywords={dental calculus; LC-MS/MS; alkaloids; dental pathology;
 sinusitis; caffeine; tobacco},
   colorlinks=true,
-  linkcolor={blue},
+  linkcolor={pciblue},
   filecolor={Maroon},
-  citecolor={Blue},
-  urlcolor={Blue},
+  citecolor={pciblue},
+  urlcolor={pciblue},
   pdfcreator={LaTeX via pandoc}}
 
-\title{Multiproxy analysis exploring patterns of diet and disease in
-dental calculus and skeletal remains from a 19th century Dutch
-population}
-\author{Bjørn Peare Bartholdy \and Jørgen B. Hasselstrøm \and Lambert K.
-Sørensen \and Maia Casna \and Menno Hoogland \and Historisch Genootschap
-Beemster \and Amanda G. Henry}
+\title{}
+\author{}
 \date{}
 
 \begin{document}
-%% modified from: https://github.com/quarto-journals/plos/blob/main/_extensions/plos/partials/before-body.tex
 
-%\maketitle
-
-\begin{center}
-
-%\thispagestyle{fancy}
-
-\LARGE{Multiproxy analysis exploring patterns of diet and disease in
-dental calculus and skeletal remains from a 19th century Dutch
-population}
-
-% Insert author names, affiliations and corresponding author email
-
-\normalsize{Bjørn Peare
-Bartholdy}\textsuperscript{1,2*}, \normalsize{Jørgen B.
-Hasselstrøm}\textsuperscript{3}, \normalsize{Lambert K.
-Sørensen}\textsuperscript{3}, \normalsize{Maia
-Casna}\textsuperscript{1}, \normalsize{Menno
-Hoogland}\textsuperscript{1}, \normalsize{Historisch Genootschap
-Beemster}\textsuperscript{4}, \normalsize{Amanda G.
-Henry}\textsuperscript{1}\vspace{12pt}
-
-%\rule{\textwidth}{1.8pt}\vspace{8pt}
-
-\end{center}
-
-\textsuperscript{\footnotesize{1}}\textit{\small{Department of
-Archaeological Sciences, Leiden
-University}}\\ \textsuperscript{\footnotesize{2}}\textit{\small{Faculty
-of Mechanical, Maritime and Materials Engineering, Delft University of
-Technology}}\\ \textsuperscript{\footnotesize{3}}\textit{\small{Department
-of Forensic Medicine, Aarhus
-University}}\\ \textsuperscript{\footnotesize{4}}\textit{\small{Historisch
-Genootschap Beemster}}
-
-% Use the asterisk to denote corresponding authorship and provide email address in note below.
-* \small{b.p.bartholdy@tudelft.nl}
-
-\vspace{12pt}
-
-\linenumbers
-
-\begin{abstract}
-Dental calculus is an excellent source of information on the dietary
-patterns of past populations, including consumption of plant-based
-items. The detection of plant-derived residues such as alkaloids and
-their metabolites in dental calculus provides direct evidence of
-consumption by individuals within a population. We conducted a study on
-41 individuals from Middenbeemster, a 19th century rural Dutch
-archaeological site. Skeletal and dental analysis was performed to
-explore potential relationships between pathological lesions and
-presence of alkaloids. Dental calculus was analysed using
-ultra-high-performance liquid chromatography-tandem mass spectrometry
-(UHPLC-ESI-MS/MS). We were able to detect nicotine, cotinine, caffeine,
-theophylline, and salicylic acid, suggesting the consumption of tea and
-coffee and smoking of tobacco on an individual scale, which is also
-confirmed by historic documentation and identification of pipe notches
-in the dentition. Nicotine and/or cotinine was present in 56\% of
-individuals with at least one visible pipe notch. There is some
-influence of skeletal preservation on the detection of alkaloids, with
-higher quantities of compounds extracted from well-preserved
-individuals, and we observe a positive relationship between weight of
-the calculus sample and quantity of detected compounds, as well as
-between chronic maxillary sinusitis and the presence of multiple
-alkaloids. There are many limitations that will need to be addressed
-going forward with this type of analysis; we stress the need for more
-systematic research on the consumption of alkaloid-containing items and
-their subsequent concentration and preservation in dental calculus, in
-addition to how mode of consumption may affect concentrations in the
-dentition. Despite the limitations, this preliminary study illustrates
-many benefits of using calculus to target a variety of compounds that
-could have been consumed as medicine or diet. This method allows us to
-directly address specific individuals, which can be especially useful in
-individuals that are not always well-documented in historic
-documentation, such as rural populations, and especially children and
-women.
-\end{abstract}
-
-\small \textbf{Keywords:}  dental calculus; LC-MS/MS; alkaloids; dental
-pathology; sinusitis; caffeine; tobacco   \\
-
-%\vfill
-
-%\newgeometry{top=30mm,left=30mm}\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[frame hidden, sharp corners, interior hidden, boxrule=0pt, enhanced, borderline west={3pt}{0pt}{shadecolor}, breakable]}{\end{tcolorbox}}\fi
-
-\hypertarget{introduction}{%
-\section{Introduction}\label{introduction}}
+\setstretch{1.5}
+\section{Introduction}\label{introduction}
 
 Dental calculus has proven to be an excellent source of a wide variety
 of information about our past. The increased accessibility and
 advancement of methods in aDNA, paleoproteomics, and mass spectrometry,
 has expanded our ability to identify biomarkers of diet and disease on
-an increasingly large scale (Gismondi et al., 2020; Velsko et al., 2017;
-Warinner et al., 2014).
+an increasingly large scale
+(\citeproc{ref-gismondiMultidisciplinaryApproach2020}{Gismondi et al.,
+2020}; \citeproc{ref-velskoDentalCalculus2017}{Velsko et al., 2017};
+\citeproc{ref-warinnerEvidenceMilk2014}{Warinner et al., 2014}).
 
 One such collection of biomarkers is alkaloids, a plant-derived group of
 compounds. Many alkaloids have important medicinal and psychoactive
 effects in humans, and their direct detection, or detection of their
 metabolites, is of great interest to archaeologists. Previous studies
 have successfully recovered alkaloids in archaeological contexts,
-including ceramics (Smith et al., 2018), pipes (Rafferty et al., 2012),
-human hair (Echeverría \& Niemeyer, 2013; Ogalde et al., 2009), and even
-dental calculus employing both targeted (Eerkens et al., 2018) and
-untargeted approaches (Buckley et al., 2014; Gismondi et al., 2020).
-Especially nicotine, the principal alkaloid in tobacco leaves, has been
-widely studied in the archaeological record due to its apparent
-stability and ability to survive over long periods of time (Eerkens et
-al., 2018; Rafferty et al., 2012; Tushingham et al., 2013).
+including ceramics (\citeproc{ref-smithDetectionOpium2018}{Smith et al.,
+2018}), pipes (\citeproc{ref-raffertyCurrentResearch2012}{Rafferty et
+al., 2012}), human hair
+(\citeproc{ref-echeverriaNicotineHair2013}{Echeverría \& Niemeyer,
+2013}; \citeproc{ref-ogaldeIdentificationPsychoactive2009}{Ogalde et
+al., 2009}), and even dental calculus employing both targeted
+(\citeproc{ref-eerkensDentalCalculus2018}{Eerkens et al., 2018}) and
+untargeted approaches (\citeproc{ref-buckleyDentalCalculus2014}{Buckley
+et al., 2014};
+\citeproc{ref-gismondiMultidisciplinaryApproach2020}{Gismondi et al.,
+2020}). Especially nicotine, the principal alkaloid in tobacco leaves,
+has been widely studied in the archaeological record due to its apparent
+stability and ability to survive over long periods of time
+(\citeproc{ref-eerkensDentalCalculus2018}{Eerkens et al., 2018};
+\citeproc{ref-raffertyCurrentResearch2012}{Rafferty et al., 2012};
+\citeproc{ref-tushinghamHuntergathererTobacco2013}{Tushingham et al.,
+2013}).
 
 Alkaloids may enter the oral cavity via two pathways: (1) direct
 incorporation through ingestion of alkaloid-containing plants, whether
 deliberate or accidental; and (2) passive diffusion as alkaloids and
 other compounds are transferred from plasma to saliva, and then
 gradually secreted into the oral cavity through the salivary glands in
-the hours-to-days following ingestion (Cone \& Huestis, 2007). The
+the hours-to-days following ingestion
+(\citeproc{ref-coneInterpretationOral2007}{Cone \& Huestis, 2007}). The
 second pathway allows the identification of parent compounds that do not
 enter the mouth (e.g.~injection), as long as they, or their metabolites,
 are excreted through the saliva, thus eventually entering the oral
@@ -319,41 +270,45 @@ cavity.
 Many of the components involved in the formation and growth of dental
 calculus originate from oral fluid. Proteins, bacteria, salts and other
 compounds are transferred from saliva to biofilms on the tooth surface
-(Jin \& Yip, 2002; White, 1997). This may also allow various alkaloids
-of dietary and medicinal origin to become incorporated in dental plaque.
-Dental plaque undergoes frequent mineralisation events, ultimately
-causing the entrapped alkaloids and their metabolites to become
-preserved within the dental calculus. Barring intentional or accidental
-removal of the calculus during life, burial, excavation, and
-post-excavation cleaning, the alkaloids can then be detected by various
-methods to show a record of consumption during life. Because drugs may
-be transferred from plasma to saliva, there is often a close correlation
-between drugs detected in oral fluid and blood, though there are
-differences in detected concentrations (Cone \& Huestis, 2007; Milman et
-al., 2011; Wille et al., 2009). This was also shown to be true for
-dental calculus and blood (Sørensen et al., 2021), making dental
-calculus a potentially useful substance for detecting ancient alkaloids
-and other dietary compounds.
+(\citeproc{ref-jinSupragingivalCalculus2002}{Jin \& Yip, 2002};
+\citeproc{ref-whiteDentalCalculus1997}{White, 1997}). This may also
+allow various alkaloids of dietary and medicinal origin to become
+incorporated in dental plaque. Dental plaque undergoes frequent
+mineralisation events, ultimately causing the entrapped alkaloids and
+their metabolites to become preserved within the dental calculus.
+Barring intentional or accidental removal of the calculus during life,
+burial, excavation, and post-excavation cleaning, the alkaloids can then
+be detected by various methods to show a record of consumption during
+life. Because drugs may be transferred from plasma to saliva, there is
+often a close correlation between drugs detected in oral fluid and
+blood, though there are differences in detected concentrations
+(\citeproc{ref-coneInterpretationOral2007}{Cone \& Huestis, 2007};
+\citeproc{ref-milmanOralFluid2011}{Milman et al., 2011};
+\citeproc{ref-willeRelationshipOral2009}{Wille et al., 2009}). This was
+also shown to be true for dental calculus and blood
+(\citeproc{ref-sorensenDrugsCalculus2021}{Sørensen et al., 2021}),
+making dental calculus a potentially useful substance for detecting
+ancient alkaloids and other dietary compounds.
 
 In this study we use a ultra-high-performance liquid
 chromatography-tandem mass spectrometry (UHPLC-MS/MS) method that was
 developed in a previous study on dental calculus from cadavers and
 validated by comparing the results to compounds detected in the blood of
-the same individuals (Sørensen et al., 2021). All compounds that were
-detected in the blood were also detected in dental calculus, with
-additional compounds present in dental calculus that were not present in
-blood, suggesting that dental calculus represents a comprehensive
-history of consumption over a long period of time (Sørensen et al.,
-2021). We were able to detect both parent compounds and metabolites,
-including caffeine, nicotine, theophylline, and cotinine, in the dental
-calculus of individuals from a 19th century Dutch population from
-Middenbeemster. By detecting these compounds we are able to show the
-consumption of tea and coffee and smoking of tobacco on an individual
-scale, which is also confirmed by historic documentation and
-identification of pipe notches in the dentition.
+the same individuals (\citeproc{ref-sorensenDrugsCalculus2021}{Sørensen
+et al., 2021}). All compounds that were detected in the blood were also
+detected in dental calculus, with additional compounds present in dental
+calculus that were not present in blood, suggesting that dental calculus
+represents a comprehensive history of consumption over a long period of
+time (\citeproc{ref-sorensenDrugsCalculus2021}{Sørensen et al., 2021}).
+We were able to detect both parent compounds and metabolites, including
+caffeine, nicotine, theophylline, and cotinine, in the dental calculus
+of individuals from a 19th century Dutch population from Middenbeemster.
+By detecting these compounds we are able to show the consumption of tea
+and coffee and smoking of tobacco on an individual scale, which is also
+confirmed by historic documentation and identification of pipe notches
+in the dentition.
 
-\hypertarget{materials}{%
-\section{Materials}\label{materials}}
+\section{Materials}\label{materials}
 
 The sample consists of 41 individuals from Middenbeemster, a 19th
 century rural Dutch site. The village of Middenbeemster and the
@@ -364,51 +319,68 @@ decision was made to build a church, and construction started in 1618
 (Hakvoort 2013). The excavated cemetery is associated with the
 Keyserkerk church, where the inhabitants of the Middenbeemster village
 and the surrounding Beemsterpolder were buried between AD 1615 and 1866
-(Lemmers et al., 2013). Archival documents are available for those
-buried between AD 1829 and 1866, when the majority of individuals were
-interred. The main occupation of the inhabitants was dairy farming,
-consisting largely of manual labour prior to the industrial revolution
-(Aten et al., 2012; Palmer et al., 2016).
+(\citeproc{ref-lemmersMiddenbeemster2013}{Lemmers et al., 2013}).
+Archival documents are available for those buried between AD 1829 and
+1866, when the majority of individuals were interred. The main
+occupation of the inhabitants was dairy farming, consisting largely of
+manual labour prior to the industrial revolution
+(\citeproc{ref-aten400Jaar2012}{Aten et al., 2012};
+\citeproc{ref-palmerActivityReconstruction2016}{Palmer et al., 2016}).
 
 For our sample, we preferentially selected males from the middle adult
 age category (35-49 years) to minimise the effect of confounding
 cultural and biological factors. Previous research on Middenbeemster has
-shown a gendered division of labour (Palmer et al., 2016), and there are
-biological differences in dental calculus formation and drug metabolism
-that are related to age and sex (Huang et al., 2023; Uno et al., 2017;
-White, 1997). The sample consists of 27 males, 11 probable males, 2
-probable females, and 1 female (\textbf{?@fig-sample-demography}). We
-selected males due to a higher occurrence of pipe notches and dental
-calculus deposits than females (unpublished observation).
+shown a gendered division of labour
+(\citeproc{ref-palmerActivityReconstruction2016}{Palmer et al., 2016}),
+and there are biological differences in dental calculus formation and
+drug metabolism that are related to age and sex
+(\citeproc{ref-huangDecipheringGenetic2023}{Huang et al., 2023};
+\citeproc{ref-unoSexAgedependent2017}{Uno et al., 2017};
+\citeproc{ref-whiteDentalCalculus1997}{White, 1997}). The sample
+consists of 27 males, 11 probable males, 2 probable females, and 1
+female (Figure~\ref{fig-sample-demography}). We selected males due to a
+higher occurrence of pipe notches and dental calculus deposits than
+females (unpublished observation).
 
-\emph{Fig 1 (fig-sample-demography): Overview of sample demography. Left
-plot is the first batch and right plot is the replication batch with 29
-of the individuals from the first batch. eya = early young adult (18-24
-years); lya = late young adult (25-34 years); ma = middle adult (35-49
-years); old = old adult (50+ years). Male? = probable male; Female? =
-probable female.}
+\begin{figure}
 
-\hypertarget{methods}{%
-\section{Methods}\label{methods}}
+\centering{
 
-\hypertarget{skeletal-analysis}{%
-\subsection{Skeletal analysis}\label{skeletal-analysis}}
+\includegraphics{../figures/fig-sample-demography-1.pdf}
+
+}
+
+\caption{\label{fig-sample-demography}Overview of sample demography.
+Left plot is the first batch and right plot is the replication batch
+with 29 of the individuals from the first batch. eya = early young adult
+(18-24 years); lya = late young adult (25-34 years); ma = middle adult
+(35-49 years); old = old adult (50+ years). Male? = probable male;
+Female? = probable female.}
+
+\end{figure}%
+
+\section{Methods}\label{methods}
+
+\subsection{Skeletal analysis}\label{skeletal-analysis}
 
 Demographic and pathological analyses were conducted in the Laboratory
 for Human Osteoarchaeology at Leiden University. Sex was estimated using
-cranial and pelvic morphological traits (Buikstra \& Ubelaker, 1994).
-Age-at-death was estimated using dental wear, auricular and pubic
-surface appearance, cranial suture closure, and epiphyseal fusion
-(Brooks \& Suchey, 1990; Buckberry \& Chamberlain, 2002; Buikstra \&
-Ubelaker, 1994; Lovejoy et al., 1985; Meindl \& Lovejoy, 1985), and
+cranial and pelvic morphological traits
+(\citeproc{ref-Standards1994}{Buikstra \& Ubelaker, 1994}). Age-at-death
+was estimated using dental wear, auricular and pubic surface appearance,
+cranial suture closure, and epiphyseal fusion
+(\citeproc{ref-SucheyBrooks1990}{Brooks \& Suchey, 1990};
+\citeproc{ref-buckberryAuricular2002}{Buckberry \& Chamberlain, 2002};
+\citeproc{ref-Standards1994}{Buikstra \& Ubelaker, 1994};
+\citeproc{ref-lovejoyAuricular1985}{Lovejoy et al., 1985};
+\citeproc{ref-meindlSutureClosure1985}{Meindl \& Lovejoy, 1985}), and
 divided into the following categories: early young adult (18-24 years),
 late young adult (25-34 years), middle adult ( 35-49 years), old adult
 (50+ years). Preservation was visually scored on a four-stage scale
 (excellent, good, fair, poor) based on the surface condition of the
 bones and the extent of taphonomic degradation.
 
-\hypertarget{paleopathology}{%
-\subsubsection{Paleopathology}\label{paleopathology}}
+\subsubsection{Paleopathology}\label{paleopathology}
 
 Pathological conditions and lesions that occur frequently in the
 population were included in the analysis. Data were dichotomised to
@@ -421,42 +393,46 @@ based on the presence of pitting on the superior surface of the orbit.
 No distinction was made between active or healing lesions. Degenerative
 disc disease, or spondylosis, is identified as a large diffuse
 depression of the superior and/or inferior surfaces of the vertebral
-body (Rogers, 2000). Schmorl's nodes are identified as any cortical
-depressions on the surface of the vertebral body. Data on chronic
-maxillary sinusitis from Casna et al. (2021) were included in this study
-to assess the relationship between upper respiratory diseases with
-environmental factors (i.e.~tobacco smoke, caffeine consumption).
-Lesions associated with chronic maxillary sinusitis as defined by
-Boocock et al. (1995) were recorded for each individual and classified
-as ``pitting'', ``spicule-type bone formation'', ``remodeled spicules'',
-or ``white pitted bone''. chronic maxillary sinusitis was scored as
-absent when the sinus presented smooth surfaces with little or no
-associated pitting.
+body (\citeproc{ref-rogersPalaeopathologyJoint2000}{Rogers, 2000}).
+Schmorl's nodes are identified as any cortical depressions on the
+surface of the vertebral body. Data on chronic maxillary sinusitis from
+Casna et al. (\citeproc{ref-casnaUrbanizationRespiratory2021}{2021})
+were included in this study to assess the relationship between upper
+respiratory diseases with environmental factors (i.e.~tobacco smoke,
+caffeine consumption). Lesions associated with chronic maxillary
+sinusitis as defined by Boocock et al.
+(\citeproc{ref-boocockMaxillarySinusitis1995}{1995}) were recorded for
+each individual and classified as ``pitting'', ``spicule-type bone
+formation'', ``remodeled spicules'', or ``white pitted bone''. chronic
+maxillary sinusitis was scored as absent when the sinus presented smooth
+surfaces with little or no associated pitting.
 
-\hypertarget{dental-pathology}{%
-\subsubsection{Dental pathology}\label{dental-pathology}}
+\subsubsection{Dental pathology}\label{dental-pathology}
 
 Caries ratios were calculated by dividing the number of lesions by the
 number of teeth scored, resulting in a single caries ratio per
 individual. If the surface where the lesion originated is not visible,
 i.e.~if the lesion covered multiple surfaces, this was scored as
 ``crown''. Calculus indices were calculated according to Greene and
-colleagues (2005). Calculus was scored with a four-stage scoring system
-(0-3) to score absent, slight, moderate, and heavy calculus deposits
-(Brothwell, 1981) on the lingual, buccal (and labial), and interproximal
-surfaces of each tooth. Only one score was used for the combined
-interproximal surfaces, resulting in three scores per tooth (when
-surfaces are intact), and four calculus indices per individual; upper
-anterior, upper posterior, lower anterior, lower posterior. Each index
-was calculated by dividing the sum of calculus scores for each surface
-by the total number of surfaces scored in each quadrant. If a tooth
-could not be scored on all three surfaces, the tooth was not included
-(Greene et al., 2005). Periodontitis was scored on a visual four-stage
-(0-3) scoring system according to distance from cemento-enamel junction
-of each tooth to alveolar bone (Maat \& Mastwijk, 2005).
+colleagues (\citeproc{ref-greeneQuantifyingCalculus2005}{2005}).
+Calculus was scored with a four-stage scoring system (0-3) to score
+absent, slight, moderate, and heavy calculus deposits
+(\citeproc{ref-brothwellDiggingBones1981}{Brothwell, 1981}) on the
+lingual, buccal (and labial), and interproximal surfaces of each tooth.
+Only one score was used for the combined interproximal surfaces,
+resulting in three scores per tooth (when surfaces are intact), and four
+calculus indices per individual; upper anterior, upper posterior, lower
+anterior, lower posterior. Each index was calculated by dividing the sum
+of calculus scores for each surface by the total number of surfaces
+scored in each quadrant. If a tooth could not be scored on all three
+surfaces, the tooth was not included
+(\citeproc{ref-greeneQuantifyingCalculus2005}{Greene et al., 2005}).
+Periodontitis was scored on a visual four-stage (0-3) scoring system
+according to distance from cemento-enamel junction of each tooth to
+alveolar bone (\citeproc{ref-maatManualPhysical2005}{Maat \& Mastwijk,
+2005}).
 
-\hypertarget{calculus-sampling}{%
-\subsection{Calculus sampling}\label{calculus-sampling}}
+\subsection{Calculus sampling}\label{calculus-sampling}
 
 Where possible, we used material that had already been sampled for a
 previous study to prevent unnecessary repeated sampling of individuals.
@@ -464,9 +440,11 @@ Calculus from the previous study was sampled in a dedicated ancient DNA
 laboratory at the Laboratories of Molecular Anthropology and Microbiome
 Research in Norman, Oklahoma, U.S.A, using established ancient DNA
 protocols. More details on the methods can be found in the published
-articles (Ziesemer et al., 2015, 2018). Of the 41 individuals that were
-originally included in our sample, 29 were replicated in a separate
-analysis only using calculus from the previous study.\\
+articles (\citeproc{ref-ziesemer16SChallenges2015}{Ziesemer et al.,
+2015}, \citeproc{ref-ziesemerGenomeCalculus2018}{2018}). Of the 41
+individuals that were originally included in our sample, 29 were
+replicated in a separate analysis only using calculus from the previous
+study.\\
 New dental calculus samples were taken under sterile conditions in a
 positive pressure laminar flow hood in a dedicated dental calculus lab
 at Leiden University. The surface of the tooth was lightly brushed with
@@ -477,16 +455,16 @@ All calculus samples were sent to the Department of Forensic Medicine at
 Aarhus University for ultra-high-performance liquid
 chromatography-tandem mass spectrometry (UHPLC-MS/MS) analysis.
 
-\hypertarget{uhplc-msms}{%
-\subsection{UHPLC-MS/MS}\label{uhplc-msms}}
+\subsection{UHPLC-MS/MS}\label{uhplc-msms}
 
 The list of targeted compounds included both naturally occurring
 compounds known to have been used in the past, as well as synthetic
 modern drugs that did not exist at the time (e.g.~Fentanyl, MDMA,
 Amphetamine). These were part of the toxicology screening for the
-original method (Sørensen et al., 2021), developed on cadavers. In our
-study they serve as an authentication step, as their presence in
-archaeological samples could only be the result of contamination.
+original method (\citeproc{ref-sorensenDrugsCalculus2021}{Sørensen et
+al., 2021}), developed on cadavers. In our study they serve as an
+authentication step, as their presence in archaeological samples could
+only be the result of contamination.
 
 Briefly, samples of dental calculus were washed three times each with
 one mL of methanol (MeOH), to remove surface contaminants. The wash
@@ -500,10 +478,10 @@ evaporation of the elution solvent the residue was dissolved in 50 µL
 the dental calculus were analysed by UHPLC-MS/MS using a reversed-phase
 biphenyl column for chromatography. To obtain quantitative results,
 isotope dilution was applied. For more details about the method and
-validation, see the original study by Sørensen and colleagues (2021).
+validation, see the original study by Sørensen and colleagues
+(\citeproc{ref-sorensenDrugsCalculus2021}{2021}).
 
-\hypertarget{statistical-analysis}{%
-\subsection{Statistical analysis}\label{statistical-analysis}}
+\subsection{Statistical analysis}\label{statistical-analysis}
 
 All compounds and pathological conditions/lesions were converted to a
 presence/absence score. Pearson product-moment correlation was applied
@@ -516,14 +494,15 @@ index for each individual were converted to an ordinal score from 0 to 4
 by using quartiles. Polychoric correlation was applied to the paired
 dichotomous variables and dichotomous-ordinal variables.
 
-All statistical analysis was conducted in R version 4.3.2 (2023-10-31),
-Eye Holes, (R Core Team, 2020). Data wrangling was conducted with the
-\textbf{tidyverse} (Wickham et al., 2019) and visualisations were
-created using \textbf{ggplot2} (Wickham, 2016). Polychoric correlations
-were calculated with the \textbf{psych} package (Revelle, 2022).
+All statistical analysis was conducted in R version 4.3.3 (2024-02-29),
+Angel Food Cake, (\citeproc{ref-Rbase}{R Core Team, 2020}). Data
+wrangling was conducted with the \textbf{tidyverse}
+(\citeproc{ref-tidyverse2019}{Wickham et al., 2019}) and visualisations
+were created using \textbf{ggplot2} (\citeproc{ref-ggplot2}{Wickham,
+2016}). Polychoric correlations were calculated with the \textbf{psych}
+package (\citeproc{ref-Rpsych}{Revelle, 2022}).
 
-\hypertarget{results}{%
-\section{Results}\label{results}}
+\section{Results}\label{results}
 
 Multiple compounds were detected in the dental calculus samples.
 Compounds detected at a lower concentration than the lower limit of
@@ -532,17 +511,16 @@ detected in the first batch could be replicated in the second batch
 (Table~\ref{tbl-compound-detect}). For a full list of targeted
 compounds, see Supplementary Material.
 
-\hypertarget{tbl-compound-detect}{}
 \begin{longtable}[]{@{}lllr@{}}
+
 \caption{\label{tbl-compound-detect}Target compound including whether it
 was detected (TRUE) or not (FALSE) in each batch, as well as the lower
 limit of quantitation (LLOQ) in ng. CBD = cannabidiol; CBN = cannabinol;
 THC = tetrahydrocannabinol; THCA-A = tetrahydrocannabinolic acid A;
-THCVA = tetrahydrocannabivarin acid.}\tabularnewline
-\toprule\noalign{}
-Compound & Batch 1 & Batch 2 & LLOQ \\
-\midrule\noalign{}
-\endfirsthead
+THCVA = tetrahydrocannabivarin acid.}
+
+\tabularnewline
+
 \toprule\noalign{}
 Compound & Batch 1 & Batch 2 & LLOQ \\
 \midrule\noalign{}
@@ -560,6 +538,7 @@ THC & TRUE & FALSE & 0.100 \\
 THCA-A & TRUE & FALSE & 0.025 \\
 THCVA & TRUE & FALSE & 0.010 \\
 Theophylline & TRUE & TRUE & 0.010 \\
+
 \end{longtable}
 
 The pattern we expect to see in authentic compounds representing
@@ -577,9 +556,17 @@ calculus in all samples. The patterns are consistent across batches 1
 and 2. Nicotine and cotinine have the same relative quantities in the
 samples, i.e., the sample with the highest extracted quantity of
 nicotine also had the highest extracted quantity of cotinine
-(\textbf{?@fig-auth-plot-batch2}).
+(Figure~\ref{fig-auth-plot-batch2}).
 
-\emph{Fig 2 (fig-auth-plot-batch2): (A) Number of samples in which each
+\begin{figure}
+
+\centering{
+
+\includegraphics{../figures/fig-auth-plot-batch2-1.pdf}
+
+}
+
+\caption{\label{fig-auth-plot-batch2}(A) Number of samples in which each
 compound was detected in the first and second batch. (B) Quantity (ng)
 of each compound extracted from each sample in batch 2. The plot
 displays the extracted quantity across the three washes and final
@@ -588,22 +575,34 @@ calculus sample. CBD = cannabidiol; CBN = cannabinol; THC =
 tetrahydrocannabinol; THCA-A = tetrahydrocannabinolic acid A; THCVA =
 tetrahydrocannabivarin acid.}
 
+\end{figure}%
+
 To see if preservation of the skeletal remains had any effect on the
 detection of compounds, we compare extracted quantities of compounds to
 the various levels of skeletal preservation. Our results from batch 2
 suggest that detection of a compound may be linked to the preservation
 of the skeleton, with better preservation leading to increased
-extraction quantity (\textbf{?@fig-detection-preservation}A). We also
+extraction quantity (Figure~\ref{fig-detection-preservation}A). We also
 find a weak positive correlation between the weight of the calculus
 sample and the quantity of compound extracted from the calculus
-(\textbf{?@fig-detection-preservation}B).
+(Figure~\ref{fig-detection-preservation}B).
 
-\emph{Fig 3 (fig-detection-preservation): (A) Violin plot with overlaid
+\begin{figure}
+
+\centering{
+
+\includegraphics{../figures/fig-detection-preservation-1.pdf}
+
+}
+
+\caption{\label{fig-detection-preservation}(A) Violin plot with overlaid
 box plots depicting the distribution of extracted quantities of each
 compound from batch 2 separated by state of preservation of the
 skeleton. (B) Extracted quantity (ng) of compound plotted against
 weights of the calculus samples from batch 2. r = Pearson correlation
 coefficient.}
+
+\end{figure}%
 
 The presence of pipe notch(es) in an individual and concurrent detection
 of nicotine and/or cotinine is used as a crude indicator of the accuracy
@@ -618,15 +617,13 @@ is 100.0\%, but with only 2 individuals.
 One individual---an old adult, probable female---was positive for both
 nicotine and cotinine, and had no signs of a pipe notch.
 
-\hypertarget{correlations-between-detected-alkaloids-and-diseases}{%
 \subsection{Correlations between detected alkaloids and
-diseases}\label{correlations-between-detected-alkaloids-and-diseases}}
+diseases}\label{correlations-between-detected-alkaloids-and-diseases}
 
 For further statistical analyses, only the UHPLC-MS/MS results from
 batch 2 were used, as batch 1 had multiple compounds that were not
 detected in batch 2 and may have been contaminated.
 
-\hypertarget{tbl-pearson}{}
 \begin{longtable}[]{@{}
   >{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.1413}}
   >{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.0761}}
@@ -637,6 +634,7 @@ detected in batch 2 and may have been contaminated.
   >{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.1522}}
   >{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.1522}}
   >{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.1522}}@{}}
+
 \caption{\label{tbl-pearson}Pearson correlation (\emph{r}) on
 dichotomous skeletal lesions and compound concentrations (ng/mg) from
 the second batch. Correlations between pairs of dichotomous variables
@@ -644,28 +642,10 @@ are removed due to incompatibility with a Pearson correlation. Moderate
 and strong correlations in \textbf{bold}. OA = osteoarthritis; VOP =
 vertebral osteophytosis; SN = Schmorl's nodes; DDD = degenerative disc
 disease; CO = cribra orbitalia; CMS = chronic maxillary sinusitis; SA =
-salicylic acid; PN = pipe notches.}\tabularnewline
-\toprule\noalign{}
-\begin{minipage}[b]{\linewidth}\raggedright
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Caries
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Nicotine
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-SA
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Calculus
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-PN
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Theophylline
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Caffeine
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Cotinine
-\end{minipage} \\
-\midrule\noalign{}
-\endfirsthead
+salicylic acid; PN = pipe notches.}
+
+\tabularnewline
+
 \toprule\noalign{}
 \begin{minipage}[b]{\linewidth}\raggedright
 \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
@@ -703,6 +683,7 @@ Calculus & & & & & 0.13 & -0.15 & -0.13 & 0.03 \\
 PN & & & & & & -0.16 & 0.18 & -0.01 \\
 Theophylline & & & & & & & \textbf{0.51} & 0.36 \\
 Caffeine & & & & & & & & 0.08 \\
+
 \end{longtable}
 
 Point-biserial correlation was conducted on paired continuous and
@@ -725,138 +706,177 @@ periodontitis and age-at-death (0.41), nicotine and SN (0.53), calculus
 and DDD (-0.42), age-at-death and theophylline (-0.45), theophylline and
 age-at-death (-0.45), caffeine and periodontitis (0.49), cotinine and
 CMS (0.43). Remaining correlations were weak or absent
-(\textbf{?@fig-polycorr}). Correlations with age will be depressed
+(Figure~\ref{fig-polycorr}). Correlations with age will be depressed
 because age was largely controlled for in the sample selection.
 
-\emph{Fig 4 (fig-polycorr): Plot of the polychoric correlations
-(}rho\emph{). Larger circles and increased opacity indicates a stronger
+\begin{figure}
+
+\centering{
+
+\includegraphics{../figures/fig-polycorr-1.pdf}
+
+}
+
+\caption{\label{fig-polycorr}Plot of the polychoric correlations
+(\emph{rho}). Larger circles and increased opacity indicates a stronger
 correlation coefficient. OA = osteoarthritis; VOP = vertebral
 osteophytosis; SN = Schmorl's nodes; DDD = degenerative disc disease; CO
 = cribra orbitalia; CMS = chronic maxillary sinusitis; SA = salicylic
 acid.}
 
-\hypertarget{discussion}{%
-\section{Discussion}\label{discussion}}
+\end{figure}%
+
+\section{Discussion}\label{discussion}
 
 In this study we were able to extract and identify multiple alkaloids
 and salicylic acid from the dental calculus of individuals from
 Middenbeemster, a 19th century Dutch archaeological site. We applied
 ultra-high-performance liquid chromatography-tandem mass spectrometry
 (UHPLC-MS/MS) using a method that was validated by co-occurrence of
-drugs and metabolites in dental calculus and blood (Sørensen et al.,
-2021). Here we have shown that the method can also be successfully
-applied to archaeological dental calculus. We extend findings from
-previous studies on alkaloids in archaeological samples by detecting
-multiple different alkaloids in dental calculus, including nicotine,
-cotinine, caffeine, theophylline, and salicylic acid. The detection of
-these compounds was solidified in a replication analysis on different
-samples from the same individuals. Cocaine and multiple cannabinoids
-were also detected during the first analysis, but were not replicated.
-We contextualize these findings within the historical and archaeological
-evidence for consumption of these drugs and dietary compounds.
+drugs and metabolites in dental calculus and blood
+(\citeproc{ref-sorensenDrugsCalculus2021}{Sørensen et al., 2021}). Here
+we have shown that the method can also be successfully applied to
+archaeological dental calculus. We extend findings from previous studies
+on alkaloids in archaeological samples by detecting multiple different
+alkaloids in dental calculus, including nicotine, cotinine, caffeine,
+theophylline, and salicylic acid. The detection of these compounds was
+solidified in a replication analysis on different samples from the same
+individuals. Cocaine and multiple cannabinoids were also detected during
+the first analysis, but were not replicated. We contextualize these
+findings within the historical and archaeological evidence for
+consumption of these drugs and dietary compounds.
 
 Nicotine and its principal/main metabolite, cotinine, were strongly
 positively correlated, both in concentration and presence/absence in
-individuals (Table~\ref{tbl-pearson} and \textbf{?@fig-polycorr}). The
+individuals (Table~\ref{tbl-pearson} and Figure~\ref{fig-polycorr}). The
 detection of nicotine and cotinine is not surprising, as pipe-smoking in
-the Beemsterpolder is well-documented in the literature (Aten et al.,
-2012; Bouman, 2017), and visible on the skeletal remains as pipe notches
-(Lemmers et al., 2013). There is also documented medicinal use of
-nicotine in the Beemsterpolder, where a tobacco-smoke enema was used for
-headaches, respiratory problems, colds, and drowsiness from around 1780
-to 1830 (Aten et al., 2012). In our sample, we also detected nicotine
-and cotinine (replicated) in an old adult, probable female individual.
-In this particular case it is unlikely that the compounds entered the
-dental calculus through pipe-smoking, as the individual had no visible
-pipe notches; more likely the tobacco entered through an alternate mode
-of consumption, secondhand smoke, or the aforementioned tobacco-smoke
-enema.
+the Beemsterpolder is well-documented in the literature
+(\citeproc{ref-aten400Jaar2012}{Aten et al., 2012};
+\citeproc{ref-boumanBegravenis2017}{Bouman, 2017}), and visible on the
+skeletal remains as pipe notches
+(\citeproc{ref-lemmersMiddenbeemster2013}{Lemmers et al., 2013}). There
+is also documented medicinal use of nicotine in the Beemsterpolder,
+where a tobacco-smoke enema was used for headaches, respiratory
+problems, colds, and drowsiness from around 1780 to 1830
+(\citeproc{ref-aten400Jaar2012}{Aten et al., 2012}). In our sample, we
+also detected nicotine and cotinine (replicated) in an old adult,
+probable female individual. In this particular case it is unlikely that
+the compounds entered the dental calculus through pipe-smoking, as the
+individual had no visible pipe notches; more likely the tobacco entered
+through an alternate mode of consumption, secondhand smoke, or the
+aforementioned tobacco-smoke enema.
 
 Theophylline and caffeine were positively correlated in our samples,
 though to a lesser extent than nicotine and cotinine, so we are unable
 to determine if they originated from the same source
-(Table~\ref{tbl-pearson} and \textbf{?@fig-polycorr}). Caffeine and
+(Table~\ref{tbl-pearson} and Figure~\ref{fig-polycorr}). Caffeine and
 theophylline have very similar chemical structures, so we expect they
 would experience similar rates of incorporation and degradation,
 allowing us to interpret the ratio and correlations between the
 compounds. Caffeine is present in coffee, tea, and cocoa beans, with
-concentrations slightly higher in coffee (Bispo et al., 2002; Chin et
-al., 2008; Srdjenovic et al., 2008; Stavric et al., 1988). Theophylline
-is present in both coffee beans and tea leaves, but in negligible
-quantities (Stavric et al., 1988). It is also a primary metabolite of
-caffeine produced by the liver. Given the low correlation, there are
-likely multiple sources of caffeine and theophylline in the population,
-with tea and coffee being the most obvious.\\
+concentrations slightly higher in coffee
+(\citeproc{ref-bispoSimultaneousDetermination2002}{Bispo et al., 2002};
+\citeproc{ref-chinCaffeineContent2008}{Chin et al., 2008};
+\citeproc{ref-srdjenovicSimultaneousHPLC2008}{Srdjenovic et al., 2008};
+\citeproc{ref-stavricVariabilityCaffeine1988}{Stavric et al., 1988}).
+Theophylline is present in both coffee beans and tea leaves, but in
+negligible quantities
+(\citeproc{ref-stavricVariabilityCaffeine1988}{Stavric et al., 1988}).
+It is also a primary metabolite of caffeine produced by the liver. Given
+the low correlation, there are likely multiple sources of caffeine and
+theophylline in the population, with tea and coffee being the most
+obvious.\\
 Tea consumption had become widespread in the Netherlands by 1820,
-reaching all parts of society (Nierstrasz, 2015, p. 91). Historically,
-we also know that both tea and coffee were consumed in the
+reaching all parts of society
+(\citeproc{ref-nierstraszTeaTrade2015}{Nierstrasz, 2015, p. 91}).
+Historically, we also know that both tea and coffee were consumed in the
 Beemsterpolder during the 19th century. `Theegasten' (teatime) was a
 special occasion occurring from 15.00-20.00 hours, where tea was served
-along with the evening bread (Schuijtemaker, 2011). Many households also
-owned at least one coffee pot and tea pot (Bouman, 2017). Distinguishing
+along with the evening bread
+(\citeproc{ref-schuijtemakerTeTheegasten2011}{Schuijtemaker, 2011}).
+Many households also owned at least one coffee pot and tea pot
+(\citeproc{ref-boumanBegravenis2017}{Bouman, 2017}). Distinguishing
 between tea, coffee, and chocolate may be possible by also including
 theobromine and comparing ratios of the compounds, as theobromine is
 present in higher quantities in chocolate compared to caffeine and
-theophylline (Alañón et al., 2016; Bispo et al., 2002; Stavric et al.,
-1988). However, In addition to oral factors affecting alkaloid uptake in
-dental calculus, there is some indication that theobromine does not
-preserve well in the archaeological record (Velsko et al., 2017), and
+theophylline (\citeproc{ref-alanonAssessmentFlavanol2016}{Alañón et al.,
+2016}; \citeproc{ref-bispoSimultaneousDetermination2002}{Bispo et al.,
+2002}; \citeproc{ref-stavricVariabilityCaffeine1988}{Stavric et al.,
+1988}). However, In addition to oral factors affecting alkaloid uptake
+in dental calculus, there is some indication that theobromine does not
+preserve well in the archaeological record
+(\citeproc{ref-velskoDentalCalculus2017}{Velsko et al., 2017}), and
 frequent consumption of all three items would be difficult to parse.
 Additionally, we do not understand well enough the effect of the burial
 on these specific compounds, and the original concentration of the
-compounds in plants can be quite variable (King et al., 2017).
+compounds in plants can be quite variable
+(\citeproc{ref-kingCautionaryTales2017}{King et al., 2017}).
 
 Salicylic acid was found in all but one individual in our sample. It can
 be extracted from the bark of willow trees, \emph{Salix alba}, and has
-long been used for its pain-relieving properties (Bruinsma, 1872, p.
-119). It is also present in many plant-based foods (Duthie \& Wood,
-2011; Malakar et al., 2017), including potatoes, which were a staple of
-the Beemsterpolder diet (Aten et al., 2012). The extracted quantity from
-our samples decreased over the three washes, followed by a sharp
-increase in the final calculus extraction, which is what we would expect
-to see if the salicylic acid was incorporated during life
-(\textbf{?@fig-auth-plot-batch2}). It is important to note that,
+long been used for its pain-relieving properties
+(\citeproc{ref-bruinsmaBijdragenTot1872}{Bruinsma, 1872, p. 119}). It is
+also present in many plant-based foods
+(\citeproc{ref-duthieNaturalSalicylates2011}{Duthie \& Wood, 2011};
+\citeproc{ref-malakarNaturallyOccurring2017}{Malakar et al., 2017}),
+including potatoes, which were a staple of the Beemsterpolder diet
+(\citeproc{ref-aten400Jaar2012}{Aten et al., 2012}). The extracted
+quantity from our samples decreased over the three washes, followed by a
+sharp increase in the final calculus extraction, which is what we would
+expect to see if the salicylic acid was incorporated during life
+(Figure~\ref{fig-auth-plot-batch2}). It is important to note that,
 especially with salicylic acid, there is a possibility for the compound
 to enter the calculus through contact with the surrounding soil.
-Salicylic acid is a very mobile organic acid (Badri \& Vivanco, 2009;
-Chen et al., 2001) and the ubiqutous presence in our samples may be
-explained by the compound leching into the dental calculus from the
-burial environment. We can therefore not confidently rule out
-environmental contamination without analysing samples from the
-surrounding soil.
+Salicylic acid is a very mobile organic acid
+(\citeproc{ref-badriRegulationFunction2009}{Badri \& Vivanco, 2009};
+\citeproc{ref-chenCa2Dependent2001}{Chen et al., 2001}) and the
+ubiqutous presence in our samples may be explained by the compound
+leching into the dental calculus from the burial environment. We can
+therefore not confidently rule out environmental contamination without
+analysing samples from the surrounding soil.
 
 Cannabinoids---specifically THC, THCA-A, THCVA, CBD, CBN---were found in
 the first batch, but none were replicated in the second batch. Medicinal
 use of cannabinoids has been well-established in Europe since
-Medieval-times, and it was also grown in the Netherlands (Bruinsma,
-1872). Administration was most common in the form of concoctions
-containing various portions of the cannabis plant for ingestion; not
-until the late 19th century did it become recommended to smoke it for
-more immediate effects (Clarke, 2013). Dutch medicinal preparations were
-used to treat a variety of ailments and symptoms, including pain,
-inflammation, various stomach ailments, gout, and joint pains (Clarke,
-2013). Because cannabinoids have an affinity for protein-binding, they
-are less likely to diffuse from serum to saliva (Cone \& Huestis, 2007).
-This may make them difficult to detect in dental calculus unless the
+Medieval-times, and it was also grown in the Netherlands
+(\citeproc{ref-bruinsmaBijdragenTot1872}{Bruinsma, 1872}).
+Administration was most common in the form of concoctions containing
+various portions of the cannabis plant for ingestion; not until the late
+19th century did it become recommended to smoke it for more immediate
+effects (\citeproc{ref-clarkeCannabisEvolution2013}{Clarke, 2013}).
+Dutch medicinal preparations were used to treat a variety of ailments
+and symptoms, including pain, inflammation, various stomach ailments,
+gout, and joint pains
+(\citeproc{ref-clarkeCannabisEvolution2013}{Clarke, 2013}). Because
+cannabinoids have an affinity for protein-binding, they are less likely
+to diffuse from serum to saliva
+(\citeproc{ref-coneInterpretationOral2007}{Cone \& Huestis, 2007}). This
+may make them difficult to detect in dental calculus unless the
 cannibinoids were consumed orally; even then, the overall instability of
-some cannabinoids could also limit detection (Lindholst, 2010; Sørensen
-\& Hasselstrøm, 2018). Given the lack of replication, we cannot with
-security confirm that cannabis was used by the Beemster population.
+some cannabinoids could also limit detection
+(\citeproc{ref-lindholstLongTerm2010}{Lindholst, 2010};
+\citeproc{ref-sorensenEffectAntioxidants2018}{Sørensen \& Hasselstrøm,
+2018}). Given the lack of replication, we cannot with security confirm
+that cannabis was used by the Beemster population.
 
 Despite many of our sampled individuals having lived during the height
-of the opium era in the Netherlands (Macht, 1915), none of the targeted
-opioids (morphine, codeine, thebaine, papaverine, norcodeine, noscapine)
-were detected. The absence of opioids could be a result of the people
-ascribing more to the ``traditional'' rather than ``scientific''
-medicine, although laudanum and another opium containing concoction was
-part of the ``traditional'' medicine in the Netherlands (Leuw \&
-Marshall, 1994), including Middenbeemster (Aten et al., 2012). It was
-also generally considered a drug of the upper class (Scheltema, 1907),
-and may have been more common in urban centers. The absence could also
-be attributed to postmortem degradation. It has been shown that, while
-morphine is abundant in opium, it degrades rapidly. Thebaine and
-papaverine are more resistant to various ageing processes (Chovanec et
-al., 2012), however, these were also absent from our samples.
+of the opium era in the Netherlands
+(\citeproc{ref-machtHistoryOpium1915}{Macht, 1915}), none of the
+targeted opioids (morphine, codeine, thebaine, papaverine, norcodeine,
+noscapine) were detected. The absence of opioids could be a result of
+the people ascribing more to the ``traditional'' rather than
+``scientific'' medicine, although laudanum and another opium containing
+concoction was part of the ``traditional'' medicine in the Netherlands
+(\citeproc{ref-leuwProhibitionLegalization1994}{Leuw \& Marshall,
+1994}), including Middenbeemster (\citeproc{ref-aten400Jaar2012}{Aten et
+al., 2012}). It was also generally considered a drug of the upper class
+(\citeproc{ref-scheltemaOpiumTrade1907}{Scheltema, 1907}), and may have
+been more common in urban centers. The absence could also be attributed
+to postmortem degradation. It has been shown that, while morphine is
+abundant in opium, it degrades rapidly. Thebaine and papaverine are more
+resistant to various ageing processes
+(\citeproc{ref-chovanecOpiumMasses2012}{Chovanec et al., 2012}),
+however, these were also absent from our samples.
 
 The only strictly modern compound (at least in a European context)
 detected in the sample was cocaine, which was detected in the first
@@ -865,8 +885,9 @@ population, and cocaine was isolated in 1860 by Albert Niemann, and
 entered popular medical practice in 1884. Coca arrived in Europe as
 early as 1771, but as botanical specimens rather than for consumption,
 and there were also issues importing enough viable specimens of coca for
-cocaine extraction (Abduca, 2019, p. 108; Mortimer, 1901, p. 179). This
-would have been the first case of coca-leaf-consumption in Europe;
+cocaine extraction (\citeproc{ref-abucaCocaTrade2019}{Abduca, 2019, p.
+108}; \citeproc{ref-mortimerHistoryCoca1901}{Mortimer, 1901, p. 179}).
+This would have been the first case of coca-leaf-consumption in Europe;
 however, we were unable to replicate any of the cocaine results in the
 second batch. We suspect that the original detection of cocaine was a
 result of lab contamination during analysis.
@@ -881,25 +902,30 @@ We found a positive correlation between CMS and nicotine, which may be
 indicative of the impact tobacco smoking had on the respiratory health
 of the Beemster inhabitants. Tobacco smoke may play a significant role
 in diseases of the upper respiratory tract, including chronic maxillary
-sinusitis (Reh et al., 2012). Although the mechanisms by which smoking
-increases the risk of infections is not fully understood, solid evidence
-has been presented linking tobacco smoke to increased mucosal
-permeability and impairment of mucociliary clearance (Arcavi \&
-Benowitz, 2004). Such changes, together with an altered immunologic
-response, are thought to predispose to the development of chronic
-maxillary sinusitis (Slavin et al., 2005).\\
+sinusitis (\citeproc{ref-rehImpactTobacco2012}{Reh et al., 2012}).
+Although the mechanisms by which smoking increases the risk of
+infections is not fully understood, solid evidence has been presented
+linking tobacco smoke to increased mucosal permeability and impairment
+of mucociliary clearance
+(\citeproc{ref-arcaviCigaretteSmoking2004}{Arcavi \& Benowitz, 2004}).
+Such changes, together with an altered immunologic response, are thought
+to predispose to the development of chronic maxillary sinusitis
+(\citeproc{ref-slavinDiagnosisManagement2005}{Slavin et al., 2005}).\\
 We also observed a moderate positive correlation between chronic
 maxillary sinusitis and caffeine which contradicts previous research
 linking chronic coffee consumption with a positive effect on the
 respiratory system, suggesting a preventive association between caffeine
-intake and pneumonia (e.g. Alfaro et al., 2018; Kondo et al., 2021).
-However, while the lower respiratory tract seems to benefit from chronic
-coffee consumption, it is possible that elevated caffeine intake impacts
-mucosal moisture due to its dehydrating effect (Maughan \& Griffin,
-2003), thereby exposing individuals to greater risk of sinus infection.
+intake and pneumonia (e.g. \citeproc{ref-alfaroChronicCoffee2018}{Alfaro
+et al., 2018}; \citeproc{ref-kondoAssociationCoffee2021}{Kondo et al.,
+2021}). However, while the lower respiratory tract seems to benefit from
+chronic coffee consumption, it is possible that elevated caffeine intake
+impacts mucosal moisture due to its dehydrating effect
+(\citeproc{ref-maughanCaffeineIngestion2003}{Maughan \& Griffin, 2003}),
+thereby exposing individuals to greater risk of sinus infection.
 
 The detection of nicotine in dental calculus has previously been
-presented by Eerkens and colleagues (2018) in two individuals from
+presented by Eerkens and colleagues
+(\citeproc{ref-eerkensDentalCalculus2018}{2018}) in two individuals from
 pre-contact California. They also targeted caffeine, cotinine, and
 theophylline in their samples, but were unable to detect any of them. It
 remains to be seen whether this is due to differences in methods used,
@@ -908,16 +934,18 @@ choice of tooth for sampling may impact the detection of certain
 compounds, as the incorporation in dental calculus may depend on the
 mode of consumption. Tobacco smokers may have more nicotine present in
 calculus on incisors, whereas tobacco chewers may have more on molars
-(Eerkens et al., 2018). However, sampling may not be limited to mode of
-consumption. The presence of cotinine suggests that the excretion of a
-compound after being metabolised in the body is also a source of
-deposition, and that deposition of alkaloids in dental calculus can
-occur both on the way into the body, i.e.~during consumption, and on the
-way out, i.e.~disposal of waste products via saliva secretion into the
-mouth. Especially mucin-rich saliva from the sublingual and
-submandibular glands preferentially binds toxins (Dodds et al., 2005),
-and since these glands are located closest to the lower incisors, they
-may be the most effective target for these studies. This has yet to be
+(\citeproc{ref-eerkensDentalCalculus2018}{Eerkens et al., 2018}).
+However, sampling may not be limited to mode of consumption. The
+presence of cotinine suggests that the excretion of a compound after
+being metabolised in the body is also a source of deposition, and that
+deposition of alkaloids in dental calculus can occur both on the way
+into the body, i.e.~during consumption, and on the way out,
+i.e.~disposal of waste products via saliva secretion into the mouth.
+Especially mucin-rich saliva from the sublingual and submandibular
+glands preferentially binds toxins
+(\citeproc{ref-doddsHealthBenefits2005}{Dodds et al., 2005}), and since
+these glands are located closest to the lower incisors, they may be the
+most effective target for these studies. This has yet to be
 systematically tested in archaeological dental calculus. Because we
 homogenised samples from multiple teeth of an individual, we were unable
 to test the effect of oral biogeography. It is also possible that
@@ -926,21 +954,27 @@ that the presence of caffeine and nicotine metabolites following direct
 ingestion can be explained by this pathway. However, the literature on
 biofilm biodegradation of alkaloids is limited, and \emph{in vitro}
 studies have only found minimal contributions by certain oral bacteria
-in isolation (Cogo et al., 2008; Sun et al., 2016); it is possible that
-a larger role is played by oral bacteria within larger, more
-metabolically active communities, e.g.~biofilms (Takahashi, 2015).
+in isolation (\citeproc{ref-cogoVitroEvaluation2008}{Cogo et al., 2008};
+\citeproc{ref-sunMetabolomicsEvaluation2016}{Sun et al., 2016}); it is
+possible that a larger role is played by oral bacteria within larger,
+more metabolically active communities, e.g.~biofilms
+(\citeproc{ref-takahashiOralMicrobiome2015}{Takahashi, 2015}).
 
 Targeting individuals with moderate-to-large calculus deposits likely
 biased our sample, as the presence of calculus may increase the risk of
-premature death (Yaussy \& DeWitte, 2019). Additionally, periodontal
-disease (often linked to the presence of calculus) is a risk-factor for
-respiratory diseases, if periodontal and respiratory pathogens enter the
-bloodstream (Azarpazhooh \& Leake, 2006; Scannapieco, 1999; Scannapieco
-\& Ho, 2001). In our sample, the percentage of chronic maxillary
-sinusitis (37.0\%) is lower than in another (more representative) male
-sample (44.1\%) (Casna et al., 2021), and the caries percentage is
-similarly lower in our sample (17.6\%) than a more representative sample
-(22.9\%) (Lemmers et al., 2013).\\
+premature death (\citeproc{ref-yaussyCalculusSurvivorship2019}{Yaussy \&
+DeWitte, 2019}). Additionally, periodontal disease (often linked to the
+presence of calculus) is a risk-factor for respiratory diseases, if
+periodontal and respiratory pathogens enter the bloodstream
+(\citeproc{ref-azarpazhoohSystematicReview2006}{Azarpazhooh \& Leake,
+2006}; \citeproc{ref-scannapiecoRoleOral1999}{Scannapieco, 1999};
+\citeproc{ref-scannapiecoPotentialAssociations2001}{Scannapieco \& Ho,
+2001}). In our sample, the percentage of chronic maxillary sinusitis
+(37.0\%) is lower than in another (more representative) male sample
+(44.1\%) (\citeproc{ref-casnaUrbanizationRespiratory2021}{Casna et al.,
+2021}), and the caries percentage is similarly lower in our sample
+(17.6\%) than a more representative sample (22.9\%)
+(\citeproc{ref-lemmersMiddenbeemster2013}{Lemmers et al., 2013}).\\
 We used the presence/absence of a pipe notch and concurrent detection of
 tobacco as a crude estimate of the accuracy of the method, which we
 found to be around 59.3\%. This is a very rough estimate, as the
@@ -951,9 +985,11 @@ intentionally or unintentionally, eliminating all trace of the alkaloids
 consumed prior to its removal.\\
 Following burial, compound stability over time will play a large role,
 as will microbial degradation of compounds by bacteria and fungi in soil
-(Liu et al., 2015), as well as the soil environment, such as
-temperature, pH, and oxygen availability (Lindholst, 2010; Mackie et
-al., 2017).\\
+(\citeproc{ref-liuNicotinedegradingMicroorganisms2015}{Liu et al.,
+2015}), as well as the soil environment, such as temperature, pH, and
+oxygen availability (\citeproc{ref-lindholstLongTerm2010}{Lindholst,
+2010}; \citeproc{ref-mackiePreservationMetaproteome2017}{Mackie et al.,
+2017}).\\
 Due to this, quantitation of the detected compounds may have limited
 value in archaeological samples due to degradation, and will greatly
 affect our correlations related to concentration. The detected quantity
@@ -961,8 +997,10 @@ of a compound will also depend on the quantity in dental calculus during
 life, which is largely controlled by the quantity consumed, how often
 the calculus was disrupted/removed, metabolic breakdown of the compound,
 and inter- and intra-individual factors related to stages of biofilm
-maturation (Lustmann et al., 1976; Velsko et al., 2019; Zijnge et al.,
-2010). In short, this means it is not really possible to equate the
+maturation (\citeproc{ref-lustmannScanningElectron1976}{Lustmann et al.,
+1976}; \citeproc{ref-velskoMicrobialDifferences2019}{Velsko et al.,
+2019}; \citeproc{ref-zijngeBiofilmArchitecture2010}{Zijnge et al.,
+2010}). In short, this means it is not really possible to equate the
 absence of a compound as evidence for the absence of consumption, which
 complicates the interpretation of our results. We have attempted to
 minimise errors occurring due to this limitation by including a
@@ -986,19 +1024,21 @@ compounds/metabolites are more likely to be incorporated and preserved
 in dental calculus.\\
 There is an increasing interest in using oral fluid as a means of
 detecting alkaloids in living individuals due to the non-invasive nature
-of the testing compared to blood and urine sampling (Cone, 1993; Valen
-et al., 2017). These \emph{in vivo} studies are a valuable source of
-method validation and can help determine the feasibility of detecting
-certain alkaloids in oral fluid and, subsequently, dental calculus.
-Archaeologists, though, will likely be responsible for exploring
-dental-calculus-specific incorporation and retention of alkaloids, as
-well as their long-term preservation in the burial environment. Finally,
-following our experience with salicylic acid, we encourage all future
-studies to ensure that a control sample is taken from the soil, either
-from the soil surrounding the individual, or, ideally, directly from the
-skeletal remains. This should preferably happen before cleaning, but
-there will often be soil left over in cavities (e.g.~nasal cavity,
-orbit, auditory meatus).
+of the testing compared to blood and urine sampling
+(\citeproc{ref-coneSalivaTesting1993}{Cone, 1993};
+\citeproc{ref-valenDetermination212017}{Valen et al., 2017}). These
+\emph{in vivo} studies are a valuable source of method validation and
+can help determine the feasibility of detecting certain alkaloids in
+oral fluid and, subsequently, dental calculus. Archaeologists, though,
+will likely be responsible for exploring dental-calculus-specific
+incorporation and retention of alkaloids, as well as their long-term
+preservation in the burial environment. Finally, following our
+experience with salicylic acid, we encourage all future studies to
+ensure that a control sample is taken from the soil, either from the
+soil surrounding the individual, or, ideally, directly from the skeletal
+remains. This should preferably happen before cleaning, but there will
+often be soil left over in cavities (e.g.~nasal cavity, orbit, auditory
+meatus).
 
 While a major limitation is the uncertainty surrounding whether or not a
 compound is actually absent, the power of the method lies in the ability
@@ -1007,17 +1047,19 @@ multiple consumption pathways that are not detected by other methods.
 Taking tobacco consumption as an example; while pipe notches are a
 useful way to identify tobacco consumption, pipe smoking was not the
 only mode of tobacco consumption, with others including chewing,
-drinking, cigars, and snuff (Goodman, 1994, p. 67). Pipe-smoking was
-mainly practised by males (Eerkens et al., 2018; Lemmers et al., 2013),
-so methods like the one presented here are suitable for exploring
-tobacco consumption in an entire society, rather than a trivial subset
-of past populations. Combined with other methods, it can also give us a
-more complete picture of dietary patterns and medicinal/recreational
+drinking, cigars, and snuff
+(\citeproc{ref-goodmanTobaccoHistory1994}{Goodman, 1994, p. 67}).
+Pipe-smoking was mainly practised by males
+(\citeproc{ref-eerkensDentalCalculus2018}{Eerkens et al., 2018};
+\citeproc{ref-lemmersMiddenbeemster2013}{Lemmers et al., 2013}), so
+methods like the one presented here are suitable for exploring tobacco
+consumption in an entire society, rather than a trivial subset of past
+populations. Combined with other methods, it can also give us a more
+complete picture of dietary patterns and medicinal/recreational
 plant-use in the past by capturing multiple possible incorporation
 pathways of dietary (and other) compounds.
 
-\hypertarget{conclusions}{%
-\section{Conclusions}\label{conclusions}}
+\section{Conclusions}\label{conclusions}
 
 This preliminary study outlines the benefits of using calculus to target
 a variety of compounds that could have been consumed as medicine or
@@ -1038,8 +1080,7 @@ archaeology), dental calculus represents an impressive long-term
 reservoir of information regarding the consumption of various alkaloids,
 whether dietary, medicinal, recreational, or otherwise.
 
-\hypertarget{acknowledgements}{%
-\section*{Acknowledgements}\label{acknowledgements}}
+\section*{Acknowledgements}\label{acknowledgements}
 \addcontentsline{toc}{section}{Acknowledgements}
 
 We wish to thank Kirsten Ziesemer for helping track down the calculus
@@ -1050,24 +1091,21 @@ Middenbeemster. We also thank Louise Le Meillour for taking on our
 preprint and providing helpful comments, and Mario Zimmerman and two
 other anonymous reviewers for their time and invaluable insights.
 
-\hypertarget{funding}{%
-\section*{Funding}\label{funding}}
+\section*{Funding}\label{funding}
 \addcontentsline{toc}{section}{Funding}
 
 This research has received funding from the European Research Council
 under the European Union's Horizon 2020 research and innovation program,
 grant agreement number STG--677576 (``HARVEST'').
 
-\hypertarget{conflict-of-interest-disclosure}{%
 \section*{Conflict of interest
-disclosure}\label{conflict-of-interest-disclosure}}
+disclosure}\label{conflict-of-interest-disclosure}
 \addcontentsline{toc}{section}{Conflict of interest disclosure}
 
 The authors have no conflicts to declare.
 
-\hypertarget{data-availability-statement}{%
 \section*{Data Availability
-Statement}\label{data-availability-statement}}
+Statement}\label{data-availability-statement}
 \addcontentsline{toc}{section}{Data Availability Statement}
 
 All raw data is available on Zenodo
@@ -1075,55 +1113,55 @@ All raw data is available on Zenodo
 the source code for the manuscript and supplementary materials are
 available as a research compendium
 (\url{https://doi.org/10.5281/zenodo.7649824}) using the structure
-recommended by the \textbf{rrtools} R package (Marwick, 2019).
+recommended by the \textbf{rrtools} R package
+(\citeproc{ref-Rrrtools}{Marwick, 2019}).
 
-\hypertarget{references}{%
-\section*{References}\label{references}}
+\section*{References}\label{references}
 \addcontentsline{toc}{section}{References}
 
-\hypertarget{refs}{}
+\phantomsection\label{refs}
 \begin{CSLReferences}{1}{0}
-\leavevmode\vadjust pre{\hypertarget{ref-abucaCocaTrade2019}{}}%
+\bibitem[\citeproctext]{ref-abucaCocaTrade2019}
 Abduca, R. (2019). Coca leaf transfers to {Europe}. {Effects} on the
 consumption of coca in {North-western Argentina}. In M. Kaller \& F.
 Jacob (Eds.), \emph{Transatlantic {Trade} and {Global Cultural Transfers
 Since} 1492: {More} than {Commodities}}. {Routledge}.
 \url{https://books.google.com?id=13imDwAAQBAJ}
 
-\leavevmode\vadjust pre{\hypertarget{ref-alanonAssessmentFlavanol2016}{}}%
+\bibitem[\citeproctext]{ref-alanonAssessmentFlavanol2016}
 Alañón, M. E., Castle, S. M., Siswanto, P. J., Cifuentes-Gómez, T., \&
 Spencer, J. P. E. (2016). Assessment of flavanol stereoisomers and
 caffeine and theobromine content in commercial chocolates. \emph{Food
 Chemistry}, \emph{208}, 177--184.
 \url{https://doi.org/10.1016/j.foodchem.2016.03.116}
 
-\leavevmode\vadjust pre{\hypertarget{ref-alfaroChronicCoffee2018}{}}%
+\bibitem[\citeproctext]{ref-alfaroChronicCoffee2018}
 Alfaro, T. M., Monteiro, R. A., Cunha, R. A., \& Cordeiro, C. R. (2018).
 Chronic coffee consumption and respiratory disease: {A} systematic
 review. \emph{The Clinical Respiratory Journal}, \emph{12}(3),
 1283--1294. \url{https://doi.org/10.1111/crj.12662}
 
-\leavevmode\vadjust pre{\hypertarget{ref-arcaviCigaretteSmoking2004}{}}%
+\bibitem[\citeproctext]{ref-arcaviCigaretteSmoking2004}
 Arcavi, L., \& Benowitz, N. L. (2004). Cigarette {Smoking} and
 {Infection}. \emph{Archives of Internal Medicine}, \emph{164}(20),
 2206--2216. \url{https://doi.org/10.1001/archinte.164.20.2206}
 
-\leavevmode\vadjust pre{\hypertarget{ref-aten400Jaar2012}{}}%
+\bibitem[\citeproctext]{ref-aten400Jaar2012}
 Aten, D., Bossaers, K. W. J. M., \& Misset, C. (2012). \emph{400 jaar
 Beemster: 1612-2012}. {Stichting Uitgeverij Noord-Holland}.
 
-\leavevmode\vadjust pre{\hypertarget{ref-azarpazhoohSystematicReview2006}{}}%
+\bibitem[\citeproctext]{ref-azarpazhoohSystematicReview2006}
 Azarpazhooh, A., \& Leake, J. L. (2006). Systematic {Review} of the
 {Association Between Respiratory Diseases} and {Oral Health}.
 \emph{Journal of Periodontology}, \emph{77}(9), 1465--1482.
 \url{https://doi.org/10.1902/jop.2006.060010}
 
-\leavevmode\vadjust pre{\hypertarget{ref-badriRegulationFunction2009}{}}%
+\bibitem[\citeproctext]{ref-badriRegulationFunction2009}
 Badri, D. V., \& Vivanco, J. M. (2009). Regulation and function of root
 exudates. \emph{Plant, Cell \& Environment}, \emph{32}(6), 666--681.
 \url{https://doi.org/10.1111/j.1365-3040.2009.01926.x}
 
-\leavevmode\vadjust pre{\hypertarget{ref-bispoSimultaneousDetermination2002}{}}%
+\bibitem[\citeproctext]{ref-bispoSimultaneousDetermination2002}
 Bispo, M. S., Veloso, M. C. C., Pinheiro, H. L. C., De Oliveira, R. F.
 S., Reis, J. O. N., \& De Andrade, J. B. (2002). Simultaneous
 {Determination} of {Caffeine}, {Theobromine}, and {Theophylline} by
@@ -1131,52 +1169,52 @@ S., Reis, J. O. N., \& De Andrade, J. B. (2002). Simultaneous
 Chromatographic Science}, \emph{40}(1), 45--48.
 \url{https://doi.org/10.1093/chromsci/40.1.45}
 
-\leavevmode\vadjust pre{\hypertarget{ref-boocockMaxillarySinusitis1995}{}}%
+\bibitem[\citeproctext]{ref-boocockMaxillarySinusitis1995}
 Boocock, P., Roberts, C. A., \& Manchester, K. (1995). Maxillary
 sinusitis in {Medieval Chichester}, {England}. \emph{American Journal of
 Physical Anthropology}, \emph{98}(4), 483--495.
 \url{https://doi.org/10.1002/ajpa.1330980408}
 
-\leavevmode\vadjust pre{\hypertarget{ref-boumanBegravenis2017}{}}%
+\bibitem[\citeproctext]{ref-boumanBegravenis2017}
 Bouman, J. (2017). De Begravenis. \emph{De Nieuwe Schouwschuit},
 \emph{15}, 11--15.
 \url{https://www.historischgenootschapbeemster.nl/wp-content/uploads/De_Nieuwe_Schouwschuit_15e_jaargang_november_2017.pdf}
 
-\leavevmode\vadjust pre{\hypertarget{ref-SucheyBrooks1990}{}}%
+\bibitem[\citeproctext]{ref-SucheyBrooks1990}
 Brooks, S., \& Suchey, J. M. (1990). Skeletal age determination based on
 the os pubis: {A} comparison of the {Acsádi-Nemeskéri} and
 {Suchey-Brooks} methods. \emph{Human Evolution}, \emph{5}(3), 227--238.
 \url{https://doi.org/10.1007/BF02437238}
 
-\leavevmode\vadjust pre{\hypertarget{ref-brothwellDiggingBones1981}{}}%
+\bibitem[\citeproctext]{ref-brothwellDiggingBones1981}
 Brothwell, D. (1981). \emph{Digging up {Bones}: {The} excavation,
 treatment and study of human skeletal remains} (3rd ed.). {British
 Museum (Natural History)}.
 
-\leavevmode\vadjust pre{\hypertarget{ref-bruinsmaBijdragenTot1872}{}}%
+\bibitem[\citeproctext]{ref-bruinsmaBijdragenTot1872}
 Bruinsma, J. J. (1872). \emph{Bijdragen tot de {Geneeskundige
 Plaatsbeschrijving} van {Nederland}}. {Van Weelden en Mingelen}.
 \url{https://dlcs.io/pdf/wellcome/pdf-item/b24874140/0}
 
-\leavevmode\vadjust pre{\hypertarget{ref-buckberryAuricular2002}{}}%
+\bibitem[\citeproctext]{ref-buckberryAuricular2002}
 Buckberry, J. L., \& Chamberlain, A. T. (2002). Age estimation from the
 auricular surface of the ilium: A revised method. \emph{American Journal
 of Physical Anthropology}, \emph{119}(3), 231--239.
 \url{https://doi.org/10.1002/ajpa.10130}
 
-\leavevmode\vadjust pre{\hypertarget{ref-buckleyDentalCalculus2014}{}}%
+\bibitem[\citeproctext]{ref-buckleyDentalCalculus2014}
 Buckley, S., Usai, D., Jakob, T., Radini, A., \& Hardy, K. (2014).
 Dental {Calculus Reveals Unique Insights} into {Food Items}, {Cooking}
 and {Plant Processing} in {Prehistoric Central Sudan}. \emph{PLOS ONE},
 \emph{9}(7), e100808. \url{https://doi.org/10.1371/journal.pone.0100808}
 
-\leavevmode\vadjust pre{\hypertarget{ref-Standards1994}{}}%
+\bibitem[\citeproctext]{ref-Standards1994}
 Buikstra, J. E., \& Ubelaker, D. H. (1994). Standards for data
 collection from human skeletal remains: {Proceedings} of a seminar at
 the {Field Museum} of {Natural History} ({Arkansas Archaeology Research
 Series} 44). \emph{Fayetteville Arkansas Archaeological Survey}.
 
-\leavevmode\vadjust pre{\hypertarget{ref-casnaUrbanizationRespiratory2021}{}}%
+\bibitem[\citeproctext]{ref-casnaUrbanizationRespiratory2021}
 Casna, M., Burrell, C. L., Schats, R., Hoogland, M. L. P., \& Schrader,
 S. A. (2021). Urbanization and respiratory stress in the {Northern Low
 Countries}: {A} comparative study of chronic maxillary sinusitis in two
@@ -1184,63 +1222,63 @@ early modern sites from the {Netherlands} ({AD} 1626--1866).
 \emph{International Journal of Osteoarchaeology}, \emph{31}(5),
 891--901. \url{https://doi.org/10.1002/oa.3006}
 
-\leavevmode\vadjust pre{\hypertarget{ref-chenCa2Dependent2001}{}}%
+\bibitem[\citeproctext]{ref-chenCa2Dependent2001}
 Chen, H., Hou, W., Kuć, J., \& Lin, Y. (2001). Ca2+‐dependent and
 {Ca2}+‐independent excretion modes of salicylic acid in tobacco cell
 suspension culture. \emph{Journal of Experimental Botany},
 \emph{52}(359), 1219--1226.
 \url{https://doi.org/10.1093/jexbot/52.359.1219}
 
-\leavevmode\vadjust pre{\hypertarget{ref-chinCaffeineContent2008}{}}%
+\bibitem[\citeproctext]{ref-chinCaffeineContent2008}
 Chin, J. M., Merves, M. L., Goldberger, B. A., Sampson-Cone, A., \&
 Cone, E. J. (2008). Caffeine {Content} of {Brewed Teas}. \emph{Journal
 of Analytical Toxicology}, \emph{32}(8), 702--704.
 \url{https://doi.org/10.1093/jat/32.8.702}
 
-\leavevmode\vadjust pre{\hypertarget{ref-chovanecOpiumMasses2012}{}}%
+\bibitem[\citeproctext]{ref-chovanecOpiumMasses2012}
 Chovanec, Z., Rafferty, S., \& Swiny, S. (2012). Opium for the {Masses}.
 \emph{Ethnoarchaeology}, \emph{4}(1), 5--36.
 \url{https://doi.org/10.1179/eth.2012.4.1.5}
 
-\leavevmode\vadjust pre{\hypertarget{ref-clarkeCannabisEvolution2013}{}}%
+\bibitem[\citeproctext]{ref-clarkeCannabisEvolution2013}
 Clarke, R. (2013). \emph{Cannabis : {Evolution} and {Ethnobotany}}.
 {University of California Press}.
 
-\leavevmode\vadjust pre{\hypertarget{ref-cogoVitroEvaluation2008}{}}%
+\bibitem[\citeproctext]{ref-cogoVitroEvaluation2008}
 Cogo, K., Montan, M. F., Bergamaschi, C. de C., D. Andrade, E., Rosalen,
 P. L., \& Groppo, F. C. (2008). In vitro evaluation of the effect of
 nicotine, cotinine, and caffeine on oral microorganisms. \emph{Canadian
 Journal of Microbiology}, \emph{54}(6), 501--508.
 \url{https://doi.org/10.1139/W08-032}
 
-\leavevmode\vadjust pre{\hypertarget{ref-coneSalivaTesting1993}{}}%
+\bibitem[\citeproctext]{ref-coneSalivaTesting1993}
 Cone, E. J. (1993). Saliva {Testing} for {Drugs} of {Abuse}.
 \emph{Annals of the New York Academy of Sciences}, \emph{694}(1),
 91--127. \url{https://doi.org/10.1111/j.1749-6632.1993.tb18346.x}
 
-\leavevmode\vadjust pre{\hypertarget{ref-coneInterpretationOral2007}{}}%
+\bibitem[\citeproctext]{ref-coneInterpretationOral2007}
 Cone, E. J., \& Huestis, M. A. (2007). Interpretation of {Oral Fluid
 Tests} for {Drugs} of {Abuse}. \emph{Annals of the New York Academy of
 Sciences}, \emph{1098}, 51--103.
 \url{https://doi.org/10.1196/annals.1384.037}
 
-\leavevmode\vadjust pre{\hypertarget{ref-doddsHealthBenefits2005}{}}%
+\bibitem[\citeproctext]{ref-doddsHealthBenefits2005}
 Dodds, M. W. J., Johnson, D. A., \& Yeh, C.-K. (2005). Health benefits
 of saliva: A review. \emph{Journal of Dentistry}, \emph{33}(3),
 223--233. \url{https://doi.org/10.1016/j.jdent.2004.10.009}
 
-\leavevmode\vadjust pre{\hypertarget{ref-duthieNaturalSalicylates2011}{}}%
+\bibitem[\citeproctext]{ref-duthieNaturalSalicylates2011}
 Duthie, G. G., \& Wood, A. D. (2011). Natural salicylates: Foods ,
 functions and disease prevention. \emph{Food \& Function}, \emph{2}(9),
 515--520. \url{https://doi.org/10.1039/C1FO10128E}
 
-\leavevmode\vadjust pre{\hypertarget{ref-echeverriaNicotineHair2013}{}}%
+\bibitem[\citeproctext]{ref-echeverriaNicotineHair2013}
 Echeverría, J., \& Niemeyer, H. M. (2013). Nicotine in the hair of
 mummies from {San Pedro} de {Atacama} ({Northern Chile}). \emph{Journal
 of Archaeological Science}, \emph{40}(10), 3561--3568.
 \url{https://doi.org/10.1016/j.jas.2013.04.030}
 
-\leavevmode\vadjust pre{\hypertarget{ref-eerkensDentalCalculus2018}{}}%
+\bibitem[\citeproctext]{ref-eerkensDentalCalculus2018}
 Eerkens, J. W., Tushingham, S., Brownstein, K. J., Garibay, R., Perez,
 K., Murga, E., Kaijankoski, P., Rosenthal, J. S., \& Gang, D. R. (2018).
 Dental calculus as a source of ancient alkaloids: {Detection} of
@@ -1248,7 +1286,7 @@ nicotine by {LC-MS} in calculus samples from the {Americas}.
 \emph{Journal of Archaeological Science: Reports}, \emph{18}, 509--515.
 \url{https://doi.org/10.1016/j.jasrep.2018.02.004}
 
-\leavevmode\vadjust pre{\hypertarget{ref-gismondiMultidisciplinaryApproach2020}{}}%
+\bibitem[\citeproctext]{ref-gismondiMultidisciplinaryApproach2020}
 Gismondi, A., Baldoni, M., Gnes, M., Scorrano, G., D'Agostino, A.,
 Marco, G. D., Calabria, G., Petrucci, M., Müldner, G., Tersch, M. V.,
 Nardi, A., Enei, F., Canini, A., Rickards, O., Alexander, M., \&
@@ -1258,36 +1296,36 @@ of {Santa Severa} (7th-15th centuries, {Rome}, {Italy}). \emph{PLOS
 ONE}, \emph{15}(1), e0227433.
 \url{https://doi.org/10.1371/journal.pone.0227433}
 
-\leavevmode\vadjust pre{\hypertarget{ref-goodmanTobaccoHistory1994}{}}%
+\bibitem[\citeproctext]{ref-goodmanTobaccoHistory1994}
 Goodman, J. (1994). \emph{Tobacco in history: The cultures of
 dependence}. {Routledge}.
 
-\leavevmode\vadjust pre{\hypertarget{ref-greeneQuantifyingCalculus2005}{}}%
+\bibitem[\citeproctext]{ref-greeneQuantifyingCalculus2005}
 Greene, T. R., Kuba, C. L., \& Irish, J. D. (2005). Quantifying
 calculus: {A} suggested new approach for recording an important
 indicator of diet and dental health. \emph{HOMO - Journal of Comparative
 Human Biology}, \emph{56}(2), 119--132.
 \url{https://doi.org/10.1016/j.jchb.2005.02.002}
 
-\leavevmode\vadjust pre{\hypertarget{ref-huangDecipheringGenetic2023}{}}%
+\bibitem[\citeproctext]{ref-huangDecipheringGenetic2023}
 Huang, Y., Shan, Y., Zhang, W., Lee, A. M., Li, F., Stranger, B. E., \&
 Huang, R. S. (2023). Deciphering genetic causes for sex differences in
 human health through drug metabolism and transporter genes. \emph{Nature
 Communications}, \emph{14}(1, 1), 175.
 \url{https://doi.org/10.1038/s41467-023-35808-6}
 
-\leavevmode\vadjust pre{\hypertarget{ref-jinSupragingivalCalculus2002}{}}%
+\bibitem[\citeproctext]{ref-jinSupragingivalCalculus2002}
 Jin, Y., \& Yip, H.-K. (2002). Supragingival {Calculus}: {Formation} and
 {Control}. \emph{Critical Reviews in Oral Biology \& Medicine}.
 \url{https://doi.org/10.1177/154411130201300506}
 
-\leavevmode\vadjust pre{\hypertarget{ref-kingCautionaryTales2017}{}}%
+\bibitem[\citeproctext]{ref-kingCautionaryTales2017}
 King, A., Powis, T. G., Cheong, K. F., \& Gaikwad, N. W. (2017).
 Cautionary tales on the identification of caffeinated beverages in
 {North America}. \emph{Journal of Archaeological Science}, \emph{85},
 30--40. \url{https://doi.org/10.1016/j.jas.2017.06.006}
 
-\leavevmode\vadjust pre{\hypertarget{ref-kondoAssociationCoffee2021}{}}%
+\bibitem[\citeproctext]{ref-kondoAssociationCoffee2021}
 Kondo, K., Suzuki, K., Washio, M., Ohfuji, S., Adachi, S., Kan, S.,
 Imai, S., Yoshimura, K., Miyashita, N., Fujisawa, N., Maeda, A.,
 Fukushima, W., \& Hirota, Y. (2021). Association between coffee and
@@ -1295,81 +1333,81 @@ green tea intake and pneumonia among the {Japanese} elderly: A
 case-control study. \emph{Scientific Reports}, \emph{11}(1, 1), 5570.
 \url{https://doi.org/10.1038/s41598-021-84348-w}
 
-\leavevmode\vadjust pre{\hypertarget{ref-lemmersMiddenbeemster2013}{}}%
+\bibitem[\citeproctext]{ref-lemmersMiddenbeemster2013}
 Lemmers, S. A. M., Schats, R., Hoogland, M. L. P., \& Waters-Rist, A.
 (2013). Fysisch antropologische analyse Middenbeemster. In \emph{De
 begravingen bij de Keyserkerk te Middenbeemster} (pp. 35--60).
 
-\leavevmode\vadjust pre{\hypertarget{ref-leuwProhibitionLegalization1994}{}}%
+\bibitem[\citeproctext]{ref-leuwProhibitionLegalization1994}
 Leuw, E., \& Marshall, I. H. (1994). \emph{Between {Prohibition} and
 {Legalization}: {The Dutch Experiment} in {Drug Policy}}. {Kugler
 Publications}. \url{https://books.google.com?id=2mAVkStNG5EC}
 
-\leavevmode\vadjust pre{\hypertarget{ref-lindholstLongTerm2010}{}}%
+\bibitem[\citeproctext]{ref-lindholstLongTerm2010}
 Lindholst, C. (2010). Long term stability of cannabis resin and cannabis
 extracts. \emph{Australian Journal of Forensic Sciences}, \emph{42}(3),
 181--190. \url{https://doi.org/10.1080/00450610903258144}
 
-\leavevmode\vadjust pre{\hypertarget{ref-liuNicotinedegradingMicroorganisms2015}{}}%
+\bibitem[\citeproctext]{ref-liuNicotinedegradingMicroorganisms2015}
 Liu, J., Ma, G., Chen, T., Hou, Y., Yang, S., Zhang, K.-Q., \& Yang, J.
 (2015). Nicotine-degrading microorganisms and their potential
 applications. \emph{Applied Microbiology and Biotechnology},
 \emph{99}(9), 3775--3785.
 \url{https://doi.org/10.1007/s00253-015-6525-1}
 
-\leavevmode\vadjust pre{\hypertarget{ref-lovejoyAuricular1985}{}}%
+\bibitem[\citeproctext]{ref-lovejoyAuricular1985}
 Lovejoy, C. O., Meindl, R. S., Pryzbeck, T. R., \& Mensforth, R. P.
 (1985). Chronological metamorphosis of the auricular surface of the
 ilium: {A} new method for the determination of adult skeletal age at
 death. \emph{American Journal of Physical Anthropology}, \emph{68}(1),
 15--28. \url{https://doi.org/10.1002/ajpa.1330680103}
 
-\leavevmode\vadjust pre{\hypertarget{ref-lustmannScanningElectron1976}{}}%
+\bibitem[\citeproctext]{ref-lustmannScanningElectron1976}
 Lustmann, J., Lewin-Epstein, J., \& Shteyer, A. (1976). Scanning
 electron microscopy of dental calculus. \emph{Calcified Tissue
 Research}, \emph{21}(1), 47--55.
 \url{https://doi.org/10.1007/BF02547382}
 
-\leavevmode\vadjust pre{\hypertarget{ref-maatManualPhysical2005}{}}%
+\bibitem[\citeproctext]{ref-maatManualPhysical2005}
 Maat, G., \& Mastwijk, R. (2005). Manual for the physical
 anthropological report. \emph{Barge's Anthropologica}, \emph{6}.
 
-\leavevmode\vadjust pre{\hypertarget{ref-machtHistoryOpium1915}{}}%
+\bibitem[\citeproctext]{ref-machtHistoryOpium1915}
 Macht, D. I. (1915). The history of opium and some of its preparations
 and alkaloids. \emph{The Journal of the American Medical Association},
 \emph{LXIV}(6), 5.
 
-\leavevmode\vadjust pre{\hypertarget{ref-mackiePreservationMetaproteome2017}{}}%
+\bibitem[\citeproctext]{ref-mackiePreservationMetaproteome2017}
 Mackie, M., Hendy, J., Lowe, A. D., Sperduti, A., Holst, M., Collins, M.
 J., \& Speller, C. F. (2017). Preservation of the metaproteome:
 Variability of protein preservation in ancient dental calculus.
 \emph{STAR: Science \& Technology of Archaeological Research},
 \emph{3}(1), 58--70. \url{https://doi.org/10.1080/20548923.2017.1361629}
 
-\leavevmode\vadjust pre{\hypertarget{ref-malakarNaturallyOccurring2017}{}}%
+\bibitem[\citeproctext]{ref-malakarNaturallyOccurring2017}
 Malakar, S., Gibson, P. R., Barrett, J. S., \& Muir, J. G. (2017).
 Naturally occurring dietary salicylates: {A} closer look at common
 {Australian} foods. \emph{Journal of Food Composition and Analysis},
 \emph{57}, 31--39. \url{https://doi.org/10.1016/j.jfca.2016.12.008}
 
-\leavevmode\vadjust pre{\hypertarget{ref-Rrrtools}{}}%
+\bibitem[\citeproctext]{ref-Rrrtools}
 Marwick, B. (2019). \emph{Rrtools: {Creates} a reproducible research
 compendium} {[}Manual{]}. \url{https://github.com/benmarwick/rrtools}
 
-\leavevmode\vadjust pre{\hypertarget{ref-maughanCaffeineIngestion2003}{}}%
+\bibitem[\citeproctext]{ref-maughanCaffeineIngestion2003}
 Maughan, R. J., \& Griffin, J. (2003). Caffeine ingestion and fluid
 balance: A review. \emph{Journal of Human Nutrition and Dietetics},
 \emph{16}(6), 411--420.
 \url{https://doi.org/10.1046/j.1365-277X.2003.00477.x}
 
-\leavevmode\vadjust pre{\hypertarget{ref-meindlSutureClosure1985}{}}%
+\bibitem[\citeproctext]{ref-meindlSutureClosure1985}
 Meindl, R. S., \& Lovejoy, C. O. (1985). Ectocranial suture closure: {A}
 revised method for the determination of skeletal age at death based on
 the lateral-anterior sutures. \emph{American Journal of Physical
 Anthropology}, \emph{68}(1), 57--66.
 \url{https://doi.org/10.1002/ajpa.1330680106}
 
-\leavevmode\vadjust pre{\hypertarget{ref-milmanOralFluid2011}{}}%
+\bibitem[\citeproctext]{ref-milmanOralFluid2011}
 Milman, G., Schwope, D. M., Schwilke, E. W., Darwin, W. D., Kelly, D.
 L., Goodwin, R. S., Gorelick, D. A., \& Huestis, M. A. (2011). Oral
 {Fluid} and {Plasma Cannabinoid Ratios} after {Around-the-Clock
@@ -1377,82 +1415,82 @@ Controlled Oral Δ9-Tetrahydrocannabinol Administration}. \emph{Clinical
 Chemistry}, \emph{57}(11), 1597--1606.
 \url{https://doi.org/10.1373/clinchem.2011.169490}
 
-\leavevmode\vadjust pre{\hypertarget{ref-mortimerHistoryCoca1901}{}}%
+\bibitem[\citeproctext]{ref-mortimerHistoryCoca1901}
 Mortimer, W. G. (1901). \emph{Peru. {History} of coca, "the divine
 plant" of the {Incas}; with an introductory account of the {Incas}, and
 of the {Andean Indians} of to-day}. {New York, J. H. Vail \& Company}.
 \url{http://archive.org/details/peruhistoryofcoc00mortrich}
 
-\leavevmode\vadjust pre{\hypertarget{ref-nierstraszTeaTrade2015}{}}%
+\bibitem[\citeproctext]{ref-nierstraszTeaTrade2015}
 Nierstrasz, C. (2015). \emph{Rivalry for {Trade} in {Tea} and
 {Textiles}: {The English} and {Dutch East India} companies
 (1700--1800)}. {Springer}.
 \url{https://books.google.com?id=uwtaCwAAQBAJ}
 
-\leavevmode\vadjust pre{\hypertarget{ref-ogaldeIdentificationPsychoactive2009}{}}%
+\bibitem[\citeproctext]{ref-ogaldeIdentificationPsychoactive2009}
 Ogalde, J. P., Arriaza, B. T., \& Soto, E. C. (2009). Identification of
 psychoactive alkaloids in ancient {Andean} human hair by gas
 chromatography/mass spectrometry. \emph{Journal of Archaeological
 Science}, \emph{36}(2), 467--472.
 \url{https://doi.org/10.1016/j.jas.2008.09.036}
 
-\leavevmode\vadjust pre{\hypertarget{ref-palmerActivityReconstruction2016}{}}%
+\bibitem[\citeproctext]{ref-palmerActivityReconstruction2016}
 Palmer, J. L. A., Hoogland, M. H. L., \& Waters‐Rist, A. L. (2016).
 Activity {Reconstruction} of {Post}‐{Medieval Dutch Rural Villagers}
 from {Upper Limb Osteoarthritis} and {Entheseal Changes}.
 \emph{International Journal of Osteoarchaeology}, \emph{26}(1), 78--92.
 \url{https://doi.org/10.1002/oa.2397}
 
-\leavevmode\vadjust pre{\hypertarget{ref-Rbase}{}}%
+\bibitem[\citeproctext]{ref-Rbase}
 R Core Team. (2020). \emph{R: {A} language and environment for
 statistical computing} {[}Manual{]}. {R Foundation for Statistical
 Computing}; {R Foundation for Statistical Computing}.
 \url{https://www.R-project.org/}
 
-\leavevmode\vadjust pre{\hypertarget{ref-raffertyCurrentResearch2012}{}}%
+\bibitem[\citeproctext]{ref-raffertyCurrentResearch2012}
 Rafferty, S. M., Lednev, I., Virkler, K., \& Chovanec, Z. (2012).
 Current research on smoking pipe residues. \emph{Journal of
 Archaeological Science}, \emph{39}(7), 1951--1959.
 \url{https://doi.org/10.1016/j.jas.2012.02.001}
 
-\leavevmode\vadjust pre{\hypertarget{ref-rehImpactTobacco2012}{}}%
+\bibitem[\citeproctext]{ref-rehImpactTobacco2012}
 Reh, D. D., Higgins, T. S., \& Smith, T. L. (2012). Impact of {Tobacco
 Smoke} on {Chronic Rhinosinusitis} -- {A Review} of the {Literature}.
 \emph{International Forum of Allergy \& Rhinology}, \emph{2}(5), 362.
 \url{https://doi.org/10.1002/alr.21054}
 
-\leavevmode\vadjust pre{\hypertarget{ref-Rpsych}{}}%
+\bibitem[\citeproctext]{ref-Rpsych}
 Revelle, W. (2022). \emph{Psych: {Procedures} for psychological,
 psychometric, and personality research} {[}Manual{]}. {Northwestern
 University}. \url{https://CRAN.R-project.org/package=psych}
 
-\leavevmode\vadjust pre{\hypertarget{ref-rogersPalaeopathologyJoint2000}{}}%
+\bibitem[\citeproctext]{ref-rogersPalaeopathologyJoint2000}
 Rogers, J. (2000). The palaeopathology of joint disease. In M. Cox \& S.
 Mays (Eds.), \emph{Human osteology : {In} archaeology and forensic
 science.} (1st ed, pp. 163--182). {Cambridge University Press}.
-\url{https://login.ezproxy.leidenuniv.nl:2443/login?URL=https://search.ebscohost.com/login.aspx?direct=true\&db=e000xww\&AN=40641\&site=ehost-live}
+\url{https://login.ezproxy.leidenuniv.nl:2443/login?URL=https://search.ebscohost.com/login.aspx?direct=true&db=e000xww&AN=40641&site=ehost-live}
 
-\leavevmode\vadjust pre{\hypertarget{ref-scannapiecoRoleOral1999}{}}%
+\bibitem[\citeproctext]{ref-scannapiecoRoleOral1999}
 Scannapieco, F. A. (1999). Role of {Oral Bacteria} in {Respiratory
 Infection}. \emph{Journal of Periodontology}, \emph{70}(7), 793--802.
 \url{https://doi.org/10.1902/jop.1999.70.7.793}
 
-\leavevmode\vadjust pre{\hypertarget{ref-scannapiecoPotentialAssociations2001}{}}%
+\bibitem[\citeproctext]{ref-scannapiecoPotentialAssociations2001}
 Scannapieco, F. A., \& Ho, A. W. (2001). Potential {Associations Between
 Chronic Respiratory Disease} and {Periodontal Disease}: {Analysis} of
 {National Health} and {Nutrition Examination Survey III}. \emph{Journal
 of Periodontology}, \emph{72}(1), 50--56.
 \url{https://doi.org/10.1902/jop.2001.72.1.50}
 
-\leavevmode\vadjust pre{\hypertarget{ref-scheltemaOpiumTrade1907}{}}%
+\bibitem[\citeproctext]{ref-scheltemaOpiumTrade1907}
 Scheltema, J. F. (1907). The {Opium Trade} in the {Dutch East Indies}.
 {I}. \emph{American Journal of Sociology}, \emph{13}(1), 79--112.
 
-\leavevmode\vadjust pre{\hypertarget{ref-schuijtemakerTeTheegasten2011}{}}%
+\bibitem[\citeproctext]{ref-schuijtemakerTeTheegasten2011}
 Schuijtemaker, D. (2011). Te Theegasten. \emph{De Nieuwe Schouwschuit},
 \emph{9}, 16--17.
 
-\leavevmode\vadjust pre{\hypertarget{ref-slavinDiagnosisManagement2005}{}}%
+\bibitem[\citeproctext]{ref-slavinDiagnosisManagement2005}
 Slavin, R. G., Spector, S. L., Bernstein, I. L., Slavin, R. G., Kaliner,
 M. A., Kennedy, D. W., Virant, F. S., Wald, E. R., Khan, D. A.,
 Blessing-Moore, J., Lang, D. M., Nicklas, R. A., Oppenheimer, J. J.,
@@ -1462,73 +1500,73 @@ management of sinusitis: {A} practice parameter update. \emph{Journal of
 Allergy and Clinical Immunology}, \emph{116}, S13--S47.
 \url{https://doi.org/10.1016/j.jaci.2005.09.048}
 
-\leavevmode\vadjust pre{\hypertarget{ref-smithDetectionOpium2018}{}}%
+\bibitem[\citeproctext]{ref-smithDetectionOpium2018}
 Smith, R. K., Stacey, R. J., Bergström, E., \& Thomas-Oates, J. (2018).
 Detection of opium alkaloids in a {Cypriot} base-ring juglet.
 \emph{Analyst}, \emph{143}(21), 5127--5136.
 \url{https://doi.org/10.1039/C8AN01040D}
 
-\leavevmode\vadjust pre{\hypertarget{ref-sorensenEffectAntioxidants2018}{}}%
+\bibitem[\citeproctext]{ref-sorensenEffectAntioxidants2018}
 Sørensen, L. K., \& Hasselstrøm, J. B. (2018). The effect of
 antioxidants on the long-term stability of {THC} and related
 cannabinoids in sampled whole blood. \emph{Drug Testing and Analysis},
 \emph{10}(2), 301--309. \url{https://doi.org/10.1002/dta.2221}
 
-\leavevmode\vadjust pre{\hypertarget{ref-sorensenDrugsCalculus2021}{}}%
+\bibitem[\citeproctext]{ref-sorensenDrugsCalculus2021}
 Sørensen, L. K., Hasselstrøm, J. B., Larsen, L. S., \& Bindslev, D. A.
 (2021). Entrapment of drugs in dental calculus -- {Detection} validation
 based on test results from post-mortem investigations. \emph{Forensic
 Science International}, \emph{319}, 110647.
 \url{https://doi.org/10.1016/j.forsciint.2020.110647}
 
-\leavevmode\vadjust pre{\hypertarget{ref-srdjenovicSimultaneousHPLC2008}{}}%
+\bibitem[\citeproctext]{ref-srdjenovicSimultaneousHPLC2008}
 Srdjenovic, B., Djordjevic-Milic, V., Grujic, N., Injac, R., \&
 Lepojevic, Z. (2008). Simultaneous {HPLC Determination} of {Caffeine},
 {Theobromine}, and {Theophylline} in {Food}, {Drinks}, and {Herbal
 Products}. \emph{Journal of Chromatographic Science}, \emph{46}(2),
 144--149. \url{https://doi.org/10.1093/chromsci/46.2.144}
 
-\leavevmode\vadjust pre{\hypertarget{ref-stavricVariabilityCaffeine1988}{}}%
+\bibitem[\citeproctext]{ref-stavricVariabilityCaffeine1988}
 Stavric, B., Klassen, R., Watkinson, B., Karpinski, K., Stapley, R., \&
 Fried, P. (1988). Variability in caffeine consumption from coffee and
 tea: {Possible} significance for epidemiological studies. \emph{Food and
 Chemical Toxicology}, \emph{26}(2), 111--118.
 \url{https://doi.org/10.1016/0278-6915(88)90107-X}
 
-\leavevmode\vadjust pre{\hypertarget{ref-sunMetabolomicsEvaluation2016}{}}%
+\bibitem[\citeproctext]{ref-sunMetabolomicsEvaluation2016}
 Sun, J., Jin, J., Beger, R. D., Cerniglia, C. E., Yang, M., \& Chen, H.
 (2016). Metabolomics evaluation of the impact of smokeless tobacco
 exposure on the oral bacterium {Capnocytophaga} sputigena.
 \emph{Toxicology in Vitro}, \emph{36}, 133--141.
 \url{https://doi.org/10.1016/j.tiv.2016.07.020}
 
-\leavevmode\vadjust pre{\hypertarget{ref-takahashiOralMicrobiome2015}{}}%
+\bibitem[\citeproctext]{ref-takahashiOralMicrobiome2015}
 Takahashi, N. (2015). Oral {Microbiome Metabolism}: {From} {``{Who Are
 They}?''} To {``{What Are They Doing}?''} \emph{Journal of Dental
 Research}, \emph{94}(12), 1628--1637.
 \url{https://doi.org/10.1177/0022034515606045}
 
-\leavevmode\vadjust pre{\hypertarget{ref-tushinghamHuntergathererTobacco2013}{}}%
+\bibitem[\citeproctext]{ref-tushinghamHuntergathererTobacco2013}
 Tushingham, S., Ardura, D., Eerkens, J. W., Palazoglu, M., Shahbaz, S.,
 \& Fiehn, O. (2013). Hunter-gatherer tobacco smoking: Earliest evidence
 from the {Pacific Northwest Coast} of {North America}. \emph{Journal of
 Archaeological Science}, \emph{40}(2), 1397--1407.
 \url{https://doi.org/10.1016/j.jas.2012.09.019}
 
-\leavevmode\vadjust pre{\hypertarget{ref-unoSexAgedependent2017}{}}%
+\bibitem[\citeproctext]{ref-unoSexAgedependent2017}
 Uno, Y., Takata, R., Kito, G., Yamazaki, H., Nakagawa, K., Nakamura, Y.,
 Kamataki, T., \& Katagiri, T. (2017). Sex- and age-dependent gene
 expression in human liver: {An} implication for drug-metabolizing
 enzymes. \emph{Drug Metabolism and Pharmacokinetics}, \emph{32}(1),
 100--107. \url{https://doi.org/10.1016/j.dmpk.2016.10.409}
 
-\leavevmode\vadjust pre{\hypertarget{ref-valenDetermination212017}{}}%
+\bibitem[\citeproctext]{ref-valenDetermination212017}
 Valen, A., Leere Øiestad, Å. M., Strand, D. H., Skari, R., \& Berg, T.
 (2017). Determination of 21 drugs in oral fluid using fully automated
 supported liquid extraction and {UHPLC-MS}/{MS}. \emph{Drug Testing and
 Analysis}, \emph{9}(5), 808--823. \url{https://doi.org/10.1002/dta.2045}
 
-\leavevmode\vadjust pre{\hypertarget{ref-velskoMicrobialDifferences2019}{}}%
+\bibitem[\citeproctext]{ref-velskoMicrobialDifferences2019}
 Velsko, I. M., Fellows Yates, J. A., Aron, F., Hagan, R. W., Frantz, L.
 A. F., Loe, L., Martinez, J. B. R., Chaves, E., Gosden, C., Larson, G.,
 \& Warinner, C. (2019). Microbial differences between dental plaque and
@@ -1536,7 +1574,7 @@ historic dental calculus are related to oral biofilm maturation stage.
 \emph{Microbiome}, \emph{7}(1), 102.
 \url{https://doi.org/10.1186/s40168-019-0717-3}
 
-\leavevmode\vadjust pre{\hypertarget{ref-velskoDentalCalculus2017}{}}%
+\bibitem[\citeproctext]{ref-velskoDentalCalculus2017}
 Velsko, I. M., Overmyer, K. A., Speller, C., Klaus, L., Collins, M. J.,
 Loe, L., Frantz, L. A. F., Sankaranarayanan, K., Lewis, C. M., Martinez,
 J. B. R., Chaves, E., Coon, J. J., Larson, G., \& Warinner, C. (2017).
@@ -1544,7 +1582,7 @@ The dental calculus metabolome in modern and historic samples.
 \emph{Metabolomics}, \emph{13}(11), 134.
 \url{https://doi.org/10.1007/s11306-017-1270-3}
 
-\leavevmode\vadjust pre{\hypertarget{ref-warinnerEvidenceMilk2014}{}}%
+\bibitem[\citeproctext]{ref-warinnerEvidenceMilk2014}
 Warinner, C., Hendy, J., Speller, C., Cappellini, E., Fischer, R.,
 Trachsel, C., Arneborg, J., Lynnerup, N., Craig, O. E., Swallow, D. M.,
 Fotakis, A., Christensen, R. J., Olsen, J. V., Liebert, A., Montalva,
@@ -1553,18 +1591,18 @@ Collins, M. J. (2014). Direct evidence of milk consumption from ancient
 human dental calculus. \emph{Scientific Reports}, \emph{4}, 7104.
 \url{https://doi.org/10.1038/srep07104}
 
-\leavevmode\vadjust pre{\hypertarget{ref-whiteDentalCalculus1997}{}}%
+\bibitem[\citeproctext]{ref-whiteDentalCalculus1997}
 White, D. J. (1997). Dental calculus: Recent insights into occurrence,
 formation, prevention, removal and oral health effects of supragingival
 and subgingival deposits. \emph{European Journal of Oral Sciences},
 \emph{105}(5), 508--522.
 \url{https://doi.org/10.1111/j.1600-0722.1997.tb00238.x}
 
-\leavevmode\vadjust pre{\hypertarget{ref-ggplot2}{}}%
+\bibitem[\citeproctext]{ref-ggplot2}
 Wickham, H. (2016). \emph{Ggplot2: {Elegant Graphics} for {Data
 Analysis}}. {Springer-Verlag}. \url{https://ggplot2.tidyverse.org}
 
-\leavevmode\vadjust pre{\hypertarget{ref-tidyverse2019}{}}%
+\bibitem[\citeproctext]{ref-tidyverse2019}
 Wickham, H., Averick, M., Bryan, J., Chang, W., McGowan, L. D.,
 François, R., Grolemund, G., Hayes, A., Henry, L., Hester, J., Kuhn, M.,
 Pedersen, T. L., Miller, E., Bache, S. M., Müller, K., Ooms, J.,
@@ -1572,7 +1610,7 @@ Robinson, D., Seidel, D. P., Spinu, V., \ldots{} Yutani, H. (2019).
 Welcome to the {tidyverse}. \emph{Journal of Open Source Software},
 \emph{4}(43), 1686. \url{https://doi.org/10.21105/joss.01686}
 
-\leavevmode\vadjust pre{\hypertarget{ref-willeRelationshipOral2009}{}}%
+\bibitem[\citeproctext]{ref-willeRelationshipOral2009}
 Wille, S. M. R., Raes, E., Lillsunde, P., Gunnar, T., Laloup, M., Samyn,
 N., Christophersen, A. S., Moeller, M. R., Hammer, K. P., \& Verstraete,
 A. G. (2009). Relationship {Between Oral Fluid} and {Blood
@@ -1580,14 +1618,14 @@ Concentrations} of {Drugs} of {Abuse} in {Drivers Suspected} of {Driving
 Under} the {Influence} of {Drugs}. \emph{Therapeutic Drug Monitoring},
 \emph{31}(4), 511. \url{https://doi.org/10.1097/FTD.0b013e3181ae46ea}
 
-\leavevmode\vadjust pre{\hypertarget{ref-yaussyCalculusSurvivorship2019}{}}%
+\bibitem[\citeproctext]{ref-yaussyCalculusSurvivorship2019}
 Yaussy, S. L., \& DeWitte, S. N. (2019). Calculus and survivorship in
 medieval {London}: {The} association between dental disease and a
 demographic measure of general health. \emph{American Journal of
 Physical Anthropology}, \emph{168}(3), 552--565.
 \url{https://doi.org/10.1002/ajpa.23772}
 
-\leavevmode\vadjust pre{\hypertarget{ref-ziesemer16SChallenges2015}{}}%
+\bibitem[\citeproctext]{ref-ziesemer16SChallenges2015}
 Ziesemer, K. A., Mann, A. E., Sankaranarayanan, K., Schroeder, H., Ozga,
 A. T., Brandt, B. W., Zaura, E., Waters-Rist, A., Hoogland, M.,
 Salazar-Garcia, D. C., Aldenderfer, M., Speller, C., Hendy, J., Weston,
@@ -1596,7 +1634,7 @@ Hofman, C., \& Warinner, C. (2015). Intrinsic challenges in ancient
 microbiome reconstruction using {16S rRNA} gene amplification. \emph{Sci
 Rep}, \emph{5}, 16498. \url{https://doi.org/10.1038/srep16498}
 
-\leavevmode\vadjust pre{\hypertarget{ref-ziesemerGenomeCalculus2018}{}}%
+\bibitem[\citeproctext]{ref-ziesemerGenomeCalculus2018}
 Ziesemer, K. A., Ramos‐Madrigal, J., Mann, A. E., Brandt, B. W.,
 Sankaranarayanan, K., Ozga, A. T., Hoogland, M., Hofman, C. A.,
 Salazar‐García, D. C., Frohlich, B., Milner, G. R., Stone, A. C.,
@@ -1605,7 +1643,7 @@ Schroeder, H. (2018). The efficacy of whole human genome capture on
 ancient dental calculus and dentin. \emph{American Journal of Physical
 Anthropology}. \url{https://doi.org/10.1002/ajpa.23763}
 
-\leavevmode\vadjust pre{\hypertarget{ref-zijngeBiofilmArchitecture2010}{}}%
+\bibitem[\citeproctext]{ref-zijngeBiofilmArchitecture2010}
 Zijnge, V., van Leeuwen, M. B. M., Degener, J. E., Abbas, F., Thurnheer,
 T., Gmür, R., \& M. Harmsen, H. J. (2010). Oral {Biofilm Architecture}
 on {Natural Teeth}. \emph{PLoS ONE}, \emph{5}(2), e9321.
