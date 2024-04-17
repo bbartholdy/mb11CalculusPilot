@@ -11,15 +11,14 @@ contributes:
           echo: false
     pdf:
       documentclass: scrartcl
-      classoption: [11.5pt,leqno]
-      linestretch: 1.5
+      classoption: [11pt,leqno]
+      linestretch: 1.1
       block-headings: false
       keep-tex: true
-      #colorlinks: true
       link-citations: true
-      urlcolor: pciblue
-      linkcolor: pciblue
-      citecolor: pciblue
+      urlcolor: PCIdark
+      linkcolor: PCIdark
+      citecolor: PCIdark
       #template: templates/pcj-submission.tex
       include-in-header: _preamble.tex
       #include-before-body: partials/before-body.tex

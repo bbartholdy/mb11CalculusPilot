@@ -44,6 +44,9 @@ format:
   pci-pdf:
     output-file: "pcj-submission_v1.pdf"
     shift-heading-level-by: -1
+    knitr: 
+      opts_chunk: 
+        fig-path: "../figures/pcj-"
   html:
     theme: cosmo
     output-file: "preprint-for-PCI_v3.html"
@@ -77,7 +80,7 @@ knitr:
     fig-path: "../figures/"
     fig-dpi: 600
 bibliography: references.bib
-csl: "apa.csl" # Insert path for the bib-style
+#csl: "apa.csl" # Insert path for the bib-style
 abstract: |
   Dental calculus is an excellent source of information on the dietary patterns
   of past populations, including consumption of plant-based items. The detection
