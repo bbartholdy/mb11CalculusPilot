@@ -156,7 +156,10 @@
           </group>
         </else>
       </choose>
-    <text variable="DOI" prefix=". https://doi.org/"/>
+    <group prefix=" " suffix="">
+      <text variable="DOI" prefix="https://doi.org/"/>
+    <!--<text variable="DOI" prefix=". https://doi.org/"/> remove to prevent overflow in latex caused by \href-->
+    </group>
     </layout>
   </bibliography>
 </style>

@@ -5,7 +5,7 @@ quarto-required: ">=1.4.0"
 contributes:
   formats:
     common:
-      csl: peer-community-journal-pci_Zotero.csl
+      csl: modified_peer-community-journal.csl
       knitr:
         opts_chunk:
           echo: false
@@ -19,9 +19,9 @@ contributes:
       urlcolor: PCIdark
       linkcolor: PCIdark
       citecolor: PCIdark
-      #template: templates/pcj-submission.tex
       include-in-header: _preamble.tex
-      #include-before-body: partials/before-body.tex
+      include-before-body:
+        - text: \pagenumbering{gobble} # remove page numbering for submission
       template-partials:
         - partials/title.tex
         - partials/before-body.tex
