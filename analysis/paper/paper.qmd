@@ -45,10 +45,17 @@ options(ggplot.discrete.colour = function() scale_fill_viridis_d())
 We wish to thank Kirsten Ziesemer for helping track down the calculus samples
 from her studies. Additionally, we owe special thanks to Vincent Falger and Kees
 de Groot from the Middenbeemster Historical Society for their input on early
-draft manuscripts and a lovely guided tour of Middenbeemster. We also thank
-Louise Le Meillour for taking on our preprint and providing helpful comments,
-and Mario Zimmerman and two other anonymous reviewers for their time and invaluable
-insights.
+draft manuscripts and a lovely guided tour of Middenbeemster.
+
+We also thank Louise Le Meillour for taking on our preprint and providing helpful
+comments, and Mario Zimmerman and two other anonymous reviewers for their time
+and invaluable insights. This paper was evaluated during a CODECHECK event at TU
+Delft by Daniel Nüst and Stephen Eglen, who provided helpful feedback on the
+reproducibility of all code used in this paper.
+
+Preprint version 5 of this article has been peer-reviewed and recommended by PCI
+Archaeology <https://doi.org/10.24072/pci.archaeo.100389> [@meillourDetectionPlantderived2023].
+
 
 ## Funding {-}
 
@@ -62,10 +69,11 @@ The authors have no conflicts to declare.
 
 ## Data Availability Statement {-}
 
-All raw data is available on Zenodo (<https://doi.org/10.5281/zenodo.8061483>).
+All raw data is available on Zenodo [<https://doi.org/10.5281/zenodo.8061483>,
+@bartholdyDentalPathological2023].
 Analysis scripts, and the source code for the manuscript and
 supplementary materials are available as a research compendium
-(<https://doi.org/10.5281/zenodo.7649824>)
+[<https://doi.org/10.5281/zenodo.7649824>, @bartholdyMB11CalculusPilot]
 using the structure recommended by the **rrtools** R package [@Rrrtools].
 
 
