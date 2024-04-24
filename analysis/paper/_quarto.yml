@@ -43,11 +43,11 @@ title-block-published: "Last updated"
 format:
   html:
     theme: cosmo
-    output-file: "preprint-for-PCI_v3.html"
+    output-file: "version_of_record.html"
     keep-md: true
   pdf:
     keep-tex: true
-    output-file: "preprint-for-PCI_v3.pdf"
+    output-file: "version_of_record.pdf"
     documentclass: article
     number-sections: true
     geometry:
@@ -62,7 +62,7 @@ format:
       - ../templates/_affiliations.tex
       - ../templates/before-body.tex
   docx:
-    output-file: "draft-manuscript-3.docx"
+    output-file: "version_of_record.docx"
 execute:
   freeze: auto
   echo: false
