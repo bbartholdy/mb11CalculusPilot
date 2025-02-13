@@ -14,7 +14,7 @@ knitr::opts_chunk$set(
 Title <- "Multiproxy analysis exploring patterns of diet and disease in dental calculus and skeletal remains from a 19th century Dutch population"
 ```
 
-# Research compendium for Bartholdy et al. 2023
+# Research compendium for Bartholdy et al. 2024
 
 [![R-CMD-check](https://github.com/bbartholdy/mb11CalculusPilot/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/bbartholdy/mb11CalculusPilot/actions/workflows/R-CMD-check.yaml) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.7649825.svg)](https://zenodo.org/badge/DOI/10.5281/zenodo.7649825)
 
@@ -50,11 +50,12 @@ The **analysis** directory contains:
 
 - [R](https://cran.r-project.org/)
 - [Quarto](https://quarto.org/)
+- [TeX](https://www.latex-project.org/get/)
 - [Git](https://git-scm.com/downloads) (optional)
 
 **Linux dependencies:**
 
-`libx11-dev libicu-dev make zlib1g-dev libcurl4-openssl-dev libssl-dev libfontconfig1-dev libfreetype6-dev libfribidi-dev libharfbuzz-dev libjpeg-dev libpng-dev libtiff-dev pandoc libxml2-dev libgit2-dev`
+`libx11-dev libicu-dev make zlib1g-dev libcurl4-openssl-dev libssl-dev libfontconfig1-dev libfreetype6-dev libfribidi-dev libharfbuzz-dev libjpeg-dev libpng-dev libtiff-dev pandoc libxml2-dev libgit2-dev gfortran`
 
 You can download the compendium as a zip from from this URL:
 
@@ -66,12 +67,12 @@ or clone the repository:
 
 Then:
 
-- Open the folder in your preferred IDE
-- run `renv::restore()` to install the required R packages
-- run `quarto::quarto_render("analysis/paper/paper.qmd", output_format = "pdf")` in the R console (requires installing **quarto** R package) or `quarto render analysis/paper/paper.qmd --to pdf` to produce a PDF
-- find the pdf in `./analysis/paper/_output`
+1. Open the folder in your preferred IDE
+2. run `renv::restore()` to install the required R packages
+3. run `quarto::quarto_render("analysis/paper/paper.qmd", output_format = "pdf")` in the R console (requires installing **quarto** R package) or `quarto render analysis/paper/paper.qmd --to pdf` to produce a PDF
+4. find the pdf in `./analysis/paper/_output`
 
-### Licenses
+## Licenses
 
 **Text and figures :**  [CC-BY-4.0](http://creativecommons.org/licenses/by/4.0/)
 
