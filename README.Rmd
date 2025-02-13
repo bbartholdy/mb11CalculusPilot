@@ -16,28 +16,13 @@ Title <- "Multiproxy analysis exploring patterns of diet and disease in dental c
 
 # Research compendium for Bartholdy et al. 2023
 
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/bbartholdy/mb11CalculusPilot/main?urlpath=rstudio) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.7649825.svg)](https://zenodo.org/badge/DOI/10.5281/zenodo.7649825)
+[![R-CMD-check](https://github.com/bbartholdy/mb11CalculusPilot/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/bbartholdy/mb11CalculusPilot/actions/workflows/R-CMD-check.yaml) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.7649825.svg)](https://zenodo.org/badge/DOI/10.5281/zenodo.7649825)
 
 This repository contains the data and code for our paper:
 
-<!--
-> Authors, (YYYY). _`r Title`_. Name of journal/book <https://doi.org/xxx/xxx>
 
-Our pre-print is online here:
--->
+> Bartholdy, Bjørn Peare; Hasselstrøm, Jørgen B.; Sørensen, Lambert K.; Casna, Maia; Hoogland, Menno; Historisch Genootschap Beemster; Henry, Amanda G. Multiproxy analysis exploring patterns of diet and disease in dental calculus and skeletal remains from a 19th century Dutch population. Peer Community Journal, Volume 4 (2024), article no. e46. doi : 10.24072/pcjournal.414. https://peercommunityjournal.org/articles/10.24072/pcjournal.414/
 
-> Bartholdy, B.P., Hasselstrøm, J.B., Sørensen, L.K., Casna, M., Hoogland, M., Historisch Genootschap Beemster, & Henry, A.G. (2023). _`r Title`_. Zenodo, Accessed `r format(Sys.Date(), "%d %b %Y")`. Online at <https://doi.org/10.5281/zenodo.7649151>
-
-
-### How to cite
-
-Use the above paper to cite this compendium.
-
-<!--
-Please cite this compendium as:
-
-> Bartholdy, B.P., Hasselstrøm, J.B., Sørensen, L.K., Casna, M., Hoogland, M., Historisch Genootschap Beemster, & Henry, A.G., (`r format(Sys.Date(), "%Y")`). _Compendium of R code and data for `r Title`_. Accessed `r format(Sys.Date(), "%d %b %Y")`. Online at <https://doi.org/10.5281/zenodo.7649825>
--->
 
 ## Contents
 
@@ -59,15 +44,17 @@ The **analysis** directory contains:
     Supplementary materials including notes and other documents
     prepared and collected during the analysis.
 
-## How to run in your browser or download and run locally
+## How to reproduce the paper
 
-**If you are running Linux, you will need to install `gfortran`**,
-e.g. `sudo apt install gfortran` for Ubuntu.
+**Software requirements:**
 
-This research compendium has been developed using the statistical programming
-language R. To work with the compendium, you will need
-installed on your computer the [R software](https://cloud.r-project.org/)
-itself, optionally (but recommended) [RStudio Desktop](https://rstudio.com/products/rstudio/download/), and [Quarto](https://quarto.org/docs/get-started/). 
+- [R](https://cran.r-project.org/)
+- [Quarto](https://quarto.org/)
+- [Git](https://git-scm.com/downloads) (optional)
+
+**Linux dependencies:**
+
+`libx11-dev libicu-dev make zlib1g-dev libcurl4-openssl-dev libssl-dev libfontconfig1-dev libfreetype6-dev libfribidi-dev libharfbuzz-dev libjpeg-dev libpng-dev libtiff-dev pandoc libxml2-dev libgit2-dev`
 
 You can download the compendium as a zip from from this URL:
 
@@ -75,15 +62,14 @@ You can download the compendium as a zip from from this URL:
 
 or clone the repository:
 
-`git clone git@github.com:bbartholdy/mb11CalculusPilot.git`
+`git clone https://github.com/bbartholdy/mb11CalculusPilot.git`
 
 Then:
 
-- open the `.Rproj` file in RStudio
-- run `devtools::install()` to ensure you have the packages this analysis depends on (also listed in the
-[DESCRIPTION](/DESCRIPTION) file).
-- finally, open `analysis/paper/paper.qmd` and **render** to produce the PDF manuscript (`_output/`),
-  or run `quarto::quarto_render("analysis/paper/paper.qmd")` in the R console.
+- Open the folder in your preferred IDE
+- run `renv::restore()` to install the required R packages
+- run `quarto::quarto_render("analysis/paper/paper.qmd", output_format = "pdf")` in the R console (requires installing **quarto** R package) or `quarto render analysis/paper/paper.qmd --to pdf` to produce a PDF
+- find the pdf in `./analysis/paper/_output`
 
 ### Licenses
 
