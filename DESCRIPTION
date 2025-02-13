@@ -18,7 +18,6 @@ Imports:
     magrittr,
     patchwork,
     psych,
-    rbbt (>= 0.0.0.9000),
     readr,
     stringr,
     tidyr
