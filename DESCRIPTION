@@ -12,17 +12,19 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
 Imports: 
     dplyr,
+    ggcorrplot,
     ggplot2,
     glue,
     here,
     magrittr,
     patchwork,
     psych,
-    rbbt,
     readr,
     stringr,
     tidyr
-Suggests: devtools
+Suggests: 
+    devtools,
+    rbbt
 Remotes: 
     paleolimbot/rbbt
 Depends: 
