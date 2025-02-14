@@ -59,7 +59,7 @@ The **analysis** directory contains:
 
 You can download the compendium as a zip from from this URL:
 
-[main.zip](/archive/refs/heads/main.zip).
+[main.zip](https://github.com/bbartholdy/mb11CalculusPilot/archive/refs/heads/main.zip)
 
 or clone the repository:
 
@@ -67,10 +67,10 @@ or clone the repository:
 
 Then:
 
-1. Open the folder in your preferred IDE
+1. open the folder in your preferred IDE
 2. run `renv::restore()` to install the required R packages
-3. run `quarto::quarto_render("analysis/paper/paper.qmd", output_format = "pdf")` in the R console (requires installing **quarto** R package) or `quarto render analysis/paper/paper.qmd --to pdf` to produce a PDF
-4. find the pdf in `./analysis/paper/_output`
+3. run `quarto::quarto_render("analysis/paper/paper.qmd", output_format = "html")` in the R console (requires installing **quarto** R package) or `quarto render analysis/paper/paper.qmd --to html` to produce an HTML
+4. open the output `./analysis/paper/_output/version-of-record.html` in a browser
 
 ## Licenses
 
