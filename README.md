@@ -53,7 +53,7 @@ The **analysis** directory contains:
 
 You can download the compendium as a zip from from this URL:
 
-[main.zip](/archive/refs/heads/main.zip).
+[main.zip](https://github.com/bbartholdy/mb11CalculusPilot/archive/refs/heads/main.zip)
 
 or clone the repository:
 
