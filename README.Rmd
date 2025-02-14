@@ -70,7 +70,7 @@ Then:
 1. open the folder in your preferred IDE
 2. run `renv::restore()` to install the required R packages
 3. run `quarto::quarto_render("analysis/paper/paper.qmd", output_format = "html")` in the R console (requires installing **quarto** R package) or `quarto render analysis/paper/paper.qmd --to html` to produce an HTML
-4. open the output `./analysis/paper/_output/version-of-record.html` in a browser
+4. open the output `./analysis/paper/_output/version_of_record.html` in a browser
 
 ## Licenses
 

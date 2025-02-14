@@ -68,7 +68,7 @@ Then:
     in the R console (requires installing **quarto** R package) or
     `quarto render analysis/paper/paper.qmd --to html` to produce an
     HTML
-4.  open the output `./analysis/paper/_output/version-of-record.html` in
+4.  open the output `./analysis/paper/_output/version_of_record.html` in
     a browser
 
 ## Licenses
