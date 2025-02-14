@@ -1,7 +1,4 @@
-#' Generate the bibliography
-#'
-#' @importFrom rbbt bbt_detect_citations bbt_write_bib
-#' @importFrom here here
+# Generate the bibliography
 
 generate_bib <- function(){
   cite_keys <- bbt_detect_citations(list.files(here("analysis/"), "*.qmd", full.names = T, recursive = T))
